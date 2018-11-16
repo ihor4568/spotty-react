@@ -1,0 +1,51 @@
+{
+  "name": "spotty-react",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "16.6.3",
+    "react-dom": "16.6.3",
+    "react-scripts": "2.1.1",
+    "styled-components": "4.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "fix": "eslint --fix ./src",
+    "lint": "eslint ./src"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-prettier": "3.3.0",
+    "eslint-plugin-prettier": "3.0.0",
+    "husky": "1.1.4",
+    "lint-staged": "8.0.4",
+    "prettier": "1.15.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --max-warnings=0",
+      "git add"
+    ],
+    "*.{html,js,json,scss}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

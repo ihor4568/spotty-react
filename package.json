@@ -1,6 +1,7 @@
 {
   "name": "spotty-react",
   "version": "0.1.0",
+  "description": "Simple music streaming service",
   "private": true,
   "dependencies": {
     "react": "16.6.3",
@@ -16,9 +17,6 @@
     "fix": "eslint --fix ./src",
     "lint": "eslint ./src"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",
@@ -26,7 +24,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "eslint": "^5.9.0",
+    "eslint": "5.9.0",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-prettier": "3.0.0",
     "husky": "1.1.4",

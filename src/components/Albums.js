@@ -49,17 +49,16 @@ const ALBUMS_INFO = [
 const AlbumsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  // max-width: 1568px;
-  // margin: 0 auto;
-  // border: 1px solid black;
 
   .albums__item {
     width: calc(100% / 6 - 2rem);
     margin: 1rem;
   }
+
   .albums__description {
     padding: 0.5rem 1rem 0.7rem;
   }
+
   .albums__album-name,
   .albums__artist-name {
     margin: 0;

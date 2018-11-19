@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
@@ -46,61 +47,54 @@ const ALBUMS_INFO = [
   }
 ];
 
-const AlbumsContainer = styled.div`
+const AlbumsContainer = styled(Grid)`
   display: flex;
   flex-wrap: wrap;
-
-  .albums__item {
-    width: calc(100% / 6 - 2rem);
-    margin: 1rem;
-  }
-
-  .albums__description {
-    padding: 0.5rem 1rem 0.7rem;
-  }
-
-  .albums__album-name,
-  .albums__artist-name {
-    margin: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  @media screen and (max-width: 1440px) {
-    .albums__item {
-      width: calc(100% / 4 - 2rem);
-    }
-  }
 `;
+
+const AlbumContainer = styled(Grid)``;
+
+const AlbumCard = styled(Card)``;
+
+const AlbumActionsArea = styled(CardActionArea)``;
+
+const AlbumMedia = styled(CardMedia)``;
+
+const AlbumContent = styled(CardContent)`
+  padding: 0.5rem 1rem 0.7rem;
+`;
+
+const AlbumName = styled(Typography)`
+  margin: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
+
+const ArtistName = styled(AlbumName)``;
 
 export default class Albums extends Component {
   render() {
     return (
-      <AlbumsContainer className="albums">
+      <AlbumsContainer container spacing={16}>
         {ALBUMS_INFO.map((album, i) => (
-          <Card key={i} className="albums__item">
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                className="albums__image"
-                image={album.imageUrl}
-                title={album.albumName}
-              />
-              <CardContent className="albums__description">
-                <Typography
-                  variant="h6"
-                  component="h2"
-                  className="albums__album-name"
-                >
-                  {album.albumName}
-                </Typography>
-                <Typography component="p" className="albums__artist-name">
-                  by {album.albumArtists}
-                </Typography>
-              </CardContent>
-            </CardActionArea>
-          </Card>
+          <AlbumContainer key={i} item xl={2} md={3}>
+            <AlbumCard>
+              <AlbumActionsArea>
+                <AlbumMedia
+                  component="img"
+                  image={album.imageUrl}
+                  title={album.albumName}
+                />
+                <AlbumContent>
+                  <AlbumName variant="h6" component="h2">
+                    {album.albumName}
+                  </AlbumName>
+                  <ArtistName component="p">by {album.albumArtists}</ArtistName>
+                </AlbumContent>
+              </AlbumActionsArea>
+            </AlbumCard>
+          </AlbumContainer>
         ))}
       </AlbumsContainer>
     );

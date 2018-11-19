@@ -3,14 +3,14 @@ import { ThemeProvider } from 'styled-components';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import StyledComponentsButton from './Button';
+import PrimarySearchAppBar from './TestPrimarySearchAppBar';
 
 class App extends Component {
 
   render() {
     return (
 		  <ThemeProvider theme={this.props.theme}>
-			  	<StyledComponentsButton />
+			  	<PrimarySearchAppBar />
 		  </ThemeProvider>
   	)
   }

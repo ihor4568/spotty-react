@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import styled from "styled-components";
 
 import AppBar from '@material-ui/core/AppBar';
 import Drawer from '@material-ui/core/Drawer';
@@ -33,69 +34,75 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const drawerWidth = 240;
 
+const RootDiv = styled.div`
+  display: flex;   
+  width: 100%;
+`;
+
+const GrowDiv = styled.div`
+  flexGrow: 1;
+`;
+
+const StyledAppBar = styled(AppBar)`
+  z-index: ${props => props.theme.zIndex.drawer + 1};
+  transition: ${props => props.theme.transitions.create(['margin', 'width'], {
+    easing: props.theme.transitions.easing.sharp,
+    duration: props.theme.transitions.duration.leavingScreen
+  })};
+
+  &.appBarShift {
+    width: calc(100% - ${drawerWidth}px);
+    margin-left: ${drawerWidth}px;
+    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
+      easing: props.theme.transitions.easing.easeOut,
+      duration: props.theme.transitions.duration.enteringScreen,
+    })};
+`;
+
+const StyledIconButton = styled(IconButton)`
+  margin-left: 12px;
+  margin-right: 36px;
+
+  &.hide {
+    display: none;
+  }
+`;
+
+const StyledToolbar = styled(Toolbar)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  ${props => props.theme.mixins.toolbar};
+`;
+
+const StyledDrawer = styled(Drawer)`
+  width: ${drawerWidth}px;
+  flex-shrink: 0;
+  white-space: nowrap;   
+
+  &.drawerOpen {
+    width: ${drawerWidth}px,
+    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
+      easing: props.theme.transitions.easing.easeOut,
+      duration: props.theme.transitions.duration.enteringScreen,
+    })};
+  };
+
+  &.drawerClose {
+    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
+      easing: props.theme.transitions.easing.sharp,
+      duration: props.theme.transitions.duration.leavingScreen
+    })};
+    overflow-x: hidden;
+    width: ${props => props.theme.spacing.unit * 7 + 1},
+    ${props => [props.theme.breakpoints.up('sm')]}: {
+      width: ${props => props.theme.spacing.unit * 9 + 1}
+    };
+  };
+`;
+
 const styles = theme => ({
-  root: {
-    display: 'flex',    
-    width: '100%',
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,    
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',    
-  },
-  drawerPaper: {
-    width: drawerWidth,
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing.unit * 7 + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9 + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },  
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
@@ -211,29 +218,25 @@ class PrimarySearchAppBar extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
+      <RootDiv>
         <CssBaseline />      
-        <AppBar
+        <StyledAppBar
           position="fixed"
-          className={classNames(classes.appBar, {
-            [classes.appBarShift]: this.state.open,
-          })}
+          className={this.state.open ? "appBarShift" : null}
         >
-          <Toolbar disableGutters={!open}>
-            <IconButton
+          <StyledToolbar disableGutters={!open}>
+            <StyledIconButton
               color="inherit"
               aria-label="Open drawer"
               onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, {
-                [classes.hide]: this.state.open,
-              })}
+              className={this.state.open ? "hide" : null}
             >
               <MenuIcon />
-            </IconButton>
+            </StyledIconButton>
             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
               Spotty
             </Typography>
-            <div className={classes.grow} />
+            <GrowDiv />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -256,30 +259,24 @@ class PrimarySearchAppBar extends React.Component {
                 <AccountCircle />
               </IconButton>
             </div>
-          </Toolbar>
-        </AppBar>
-        <Drawer
+          </StyledToolbar>
+        </StyledAppBar>
+        <StyledDrawer
           variant="permanent"
-          className={classNames(classes.drawer, {
-            [classes.drawerOpen]: this.state.open,
-            [classes.drawerClose]: !this.state.open,
-          })}
+          className={classNames(this.state.open ? 'drawerOpen' : null, !this.state.open ? 'drawerClose' : null)}
           classes={{
-            paper: classNames({
-              [classes.drawerOpen]: this.state.open,
-              [classes.drawerClose]: !this.state.open,
-            }),
+            paper: classNames(this.state.open ? 'drawerOpen' : null, !this.state.open ? 'drawerClose' : null),
           }}
           open={this.state.open}
         >
-          <div className={classes.toolbar}>
+          <StyledToolbar>
             <Typography className={classes.subtitle} variant="h6" color="inherit" noWrap>
               Library
             </Typography>            
             <IconButton onClick={this.handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
-          </div>
+          </StyledToolbar>
           <Divider />
           <List>
             <ListItem button> 
@@ -303,12 +300,12 @@ class PrimarySearchAppBar extends React.Component {
             </ListItem>              
           </List>
         {renderMenu}          
-        </Drawer>
+        </StyledDrawer>
         <main className={classes.content}>
-          <div className={classes.toolbar} />
+          <StyledToolbar />
         </main>        
         <div className={classes.player} />        
-      </div>
+      </RootDiv>
     );
   }
 }

@@ -4,10 +4,6 @@ import PrimarySearchAppBar from './PrimarySearchAppBar'
 
 export default class App extends Component {
   render() {
-    return (
-    	<div>
-	    	<PrimarySearchAppBar />
-    	</div>
-  	)
+    return <PrimarySearchAppBar />  
   }
 }

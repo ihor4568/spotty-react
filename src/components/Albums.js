@@ -50,6 +50,8 @@ const ALBUMS_INFO = [
 const AlbumsContainer = styled(Grid)`
   display: flex;
   flex-wrap: wrap;
+  width: calc(100% - ${props => props.spacing}px);
+  margin: 0 auto;
 `;
 
 const AlbumContainer = styled(Grid)``;
@@ -65,7 +67,6 @@ const AlbumContent = styled(CardContent)`
 `;
 
 const AlbumName = styled(Typography)`
-  margin: 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -76,7 +77,7 @@ const ArtistName = styled(AlbumName)``;
 export default class Albums extends Component {
   render() {
     return (
-      <AlbumsContainer container spacing={16}>
+      <AlbumsContainer container spacing={32}>
         {ALBUMS_INFO.map((album, i) => (
           <AlbumContainer key={i} item xl={2} md={3}>
             <AlbumCard>

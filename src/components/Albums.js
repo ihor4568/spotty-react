@@ -58,7 +58,7 @@ const AlbumContainer = styled(Grid)``;
 
 const AlbumCard = styled(Card)``;
 
-const AlbumActionsArea = styled(CardActionArea)``;
+const AlbumActionArea = styled(CardActionArea)``;
 
 const AlbumMedia = styled(CardMedia)``;
 
@@ -81,7 +81,7 @@ export default class Albums extends Component {
         {ALBUMS_INFO.map((album, i) => (
           <AlbumContainer key={i} item xl={2} md={3}>
             <AlbumCard>
-              <AlbumActionsArea>
+              <AlbumActionArea>
                 <AlbumMedia
                   component="img"
                   image={album.imageUrl}
@@ -93,7 +93,7 @@ export default class Albums extends Component {
                   </AlbumName>
                   <ArtistName component="p">by {album.albumArtists}</ArtistName>
                 </AlbumContent>
-              </AlbumActionsArea>
+              </AlbumActionArea>
             </AlbumCard>
           </AlbumContainer>
         ))}

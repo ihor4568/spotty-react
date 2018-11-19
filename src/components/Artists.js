@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
+import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -38,70 +39,55 @@ const ARTISTS_INFO = [
   }
 ];
 
-const ArtistsContainer = styled.div`
+const ArtistsContainer = styled(Grid)`
   display: flex;
   flex-wrap: wrap;
-
-  .artists__item-container {
-    width: calc(100% / 6 - 2rem);
-    margin: 1rem;
-    box-shadow: none;
-  }
-  .artists__item {
-    border-radius: 50%;
-    overflow: hidden;
-    padding: 0.5rem;
-  }
-  .artists__item:hover {
-    opacity: 0.9;
-  }
-  .artist__item-container:active {
-    margin-top: 150px;
-  }
-  .artists__image {
-    box-sizing: border-box;
-    border-radius: 50%;
-    box-shadow: 0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12);
-  }
-  .artists__artist-name {
-    margin: 1rem 0 0 50%;
-    transform: translateX(-50%);
-    display: inline-block;
-    cursor: pointer;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  @media screen and (max-width: 1440px) {
-    .artists__item-container {
-      width: calc(100% / 4 - 2rem);
-    }
-  }
+  width: calc(100% - ${props => props.spacing}px);
+  margin: 0 auto;
+`;
+const ArtistContainer = styled(Grid)``;
+const ArtistCard = styled(Card)`
+  box-shadow: none;
+`;
+const ArtistActionArea = styled(CardActionArea)`
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0.5rem;
+`;
+const ArtistMedia = styled(CardMedia)`
+  box-sizing: border-box;
+  border-radius: 50%;
+  box-shadow: 0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12);
+`;
+const ArtistName = styled(Typography)`
+  margin: 1rem 0 0 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export default class Artists extends Component {
   render() {
     return (
-      <ArtistsContainer className="artists">
+      <ArtistsContainer container spacing={32}>
         {ARTISTS_INFO.map((artist, i) => (
-          <Card key={i} className="artists__item-container">
-            <CardActionArea className="artists__item">
-              <CardMedia
-                component="img"
-                className="artists__image"
-                image={artist.imageUrl}
-                title={artist.artistName}
-              />
-            </CardActionArea>
-            <Typography
-              variant="h6"
-              component="h2"
-              className="artists__artist-name"
-            >
-              {artist.artistName}
-            </Typography>
-          </Card>
+          <ArtistContainer key={i} item xl={2} md={3}>
+            <ArtistCard>
+              <ArtistActionArea>
+                <ArtistMedia
+                  component="img"
+                  image={artist.imageUrl}
+                  title={artist.artistName}
+                />
+              </ArtistActionArea>
+              <ArtistName variant="h6" component="h2">
+                {artist.artistName}
+              </ArtistName>
+            </ArtistCard>
+          </ArtistContainer>
         ))}
       </ArtistsContainer>
     );

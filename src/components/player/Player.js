@@ -5,7 +5,6 @@ import PlayIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import Previous from "@material-ui/icons/SkipPrevious";
 import Next from "@material-ui/icons/SkipNext";
-import VolumeUp from "@material-ui/icons/VolumeUp";
 import Star from "@material-ui/icons/StarBorder";
 import Slider from "@material-ui/lab/Slider";
 import ThreeDot from "@material-ui/icons/MoreVert";
@@ -79,6 +78,7 @@ const VolumeBar = styled.div`
   display: flex;
   align-items: center;
   margin-left: 2rem;
+  color: gray;
 `;
 
 const VolumeSlider = styled.div`
@@ -88,13 +88,17 @@ const VolumeSlider = styled.div`
 
 const AudioRating = styled.div``;
 
-const ThreeDotsMenu = styled.div``;
+const ThreeDotsMenu = styled.div`
+  margin-right: 1rem;
+`;
 
 const PrevNextButtonStyle = {
   margin: 0,
   padding: 0,
   color: "white",
-  background: "#838383"
+  background: "#838383",
+  minWidth: "2rem",
+  minHeight: "1rem"
 };
 
 const PlayButtonContainer = {
@@ -122,6 +126,7 @@ const Player = ({
   album,
   author,
   volume,
+  volumeIcon,
   onChangeVolume
 }) => (
   <MedialPlayerAligner>
@@ -160,11 +165,9 @@ const Player = ({
           </Button>
         </Controls>
         <VolumeControls>
-          <VolumeBar>
-            <VolumeUp />
-          </VolumeBar>
+          <VolumeBar>{volumeIcon}</VolumeBar>
           <VolumeSlider>
-            <Slider value={volume} onChange={onChangeVolume} />
+            <Slider value={volume} max={1} onChange={onChangeVolume} />
           </VolumeSlider>
         </VolumeControls>
       </ControlsContainer>

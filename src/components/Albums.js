@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components/macro";
+
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -47,27 +49,26 @@ const ALBUMS_INFO = [
   }
 ];
 
-const AlbumsContainer = styled(Grid)`
-  display: flex;
-  flex-wrap: wrap;
-  width: calc(100% - ${props => props.spacing}px);
-  margin: 0 auto;
-`;
+const styles = {
+  container: {
+    width: `100%`,
+    margin: 0
+  },
+  albumDescription: {
+    padding: `0.5rem 1rem 0.7rem`
+  },
+  albumInfo: {
+    overflow: `hidden`,
+    whiteSpace: `nowrap`,
+    textOverflow: `ellipsis`
+  }
+};
 
-const AlbumContent = styled(CardContent)`
-  padding: 0.5rem 1rem 0.7rem;
-`;
-
-const AlbumInfo = styled(Typography)`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-export default class Albums extends Component {
+class Albums extends Component {
   render() {
+    const { classes } = this.props;
     return (
-      <AlbumsContainer container spacing={32}>
+      <Grid container spacing={32} className={classes.container}>
         {ALBUMS_INFO.map((album, i) => (
           <Grid key={i} item xl={2} md={3}>
             <Card>
@@ -77,17 +78,28 @@ export default class Albums extends Component {
                   image={album.imageUrl}
                   title={album.albumName}
                 />
-                <AlbumContent>
-                  <AlbumInfo variant="h6" component="h2">
+                <CardContent className={classes.albumDescription}>
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    className={classes.albumInfo}
+                  >
                     {album.albumName}
-                  </AlbumInfo>
-                  <AlbumInfo component="p">by {album.albumArtists}</AlbumInfo>
-                </AlbumContent>
+                  </Typography>
+                  <Typography component="p" className={classes.albumInfo}>
+                    by {album.albumArtists}
+                  </Typography>
+                </CardContent>
               </CardActionArea>
             </Card>
           </Grid>
         ))}
-      </AlbumsContainer>
+      </Grid>
     );
   }
 }
+
+Albums.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+export default withStyles(styles)(Albums);

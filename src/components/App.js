@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-import styled from "styled-components/macro";
+import { create } from "jss";
+import JssProvider from "react-jss/lib/JssProvider";
+import { createGenerateClassName, jssPreset } from "@material-ui/core/styles";
 
-const Container = styled.div`
-  border: 1px solid black;
-  padding: ${props => props.padding || "20px"};
-`;
+import Auth from "./Auth/Auth";
+
+const styleNode = document.createComment("insertion-point-jss");
+document.head.insertBefore(styleNode, document.head.firstChild);
+const generateClassName = createGenerateClassName();
+const jss = create(jssPreset());
+jss.options.insertionPoint = "insertion-point-jss";
 
 export default class App extends Component {
   render() {
     return (
-      <Container>
-        <div>Test</div>
-      </Container>
+      <JssProvider jss={jss} generateClassName={generateClassName}>
+        <Auth />
+      </JssProvider>
     );
   }
 }

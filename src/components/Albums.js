@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from "styled-components";
+import styled from "styled-components/macro";
 
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";

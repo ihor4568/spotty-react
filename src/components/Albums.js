@@ -68,33 +68,38 @@ class Albums extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={32} className={classes.container}>
-        {ALBUMS_INFO.map((album, i) => (
-          <Grid key={i} item xl={2} md={3}>
-            <Card>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  image={album.imageUrl}
-                  title={album.albumName}
-                />
-                <CardContent className={classes.albumDescription}>
-                  <Typography
-                    variant="h6"
-                    component="h2"
-                    className={classes.albumInfo}
-                  >
-                    {album.albumName}
-                  </Typography>
-                  <Typography component="p" className={classes.albumInfo}>
-                    by {album.albumArtists}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+      <>
+        <Typography variant="h4" component="h2" className={classes.albumInfo}>
+          Albums
+        </Typography>
+        <Grid container spacing={32} className={classes.container}>
+          {ALBUMS_INFO.map((album, i) => (
+            <Grid key={i} item xl={2} md={3}>
+              <Card>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    image={album.imageUrl}
+                    title={album.albumName}
+                  />
+                  <CardContent className={classes.albumDescription}>
+                    <Typography
+                      variant="h6"
+                      component="h2"
+                      className={classes.albumInfo}
+                    >
+                      {album.albumName}
+                    </Typography>
+                    <Typography component="p" className={classes.albumInfo}>
+                      by {album.albumArtists}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </>
     );
   }
 }

@@ -1,62 +1,63 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import React from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
 
-import AppBar from '@material-ui/core/AppBar';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import AppBar from "@material-ui/core/AppBar";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
 
-import { fade } from '@material-ui/core/styles/colorManipulator';
-import { withStyles } from '@material-ui/core/styles';
+import { fade } from "@material-ui/core/styles/colorManipulator";
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import LibraryMusic from '@material-ui/icons/LibraryMusic';
-import Album from '@material-ui/icons/Album';
-import PersonOutline from '@material-ui/icons/PersonOutline';
-import Info from '@material-ui/icons/Info';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import ExitToApp from '@material-ui/icons/ExitToApp';
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import LibraryMusic from "@material-ui/icons/LibraryMusic";
+import Album from "@material-ui/icons/Album";
+import PersonOutline from "@material-ui/icons/PersonOutline";
+import Info from "@material-ui/icons/Info";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 
 const drawerWidth = 240;
 
 const RootDiv = styled.div`
-  display: flex;   
+  display: flex;
   width: 100%;
+  height: auto;
 `;
 
 const GrowDiv = styled.div`
-  flexGrow: 1;
+  flex-grow: 1;
 `;
 
 const StyledAppBar = styled(AppBar)`
   z-index: ${props => props.theme.zIndex.drawer + 1};
-  transition: ${props => props.theme.transitions.create(['margin', 'width'], {
-    easing: props.theme.transitions.easing.sharp,
-    duration: props.theme.transitions.duration.leavingScreen
-  })};
+  transition: ${props =>
+    props.theme.transitions.create(["margin", "width"], {
+      easing: props.theme.transitions.easing.sharp,
+      duration: props.theme.transitions.duration.leavingScreen
+    })};
 
   &.appBarShift {
     width: calc(100% - ${drawerWidth}px);
     margin-left: ${drawerWidth}px;
-    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
-      easing: props.theme.transitions.easing.easeOut,
-      duration: props.theme.transitions.duration.enteringScreen,
-    })};
+    transition: ${props =>
+      props.theme.transitions.create(["margin", "width"], {
+        easing: props.theme.transitions.easing.easeOut,
+        duration: props.theme.transitions.duration.enteringScreen
+      })};
 `;
 
 const StyledIconButton = styled(IconButton)`
@@ -79,102 +80,98 @@ const StyledToolbar = styled(Toolbar)`
 const StyledDrawer = styled(Drawer)`
   width: ${drawerWidth}px;
   flex-shrink: 0;
-  white-space: nowrap;   
+  white-space: nowrap;
 
   &.drawerOpen {
-    width: ${drawerWidth}px,
-    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
-      easing: props.theme.transitions.easing.easeOut,
-      duration: props.theme.transitions.duration.enteringScreen,
-    })};
-  };
+    width: ${drawerWidth}px;
+    transition: ${props =>
+      props.theme.transitions.create(["margin", "width"], {
+        easing: props.theme.transitions.easing.easeOut,
+        duration: props.theme.transitions.duration.enteringScreen
+      })};
+  }
 
   &.drawerClose {
-    transition: ${props => props.theme.transitions.create(['margin', 'width'], {
-      easing: props.theme.transitions.easing.sharp,
-      duration: props.theme.transitions.duration.leavingScreen
-    })};
+    transition: ${props =>
+      props.theme.transitions.create(["margin", "width"], {
+        easing: props.theme.transitions.easing.sharp,
+        duration: props.theme.transitions.duration.leavingScreen
+      })};
     overflow-x: hidden;
-    width: ${props => props.theme.spacing.unit * 7 + 1},
-    ${props => [props.theme.breakpoints.up('sm')]}: {
-      width: ${props => props.theme.spacing.unit * 9 + 1}
-    };
-  };
+    width: ${props => props.theme.spacing.unit * 7 + 1}px;
+    ${props => props.theme.breakpoints.up("sm")} {
+      width: ${props => props.theme.spacing.unit * 9 + 1}px;
+    }
+  }
 `;
 
-const styles = theme => ({
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-  },  
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  subtitle: {
-    marginLeft: theme.spacing.unit * 2,
-  },  
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    marginRight: theme.spacing.unit,    
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit,
-      width: 'auto',
-    },
-  },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  exitToApp: {
-    paddingRight: theme.spacing.unit,
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200,
-      },
-    },
-  },
-  player: {
-    color: 'inherit',
-    width: '100%',
-    height: '100px',
-    position: 'fixed',
-    bottom: '0',
-    backgroundColor: theme.palette.primary.main,
-    zIndex: theme.zIndex.drawer + 1,    
-  }  
-})
+const StyledTitle = styled(Typography)`
+  display: none;
+  ${props => props.theme.breakpoints.up("sm")} {
+    display: block;
+  }
+`;
+
+const StyledSubTitle = styled(Typography)`
+  margin-left: ${props => props.theme.spacing.unit * 2}px;
+`;
+
+const ExitToAppDiv = styled.div`
+  padding-right: ${props => props.theme.spacing.unit}px;
+`;
+
+const SearchIconDiv = styled.div`
+  width: ${props => props.theme.spacing.unit * 9}px;
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const SearchDiv = styled.div`
+  position: relative;
+  border-radius: ${props => props.theme.shape.borderRadius}px;
+  background-color: ${props => fade(props.theme.palette.common.white, 0.15)};
+
+  &:hover {
+    background-color: ${props => fade(props.theme.palette.common.white, 0.25)};
+  }
+
+  margin-left: 0;
+  margin-right: ${props => props.theme.spacing.unit}px;
+  width: 100%;
+  ${props => props.theme.breakpoints.up("sm")} {
+    margin-left: ${props => props.theme.spacing.unit}px;
+    width: auto;
+  }
+`;
+
+const StyledInputBase = styled(InputBase)`
+  &.inputRoot {
+    color: inherit;
+    width: 100%;
+  }
+
+  &.inputInput {
+    padding-top: ${props => props.theme.spacing.unit}px;
+    padding-right: ${props => props.theme.spacing.unit}px;
+    padding-bottom: ${props => props.theme.spacing.unit}px;
+    padding-left: ${props => props.theme.spacing.unit * 10}px;
+    transition: ${props => props.theme.transitions.create("width")};
+    width: 100%;
+    ${props => props.theme.breakpoints.up("sm")} {
+      width: 120px;
+      .&:focus {
+        width: 200px
+      }
+    }
+`;
 
 class PrimarySearchAppBar extends React.Component {
   state = {
-    open: false,
+    open: false
   };
 
   handleDrawerOpen = () => {
@@ -183,7 +180,7 @@ class PrimarySearchAppBar extends React.Component {
 
   handleDrawerClose = () => {
     this.setState({ open: false });
-  };  
+  };
 
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
@@ -195,23 +192,23 @@ class PrimarySearchAppBar extends React.Component {
 
   render() {
     const { anchorEl, open } = this.state;
-    const { classes, theme } = this.props;
+    const { theme } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
     const renderMenu = (
       <Menu
         anchorEl={anchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
         <MenuItem disabled={true}>Random Name</MenuItem>
         <MenuItem onClick={this.handleMenuClose}>
-          <div className={classes.exitToApp}>
+          <ExitToAppDiv>
             <ExitToApp />
-          </div>
+          </ExitToAppDiv>
           Log Out
         </MenuItem>
       </Menu>
@@ -219,7 +216,7 @@ class PrimarySearchAppBar extends React.Component {
 
     return (
       <RootDiv>
-        <CssBaseline />      
+        <CssBaseline />
         <StyledAppBar
           position="fixed"
           className={this.state.open ? "appBarShift" : null}
@@ -233,25 +230,25 @@ class PrimarySearchAppBar extends React.Component {
             >
               <MenuIcon />
             </StyledIconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <StyledTitle variant="h6" color="inherit" noWrap>
               Spotty
-            </Typography>
+            </StyledTitle>
             <GrowDiv />
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
+            <SearchDiv>
+              <SearchIconDiv>
                 <SearchIcon />
-              </div>
-              <InputBase
+              </SearchIconDiv>
+              <StyledInputBase
                 placeholder="Search…"
                 classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
+                  root: "inputRoot",
+                  input: "inputInput"
                 }}
               />
-            </div>            
-            <div className={classes.sectionDesktop}>
+            </SearchDiv>
+            <div>
               <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                aria-owns={isMenuOpen ? "material-appbar" : undefined}
                 aria-haspopup="true"
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
@@ -263,56 +260,63 @@ class PrimarySearchAppBar extends React.Component {
         </StyledAppBar>
         <StyledDrawer
           variant="permanent"
-          className={classNames(this.state.open ? 'drawerOpen' : null, !this.state.open ? 'drawerClose' : null)}
+          className={this.state.open ? "drawerOpen" : "drawerClose"}
           classes={{
-            paper: classNames(this.state.open ? 'drawerOpen' : null, !this.state.open ? 'drawerClose' : null),
+            paper: this.state.open ? "drawerOpen" : "drawerClose"
           }}
           open={this.state.open}
         >
           <StyledToolbar>
-            <Typography className={classes.subtitle} variant="h6" color="inherit" noWrap>
+            <StyledSubTitle variant="h6" color="inherit" noWrap>
               Library
-            </Typography>            
+            </StyledSubTitle>
             <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {theme.direction === "rtl" ? (
+                <ChevronRightIcon />
+              ) : (
+                <ChevronLeftIcon />
+              )}
             </IconButton>
           </StyledToolbar>
           <Divider />
           <List>
-            <ListItem button> 
-              <ListItemIcon><LibraryMusic /></ListItemIcon>                  
-              <ListItemText primary='My Songs' />                          
+            <ListItem button>
+              <ListItemIcon>
+                <LibraryMusic />
+              </ListItemIcon>
+              <ListItemText primary="My Songs" />
             </ListItem>
-            <ListItem button>             
-              <ListItemIcon><Album /></ListItemIcon>                  
-              <ListItemText primary='Albums' />                             
+            <ListItem button>
+              <ListItemIcon>
+                <Album />
+              </ListItemIcon>
+              <ListItemText primary="Albums" />
             </ListItem>
-            <ListItem button>       
-              <ListItemIcon><PersonOutline /></ListItemIcon>                  
-              <ListItemText primary='Artists' />                                                      
-            </ListItem>              
+            <ListItem button>
+              <ListItemIcon>
+                <PersonOutline />
+              </ListItemIcon>
+              <ListItemText primary="Artists" />
+            </ListItem>
           </List>
           <Divider />
           <List>
-            <ListItem button>       
-              <ListItemIcon><Info /></ListItemIcon>                  
-              <ListItemText primary='About' />                                                      
-            </ListItem>              
+            <ListItem button>
+              <ListItemIcon>
+                <Info />
+              </ListItemIcon>
+              <ListItemText primary="About" />
+            </ListItem>
           </List>
-        {renderMenu}          
+          {renderMenu}
         </StyledDrawer>
-        <main className={classes.content}>
-          <StyledToolbar />
-        </main>        
-        <div className={classes.player} />        
       </RootDiv>
     );
   }
 }
 
 PrimarySearchAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(PrimarySearchAppBar);
+export default PrimarySearchAppBar;

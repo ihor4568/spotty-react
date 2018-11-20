@@ -54,48 +54,38 @@ const AlbumsContainer = styled(Grid)`
   margin: 0 auto;
 `;
 
-const AlbumContainer = styled(Grid)``;
-
-const AlbumCard = styled(Card)``;
-
-const AlbumActionArea = styled(CardActionArea)``;
-
-const AlbumMedia = styled(CardMedia)``;
-
 const AlbumContent = styled(CardContent)`
   padding: 0.5rem 1rem 0.7rem;
 `;
 
-const AlbumName = styled(Typography)`
+const AlbumInfo = styled(Typography)`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
-
-const ArtistName = styled(AlbumName)``;
 
 export default class Albums extends Component {
   render() {
     return (
       <AlbumsContainer container spacing={32}>
         {ALBUMS_INFO.map((album, i) => (
-          <AlbumContainer key={i} item xl={2} md={3}>
-            <AlbumCard>
-              <AlbumActionArea>
-                <AlbumMedia
+          <Grid key={i} item xl={2} md={3}>
+            <Card>
+              <CardActionArea>
+                <CardMedia
                   component="img"
                   image={album.imageUrl}
                   title={album.albumName}
                 />
                 <AlbumContent>
-                  <AlbumName variant="h6" component="h2">
+                  <AlbumInfo variant="h6" component="h2">
                     {album.albumName}
-                  </AlbumName>
-                  <ArtistName component="p">by {album.albumArtists}</ArtistName>
+                  </AlbumInfo>
+                  <AlbumInfo component="p">by {album.albumArtists}</AlbumInfo>
                 </AlbumContent>
-              </AlbumActionArea>
-            </AlbumCard>
-          </AlbumContainer>
+              </CardActionArea>
+            </Card>
+          </Grid>
         ))}
       </AlbumsContainer>
     );

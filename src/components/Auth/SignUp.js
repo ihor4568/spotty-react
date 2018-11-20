@@ -3,27 +3,65 @@ import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
-import styled from "styled-components";
+import { withStyles } from "@material-ui/styles";
 
-const StyledButton = styled(Button)`
-  margin-top: 30px;
-`;
+const styles = {
+  button: {
+    marginTop: 30
+  }
+};
 
-export default class SignUp extends Component {
+class SignUp extends Component {
+  state = {
+    form: {
+      email: "",
+      name: "",
+      password: "",
+      confirmPassword: ""
+    }
+  };
+
+  handleInputChange = event => {
+    const { name, value } = event.target;
+
+    this.setState({
+      form: {
+        ...this.state.form,
+        [name]: value
+      }
+    });
+  };
+
   render() {
+    const { classes } = this.props;
+
     return (
       <form>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="email">Email</InputLabel>
-          <Input name="email" autoComplete="email" autoFocus />
+          <Input
+            value={this.state.form.email}
+            onChange={this.handleInputChange}
+            name="email"
+            autoComplete="email"
+            autoFocus
+          />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="name">Name</InputLabel>
-          <Input name="name" type="text" />
+          <Input
+            value={this.state.form.name}
+            onChange={this.handleInputChange}
+            name="name"
+            type="text"
+            autoComplete="name"
+          />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input
+            value={this.state.form.password}
+            onChange={this.handleInputChange}
             name="password"
             type="password"
             autoComplete="current-password"
@@ -32,20 +70,25 @@ export default class SignUp extends Component {
         <FormControl margin="normal" required fullWidth>
           <InputLabel htmlFor="password">Confirm password</InputLabel>
           <Input
-            name="password"
+            value={this.state.form.confirmPassword}
+            onChange={this.handleInputChange}
+            name="confirmPassword"
             type="password"
             autoComplete="current-password"
           />
         </FormControl>
-        <StyledButton
+        <Button
           type="submit"
           fullWidth
           variant="contained"
           color="primary"
+          className={classes.button}
         >
           Sign Up
-        </StyledButton>
+        </Button>
       </form>
     );
   }
 }
+
+export default withStyles(styles)(SignUp);

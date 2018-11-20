@@ -3,18 +3,19 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import styled from "styled-components";
+import { withStyles } from "@material-ui/styles";
 
-const AuthContainer = styled.div`
-  max-width: 18rem;
-  margin: 0 auto;
-`;
+const styles = {
+  container: {
+    maxWidth: "18rem",
+    margin: "0 auto"
+  },
+  tab: {
+    minWidth: "50%"
+  }
+};
 
-const AuthTab = styled(Tab)`
-  min-width: 50%;
-`;
-
-export default class Auth extends Component {
+class Auth extends Component {
   state = {
     activeTab: 0
   };
@@ -25,16 +26,19 @@ export default class Auth extends Component {
 
   render() {
     const { activeTab } = this.state;
+    const { classes } = this.props;
 
     return (
-      <AuthContainer>
+      <div className={classes.container}>
         <Tabs value={activeTab} onChange={this.handleTabChange} fullWidth>
-          <AuthTab label="Sign In" />
-          <AuthTab label="Sign Up" />
+          <Tab className={classes.tab} label="Sign In" />
+          <Tab className={classes.tab} label="Sign Up" />
         </Tabs>
         {activeTab === 0 && <SignIn />}
         {activeTab === 1 && <SignUp />}
-      </AuthContainer>
+      </div>
     );
   }
 }
+
+export default withStyles(styles)(Auth);

@@ -45,20 +45,25 @@ const ArtistsContainer = styled(Grid)`
   width: calc(100% - ${props => props.spacing}px);
   margin: 0 auto;
 `;
+
 const ArtistContainer = styled(Grid)``;
+
 const ArtistCard = styled(Card)`
   box-shadow: none;
 `;
+
 const ArtistActionArea = styled(CardActionArea)`
   border-radius: 50%;
   overflow: hidden;
   padding: 0.5rem;
 `;
+
 const ArtistMedia = styled(CardMedia)`
   box-sizing: border-box;
   border-radius: 50%;
   box-shadow: 0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12);
 `;
+
 const ArtistName = styled(Typography)`
   margin: 1rem 0 0 50%;
   transform: translateX(-50%);

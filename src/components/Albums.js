@@ -69,7 +69,7 @@ class Albums extends Component {
     const { classes } = this.props;
     return (
       <>
-        <Typography variant="h4" component="h2" className={classes.albumInfo}>
+        <Typography variant="h4" component="h2">
           Albums
         </Typography>
         <Grid container spacing={32} className={classes.container}>

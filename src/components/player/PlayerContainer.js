@@ -49,6 +49,7 @@ class PlayerContainer extends Component {
 
   handleChangeProgress = (event, value) => {
     this.setState({ playingProgress: value });
+    this.audio.currentTime = (this.state.songDuration / 100) * value;
   };
 
   setPlayingState = () => {
@@ -71,7 +72,6 @@ class PlayerContainer extends Component {
     });
 
     if (this.state.playingProgress === 100) {
-      ///////////////////////////////////
       this.setState({ playingProgress: 0 });
     }
   };
@@ -96,11 +96,14 @@ class PlayerContainer extends Component {
   render() {
     const { playingProgress, isPlaying, volumeValue } = this.state;
     const { source, title, songName, albumName, authorName } = SONG;
+    const { classes, theme } = this.props;
 
     return (
       <>
         <audio src={source} ref={element => (this.audio = element)} />
         <Player
+          classes={classes}
+          theme={theme}
           onPlay={this.handleChangePlayingState}
           isPlaying={isPlaying}
           onChangeProgress={this.handleChangeProgress}

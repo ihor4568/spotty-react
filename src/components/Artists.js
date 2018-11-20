@@ -46,8 +46,6 @@ const ArtistsContainer = styled(Grid)`
   margin: 0 auto;
 `;
 
-const ArtistContainer = styled(Grid)``;
-
 const ArtistCard = styled(Card)`
   box-shadow: none;
 `;
@@ -79,7 +77,7 @@ export default class Artists extends Component {
     return (
       <ArtistsContainer container spacing={32}>
         {ARTISTS_INFO.map((artist, i) => (
-          <ArtistContainer key={i} item xl={2} md={3}>
+          <Grid key={i} item xl={2} md={3}>
             <ArtistCard>
               <ArtistActionArea>
                 <ArtistMedia
@@ -92,7 +90,7 @@ export default class Artists extends Component {
                 {artist.artistName}
               </ArtistName>
             </ArtistCard>
-          </ArtistContainer>
+          </Grid>
         ))}
       </ArtistsContainer>
     );

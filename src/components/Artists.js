@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import styled from "styled-components/macro";
+
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
@@ -39,60 +41,70 @@ const ARTISTS_INFO = [
   }
 ];
 
-const ArtistsContainer = styled(Grid)`
-  display: flex;
-  flex-wrap: wrap;
-  width: calc(100% - ${props => props.spacing}px);
-  margin: 0 auto;
-`;
-
-const ArtistCard = styled(Card)`
-  box-shadow: none;
-`;
-
-const ArtistActionArea = styled(CardActionArea)`
-  border-radius: 50%;
-  overflow: hidden;
-  padding: 0.5rem;
-`;
-
-const ArtistMedia = styled(CardMedia)`
-  box-sizing: border-box;
-  border-radius: 50%;
-  box-shadow: 0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12);
-`;
-
-const ArtistName = styled(Typography)`
-  margin: 1rem 0 0 50%;
-  transform: translateX(-50%);
-  display: inline-block;
-  cursor: pointer;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-export default class Artists extends Component {
+const styles = {
+  container: {
+    width: `100%`,
+    margin: 0
+  },
+  artistCard: {
+    boxShadow: `none`
+  },
+  artistAction: {
+    borderRadius: `50%`,
+    overflow: `hidden`,
+    padding: `0.5rem`
+  },
+  artistImage: {
+    boxSizing: `border-box`,
+    borderRadius: `50%`,
+    boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`
+  },
+  artistName: {
+    margin: `1rem 0 0 50%`,
+    transform: `translateX(-50%)`,
+    display: `inline-block`,
+    cursor: `pointer`,
+    overflow: `hidden`,
+    whiteSpace: `nowrap`,
+    textOverflow: `ellipsis`
+  }
+};
+class Artists extends Component {
   render() {
+    const { classes } = this.props;
     return (
-      <ArtistsContainer container spacing={32}>
-        {ARTISTS_INFO.map((artist, i) => (
-          <Grid key={i} item xl={2} md={3}>
-            <ArtistCard>
-              <ArtistActionArea>
-                <ArtistMedia
-                  component="img"
-                  image={artist.imageUrl}
-                  title={artist.artistName}
-                />
-              </ArtistActionArea>
-              <ArtistName variant="h6" component="h2">
-                {artist.artistName}
-              </ArtistName>
-            </ArtistCard>
-          </Grid>
-        ))}
-      </ArtistsContainer>
+      <>
+        <Typography variant="h4" component="h2">
+          Artists
+        </Typography>
+        <Grid container spacing={32} className={classes.container}>
+          {ARTISTS_INFO.map((artist, i) => (
+            <Grid key={i} item xl={2} md={3}>
+              <Card className={classes.artistCard}>
+                <CardActionArea className={classes.artistAction}>
+                  <CardMedia
+                    component="img"
+                    className={classes.artistImage}
+                    image={artist.imageUrl}
+                    title={artist.artistName}
+                  />
+                </CardActionArea>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  className={classes.artistName}
+                >
+                  {artist.artistName}
+                </Typography>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </>
     );
   }
 }
+Artists.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+export default withStyles(styles)(Artists);

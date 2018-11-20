@@ -53,18 +53,25 @@ const AlbumsContainer = styled(Grid)`
   width: calc(100% - ${props => props.spacing}px);
   margin: 0 auto;
 `;
+
 const AlbumContainer = styled(Grid)``;
+
 const AlbumCard = styled(Card)``;
+
 const AlbumActionArea = styled(CardActionArea)``;
+
 const AlbumMedia = styled(CardMedia)``;
+
 const AlbumContent = styled(CardContent)`
   padding: 0.5rem 1rem 0.7rem;
 `;
+
 const AlbumName = styled(Typography)`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
+
 const ArtistName = styled(AlbumName)``;
 
 export default class Albums extends Component {

@@ -18,6 +18,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 
 import { fade } from "@material-ui/core/styles/colorManipulator";
+import { withStyles } from "@material-ui/core/styles";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -163,11 +164,49 @@ const StyledInputBase = styled(InputBase)`
     width: 100%;
     ${props => props.theme.breakpoints.up("sm")} {
       width: 120px;
-      .&:focus {
+      &:focus {
         width: 200px
       }
     }
 `;
+const styles = theme => ({
+  inputRoot: {
+    color: "inherit",
+    width: "100%"
+  },
+  inputInput: {
+    paddingTop: theme.spacing.unit,
+    paddingRight: theme.spacing.unit,
+    paddingBottom: theme.spacing.unit,
+    paddingLeft: theme.spacing.unit * 10,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: 120,
+      "&:focus": {
+        width: 200
+      }
+    }
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen
+    })
+  },
+  drawerClose: {
+    transition: theme.transitions.create("width", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen
+    }),
+    overflowX: "hidden",
+    width: theme.spacing.unit * 7 + 1,
+    [theme.breakpoints.up("sm")]: {
+      width: theme.spacing.unit * 9 + 1
+    }
+  }
+});
 
 class PrimarySearchAppBar extends React.Component {
   state = {
@@ -192,7 +231,7 @@ class PrimarySearchAppBar extends React.Component {
 
   render() {
     const { anchorEl, open } = this.state;
-    const { theme } = this.props;
+    const { classes, theme } = this.props;
     const isMenuOpen = Boolean(anchorEl);
     window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -240,10 +279,7 @@ class PrimarySearchAppBar extends React.Component {
               </SearchIconDiv>
               <StyledInputBase
                 placeholder="Search…"
-                classes={{
-                  root: "inputRoot",
-                  input: "inputInput"
-                }}
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
               />
             </SearchDiv>
             <div>
@@ -262,7 +298,7 @@ class PrimarySearchAppBar extends React.Component {
           variant="permanent"
           className={this.state.open ? "drawerOpen" : "drawerClose"}
           classes={{
-            paper: this.state.open ? "drawerOpen" : "drawerClose"
+            paper: this.state.open ? classes.drawerOpen : classes.drawerClose
           }}
           open={this.state.open}
         >
@@ -316,7 +352,7 @@ class PrimarySearchAppBar extends React.Component {
 }
 
 PrimarySearchAppBar.propTypes = {
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired
 };
 
-export default PrimarySearchAppBar;
+export default withStyles(styles, { withTheme: true })(PrimarySearchAppBar);

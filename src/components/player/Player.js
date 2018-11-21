@@ -185,7 +185,6 @@ const Player = ({
         <ThreeDot />
       </div>
     </div>
-    <div className={classes.modal} />
   </div>
 );
 export default withStyles(styles, { withTheme: true })(Player);

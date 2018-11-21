@@ -72,7 +72,7 @@ class PlayerContainer extends Component {
     });
 
     if (this.state.playingProgress === 100) {
-      this.setState({ playingProgress: 0 });
+      this.setState({ playingProgress: 0, isPlaying: false });
     }
   };
 

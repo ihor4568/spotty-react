@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import HeaderComponent from "./HeaderComponent";
-import MainComponent from "./MainComponent";
-import PlayerComponent from "./PlayerComponent";
+import Header from "./Header";
+import Main from "./Main";
+import Player from "./Player";
 
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -20,9 +20,9 @@ class App extends Component {
 
     return (
       <div className={classes.root}>
-        <HeaderComponent />
-        <MainComponent />
-        <PlayerComponent />
+        <Header />
+        <Main />
+        <Player />
       </div>
     );
   }

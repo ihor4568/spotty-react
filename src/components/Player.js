@@ -8,7 +8,7 @@ const styles = theme => ({
     backgroundColor: "#2196f3",
     color: "inherit",
     width: "100%",
-    height: 100,
+    height: "6.5rem",
     position: "fixed",
     bottom: 0,
     zIndex: theme.zIndex.drawer + 1
@@ -16,6 +16,10 @@ const styles = theme => ({
 });
 
 class Player extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   render() {
     const { classes } = this.props;
 

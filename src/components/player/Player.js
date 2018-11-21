@@ -12,6 +12,7 @@ import ThreeDot from "@material-ui/icons/MoreVert";
 
 const styles = theme => ({
   mediaPlayerAligner: {
+    userSelect: "none",
     position: "fixed",
     zIndex: 3,
     bottom: 0,
@@ -32,9 +33,12 @@ const styles = theme => ({
   audioInfo: {
     display: "flex"
   },
+  imageContainer: {
+    height: "6.75rem"
+  },
   image: {
-    width: "6.25rem",
-    height: "6.25rem"
+    width: "6.5rem",
+    height: "6.75rem"
   },
   audioInfoText: {
     display: "flex",
@@ -126,7 +130,7 @@ const Player = ({
       <Slider value={progress} onChange={onChangeProgress} />
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
-          <div>
+          <div className={classes.imageContainer}>
             <img className={classes.image} src={imageURL} alt="album title" />
           </div>
           <div className={classes.audioInfoText}>
@@ -181,6 +185,7 @@ const Player = ({
         <ThreeDot />
       </div>
     </div>
+    <div className={classes.modal} />
   </div>
 );
 export default withStyles(styles, { withTheme: true })(Player);

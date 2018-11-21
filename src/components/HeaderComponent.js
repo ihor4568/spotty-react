@@ -31,17 +31,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const styles = theme => ({
-  root: {
-    display: "flex",
-    width: "100%"
+  main: {
+    display: "flex"
   },
   grow: {
     flexGrow: 1
   },
   appBar: {
+    backgroundColor: "#2196f3",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -112,9 +112,9 @@ const styles = theme => ({
   search: {
     position: "relative",
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
+    backgroundColor: fade(theme.palette.common.white, 0.25),
     "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
+      backgroundColor: fade(theme.palette.common.white, 0.35)
     },
     marginLeft: 0,
     marginRight: theme.spacing.unit,
@@ -189,8 +189,7 @@ class PrimarySearchAppBar extends React.Component {
   render() {
     const { anchorEl, open } = this.state;
     const { classes, theme } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+    const isMenuOpen = !!anchorEl;
 
     const renderMenu = (
       <Menu
@@ -211,7 +210,7 @@ class PrimarySearchAppBar extends React.Component {
     );
 
     return (
-      <div className={classes.root}>
+      <div className={classes.main}>
         <CssBaseline />
         <AppBar
           position="fixed"
@@ -326,10 +325,6 @@ class PrimarySearchAppBar extends React.Component {
           </List>
           {renderMenu}
         </Drawer>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-        </main>
-        <div className={classes.player} />
       </div>
     );
   }

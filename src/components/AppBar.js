@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
 
+import ProfileMenu from "./ProfileMenu";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
@@ -15,13 +15,12 @@ import { withStyles } from "@material-ui/core/styles";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import ExitToApp from "@material-ui/icons/ExitToApp";
 
-const drawerWidth = 240;
+const DRAWER_WIDTH = 200;
 
 const styles = theme => ({
   appBar: {
+    backgroundColor: "#2196f3",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -29,8 +28,8 @@ const styles = theme => ({
     })
   },
   appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
+    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    marginLeft: DRAWER_WIDTH,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
@@ -76,9 +75,6 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "center"
   },
-  exitToApp: {
-    paddingRight: theme.spacing.unit
-  },
   inputRoot: {
     color: "inherit",
     width: "100%"
@@ -100,55 +96,29 @@ const styles = theme => ({
 });
 
 class AppBarComponent extends React.Component {
-  state = {
-    open: false
-  };
+  state = {};
 
-  handleProfileMenuOpen = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleMenuClose = () => {
-    this.setState({ anchorEl: null });
+  static propTypes = {
+    classes: PropTypes.object.isRequired
   };
 
   render() {
-    const { anchorEl, open } = this.state;
     const { classes } = this.props;
-    const isMenuOpen = Boolean(anchorEl);
-
-    const renderMenu = (
-      <Menu
-        anchorEl={anchorEl}
-        anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        open={isMenuOpen}
-        onClose={this.handleMenuClose}
-      >
-        <MenuItem disabled={true}>Random Name</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>
-          <div className={classes.exitToApp}>
-            <ExitToApp />
-          </div>
-          Log Out
-        </MenuItem>
-      </Menu>
-    );
 
     return (
       <AppBar
         position="fixed"
         className={classNames(classes.appBar, {
-          [classes.appBarShift]: this.state.open
+          [classes.appBarShift]: this.props.open
         })}
       >
-        <Toolbar disableGutters={!open}>
+        <Toolbar disableGutters={!this.props.open}>
           <IconButton
             color="inherit"
             aria-label="Open drawer"
-            onClick={this.handleDrawerOpen}
+            onClick={this.props.handleDrawerOpen}
             className={classNames(classes.menuButton, {
-              [classes.hide]: this.state.open
+              [classes.hide]: this.props.open
             })}
           >
             <MenuIcon />
@@ -174,23 +144,11 @@ class AppBarComponent extends React.Component {
               }}
             />
           </div>
-          <IconButton
-            aria-owns={isMenuOpen ? "material-appbar" : undefined}
-            aria-haspopup="true"
-            onClick={this.handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
+          <ProfileMenu />
         </Toolbar>
-        {renderMenu}
       </AppBar>
     );
   }
 }
-
-AppBarComponent.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles, { withTheme: true })(AppBarComponent);

@@ -6,17 +6,13 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
-  root: {
-    display: "flex",
-    width: "100%",
+  main: {
     paddingBottom: "6.5rem"
   },
-
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3
   },
-
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -33,7 +29,7 @@ class Main extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className={classes.main}>
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Typography paragraph>

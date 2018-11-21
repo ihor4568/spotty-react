@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 
-import Artists from "./Artists";
+import MySongs from "./MySongs";
 
 export default class App extends Component {
   render() {
     return (
       <>
-        <Artists />
+        <MySongs />
       </>
     );
   }

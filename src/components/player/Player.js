@@ -1,5 +1,4 @@
 import React from "react";
-import FiveStars from "./FiveStars";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PlayIcon from "@material-ui/icons/PlayArrow";
@@ -117,7 +116,8 @@ const Player = ({
   author,
   volume,
   volumeIcon,
-  onChangeVolume
+  onChangeVolume,
+  fiveStarsElement
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
@@ -168,13 +168,14 @@ const Player = ({
           </div>
         </div>
       </div>
-      <div>
-        <FiveStars />
-      </div>
+      <div>{fiveStarsElement}</div>
       <div className={classes.threeDotMenu}>
         <ThreeDot />
       </div>
     </div>
   </div>
 );
+
+/*classes,
+  theme*/
 export default withStyles(styles, { withTheme: true })(Player);

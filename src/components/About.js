@@ -22,7 +22,14 @@ const styles = () => ({
     paddingBottom: "0.5rem"
   },
   developed: {
-    padding: "1rem 0 3rem 0"
+    padding: "1rem 0 2rem"
+  },
+  link: {
+    textDecoration: "none",
+    fontSize: "1.35rem"
+  },
+  mentor: {
+    padding: "2rem 0 1rem"
   }
 });
 
@@ -56,7 +63,7 @@ class About extends Component {
           share the best hits with your friends!
         </Typography>
         <Typography component="p" variant="h6" className={classes.developed}>
-          It is developed by:
+          Developed by:
         </Typography>
         <Grid container spacing={24}>
           {team.map((person, i) => (
@@ -65,6 +72,24 @@ class About extends Component {
             </Grid>
           ))}
         </Grid>
+        <Typography component="p" variant="h6" className={classes.mentor}>
+          Mentor:{" "}
+          <a
+            className={classes.link}
+            href="https://www.linkedin.com/in/ihor-cheremskyi-035b5714b/"
+          >
+            Ihor Cheremskyi
+          </a>
+        </Typography>
+        <Typography component="p" variant="h6">
+          Source code:{" "}
+          <a
+            className={classes.link}
+            href="https://github.com/ihor4568/spotty-react"
+          >
+            GitHub
+          </a>
+        </Typography>
       </div>
     );
   }

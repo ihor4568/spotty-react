@@ -17,6 +17,9 @@ const styles = () => ({
     margin: "0 auto",
     padding: "2rem"
   },
+  text: {
+    fontSize: "1.2rem"
+  },
   developed: {
     padding: "1rem 0 3rem 0"
   }
@@ -40,7 +43,7 @@ class About extends Component {
         <Typography variant="h4" className={classes.title}>
           About
         </Typography>
-        <Typography component="p">
+        <Typography component="p" className={classes.text}>
           This app is for people who really like music. Here it’s easy to find
           the right music for every moment - just open and listen to your
           favourite songs. You have a few options to find music on our service.

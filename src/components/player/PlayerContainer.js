@@ -5,7 +5,6 @@ import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeMute from "@material-ui/icons/VolumeMute";
 import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeUp from "@material-ui/icons/VolumeUp";
-import PropTypes from "prop-types";
 
 const SONG = {
   source:
@@ -30,6 +29,10 @@ class PlayerContainer extends Component {
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5
+  };
+
+  static defaultProps = {
+    song: SONG
   };
 
   componentDidMount = () => {
@@ -100,23 +103,17 @@ class PlayerContainer extends Component {
 
   render() {
     const { playingProgress, isPlaying, volumeValue } = this.state;
-    const { source, title, songName, albumName, authorName } = SONG;
-    const { classes, theme } = this.props;
+    const { song } = this.props;
 
     return (
       <>
-        <audio src={source} ref={element => (this.audio = element)} />
+        <audio src={song.source} ref={element => (this.audio = element)} />
         <Player
-          classes={classes}
-          theme={theme}
           onPlay={this.handleChangePlayingState}
           isPlaying={isPlaying}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
-          imageURL={title}
-          songName={songName}
-          album={albumName}
-          author={authorName}
+          song={song}
           volume={volumeValue}
           volumeIcon={this.getVolumeIcon(volumeValue)}
           onChangeVolume={this.handleChangeVolume}
@@ -126,19 +123,5 @@ class PlayerContainer extends Component {
     );
   }
 }
-
-Player.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  onPlay: PropTypes.func.isRequired,
-  onChangeProgress: PropTypes.func.isRequired,
-  progress: PropTypes.number.isRequired,
-  imageURL: PropTypes.string.isRequired,
-  songName: PropTypes.string.isRequired,
-  album: PropTypes.string.isRequired,
-  volume: PropTypes.number.isRequired,
-  onChangeVolume: PropTypes.func.isRequired,
-  fiveStarsElement: PropTypes.element.isRequired,
-  volumeIcon: PropTypes.element.isRequired
-};
 
 export default PlayerContainer;

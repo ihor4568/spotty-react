@@ -8,6 +8,7 @@ import Next from "@material-ui/icons/SkipNext";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/lab/Slider";
 import ThreeDot from "@material-ui/icons/MoreVert";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   mediaPlayerAligner: {
@@ -91,11 +92,11 @@ const styles = theme => ({
   playButtonContainer: {
     width: "4.5rem",
     height: "4.5rem",
-    marginRight: 20,
-    marginLeft: 20
+    marginRight: "1.25rem",
+    marginLeft: "1.25rem"
   },
   playButtonStateIcon: {
-    fontSize: 45
+    fontSize: "2.8rem"
   },
   threeDotMenu: {
     marginRight: "1.5rem",
@@ -105,15 +106,12 @@ const styles = theme => ({
 
 const Player = ({
   classes,
-  theme,
   onPlay,
   isPlaying,
   onChangeProgress,
   progress,
   imageURL,
-  songName,
-  album,
-  author,
+  song,
   volume,
   volumeIcon,
   onChangeVolume,
@@ -125,14 +123,14 @@ const Player = ({
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
-            <img className={classes.image} src={imageURL} alt="album title" />
+            <img className={classes.image} src={song.title} alt="album title" />
           </div>
           <div className={classes.audioInfoText}>
             <Typography variant="h6" className={classes.songInfo}>
-              {songName}
+              {song.songName}
             </Typography>
             <Typography component="h2" className={classes.albumArtistInfo}>
-              {album} - {author}
+              {song.albumName} - {song.authorName}
             </Typography>
           </div>
         </div>
@@ -176,6 +174,22 @@ const Player = ({
   </div>
 );
 
-/*classes,
-  theme*/
+Player.propTypes = {
+  isPlaying: PropTypes.bool.isRequired,
+  onPlay: PropTypes.func.isRequired,
+  onChangeProgress: PropTypes.func.isRequired,
+  progress: PropTypes.number.isRequired,
+  volume: PropTypes.number.isRequired,
+  onChangeVolume: PropTypes.func.isRequired,
+  fiveStarsElement: PropTypes.element.isRequired,
+  volumeIcon: PropTypes.element.isRequired,
+  song: PropTypes.shape({
+    source: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    songName: PropTypes.string.isRequired,
+    albumName: PropTypes.string.isRequired,
+    authorName: PropTypes.string.isRequired
+  })
+};
+
 export default withStyles(styles, { withTheme: true })(Player);

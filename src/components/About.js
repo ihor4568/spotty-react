@@ -18,7 +18,8 @@ const styles = () => ({
     padding: "2rem"
   },
   text: {
-    fontSize: "1.2rem"
+    fontSize: "1.2rem",
+    paddingBottom: "0.5rem"
   },
   developed: {
     padding: "1rem 0 3rem 0"
@@ -44,11 +45,15 @@ class About extends Component {
           About
         </Typography>
         <Typography component="p" className={classes.text}>
-          This app is for people who really like music. Here it’s easy to find
-          the right music for every moment - just open and listen to your
-          favourite songs. You have a few options to find music on our service.
-          Also you can create your own playlist. Our service is completely free
-          to use.
+          Spotty empowers people to hear exactly what they love the moment they
+          want it, and discover a universe of audio, all in one place. In the
+          car, on the move, at home or in the office, we’re everywhere people
+          want to listen.
+        </Typography>
+        <Typography component="p" className={classes.text}>
+          Our service is completely free to use. You can easely pick the right
+          song and save it to your favourites. Create your own playlists and
+          share the best hits with your friends!
         </Typography>
         <Typography component="p" variant="h6" className={classes.developed}>
           It is developed by:

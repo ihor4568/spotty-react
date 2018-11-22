@@ -1,12 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
+// import SimpleTable from "./simpleTable";
 
-import MySongs from "./MySongs";
+import MySongsTable from "./MySongsTable";
 
-export default class App extends Component {
+export default class App extends React.Component {
   render() {
     return (
       <>
-        <MySongs />
+        <MySongsTable />
       </>
     );
   }

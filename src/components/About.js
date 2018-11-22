@@ -58,9 +58,10 @@ class About extends Component {
           want to listen.
         </Typography>
         <Typography component="p" className={classes.text}>
-          Our service is completely free to use. You can easely pick the right
-          song and save it to your favourites. Create your own playlists and
-          share the best hits with your friends!
+          Our service is completely free to use. The tracks all come from
+          free-to-download, Creative Commons licensed albums. You can easely
+          pick the right song and save it to your favourites. Create your own
+          playlists and share the best hits with your friends!
         </Typography>
         <Typography component="p" variant="h6" className={classes.developed}>
           Developed by:

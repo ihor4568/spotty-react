@@ -1,10 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
+
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import Header from "./Header";
 import Main from "./Main";
 import Player from "./Player";
 
-import PropTypes from "prop-types";
+import theme from "../theme";
+
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -14,22 +17,20 @@ const styles = theme => ({
   }
 });
 
-class App extends Component {
+class App extends React.Component {
   render() {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Header />
-        <Main />
-        <Player />
-      </div>
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <Header />
+          <Main />
+          <Player />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
-
-App.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles, { withTheme: true })(App);

@@ -1,11 +1,10 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   player: {
-    backgroundColor: "#2196f3",
+    backgroundColor: theme.palette.primary.main,
     color: "inherit",
     width: "100%",
     height: "6.5rem",
@@ -16,10 +15,6 @@ const styles = theme => ({
 });
 
 class Player extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired
-  };
-
   render() {
     const { classes } = this.props;
 

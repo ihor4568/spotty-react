@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 
 import Drawer from "@material-ui/core/Drawer";
@@ -20,16 +19,14 @@ import Album from "@material-ui/icons/Album";
 import PersonOutline from "@material-ui/icons/PersonOutline";
 import Info from "@material-ui/icons/Info";
 
-const DRAWER_WIDTH = 200;
-
 const styles = theme => ({
   drawer: {
-    width: DRAWER_WIDTH,
+    width: theme.props.drawer.drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap"
   },
   drawerOpen: {
-    width: DRAWER_WIDTH,
+    width: theme.props.drawer.drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
@@ -59,11 +56,6 @@ const styles = theme => ({
 });
 
 class DrawerComponent extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired
-  };
-
   render() {
     const { classes, theme } = this.props;
 

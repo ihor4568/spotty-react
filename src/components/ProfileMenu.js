@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -17,11 +16,9 @@ const styles = theme => ({
 });
 
 class ProfileMenu extends React.Component {
-  static propTypes = {
-    classes: PropTypes.object.isRequired
+  state = {
+    anchorEl: null
   };
-
-  state = {};
 
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });

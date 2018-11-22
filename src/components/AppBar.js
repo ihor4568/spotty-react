@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 
 import ProfileMenu from "./ProfileMenu";
@@ -16,11 +15,9 @@ import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 
-const DRAWER_WIDTH = 200;
-
 const styles = theme => ({
   appBar: {
-    backgroundColor: "#2196f3",
+    backgroundColor: theme.palette.primary.main,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -28,8 +25,8 @@ const styles = theme => ({
     })
   },
   appBarShift: {
-    width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    marginLeft: DRAWER_WIDTH,
+    width: `calc(100% - ${theme.props.drawer.drawerWidth}px)`,
+    marginLeft: theme.props.drawer.drawerWidth,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
@@ -96,12 +93,6 @@ const styles = theme => ({
 });
 
 class AppBarComponent extends React.Component {
-  state = {};
-
-  static propTypes = {
-    classes: PropTypes.object.isRequired
-  };
-
   render() {
     const { classes } = this.props;
 

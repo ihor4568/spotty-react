@@ -19,9 +19,6 @@ export default class Header extends React.Component {
   };
 
   render() {
-    // eslint-disable-next-line
-    const { open } = this.state;
-
     return (
       <div>
         <CssBaseline />

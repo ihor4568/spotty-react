@@ -78,6 +78,8 @@ class About extends Component {
           <a
             className={classes.link}
             href="https://www.linkedin.com/in/ihor-cheremskyi-035b5714b/"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             Ihor Cheremskyi
           </a>
@@ -87,6 +89,8 @@ class About extends Component {
           <a
             className={classes.link}
             href="https://github.com/ihor4568/spotty-react"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             GitHub
           </a>

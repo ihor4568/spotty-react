@@ -1,4 +1,7 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+
+import LegalDialog from "./LegalDialog";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -42,6 +45,10 @@ class Main extends React.Component {
             consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
             donec massa sapien faucibus et molestie ac.
           </Typography>
+          <LegalDialog ref="child" />
+          <Button onClick={() => this.refs.child.handleClickOpen()}>
+            Open alert dialog
+          </Button>
           <Typography paragraph>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus

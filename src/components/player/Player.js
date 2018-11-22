@@ -1,11 +1,11 @@
 import React from "react";
+import FiveStars from "./FiveStars";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import PlayIcon from "@material-ui/icons/PlayArrow";
 import PauseIcon from "@material-ui/icons/Pause";
 import Previous from "@material-ui/icons/SkipPrevious";
 import Next from "@material-ui/icons/SkipNext";
-import Star from "@material-ui/icons/StarBorder";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/lab/Slider";
 import ThreeDot from "@material-ui/icons/MoreVert";
@@ -98,12 +98,6 @@ const styles = theme => ({
   playButtonStateIcon: {
     fontSize: 45
   },
-  fiveStars: {
-    color: "gray",
-    "&:hover": {
-      color: "orange"
-    }
-  },
   threeDotMenu: {
     marginRight: "1.5rem",
     color: "gray"
@@ -175,11 +169,7 @@ const Player = ({
         </div>
       </div>
       <div>
-        <Star className={classes.fiveStars} />
-        <Star className={classes.fiveStars} />
-        <Star className={classes.fiveStars} />
-        <Star className={classes.fiveStars} />
-        <Star className={classes.fiveStars} />
+        <FiveStars />
       </div>
       <div className={classes.threeDotMenu}>
         <ThreeDot />

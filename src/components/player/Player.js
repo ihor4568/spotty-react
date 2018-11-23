@@ -110,7 +110,6 @@ const Player = ({
   isPlaying,
   onChangeProgress,
   progress,
-  imageURL,
   song,
   volume,
   volumeIcon,
@@ -175,13 +174,14 @@ const Player = ({
 );
 
 Player.propTypes = {
+  classes: PropTypes.object,
   isPlaying: PropTypes.bool.isRequired,
   onPlay: PropTypes.func.isRequired,
   onChangeProgress: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
   onChangeVolume: PropTypes.func.isRequired,
-  fiveStarsElement: PropTypes.element.isRequired,
+  ratingElement: PropTypes.element.isRequired,
   volumeIcon: PropTypes.element.isRequired,
   song: PropTypes.shape({
     source: PropTypes.string.isRequired,

@@ -14,7 +14,7 @@ const styles = {
 
 class StarsRating extends React.Component {
   static propTypes = {
-    classes: PropTypes.string
+    classes: PropTypes.object
   };
 
   render() {

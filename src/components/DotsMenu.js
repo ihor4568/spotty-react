@@ -33,7 +33,7 @@ export default class DotsMenu extends Component {
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
+          open={!!anchorEl}
           onClose={this.handleClose}
         >
           <MenuItem onClick={this.handleClose}>Legal info</MenuItem>

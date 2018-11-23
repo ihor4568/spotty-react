@@ -24,8 +24,8 @@ function AboutCard(props) {
   const { classes } = props;
   return (
     <a className={classes.link} href={"https://github.com/" + props.person}>
-      <CardActionArea>
-        <Card>
+      <Card>
+        <CardActionArea>
           <CardContent>
             <CardMedia
               className={classes.media}
@@ -35,14 +35,15 @@ function AboutCard(props) {
               {props.person}
             </Typography>
           </CardContent>
-        </Card>
-      </CardActionArea>
+        </CardActionArea>
+      </Card>
     </a>
   );
 }
 
 AboutCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  person: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(AboutCard);

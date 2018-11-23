@@ -7,15 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = () => ({
   title: {
-    padding: "3rem 0 1.5rem 0"
-  },
-  container: {
-    height: "100%",
-    maxWidth: "80rem",
-    overflow: "hidden",
-    boxSizing: "border - box",
-    margin: "0 auto",
-    padding: "2rem"
+    paddingBottom: "1.5rem"
   },
   text: {
     fontSize: "1.2rem",
@@ -47,7 +39,7 @@ class About extends Component {
       "OlegShynkarenko"
     ];
     return (
-      <div className={classes.container}>
+      <>
         <Typography variant="h4" className={classes.title}>
           About
         </Typography>
@@ -66,7 +58,7 @@ class About extends Component {
         <Typography component="p" variant="h6" className={classes.developed}>
           Developed by:
         </Typography>
-        <Grid container spacing={24}>
+        <Grid container spacing={32}>
           {team.map((person, i) => (
             <Grid key={i} item xs={3}>
               <AboutCard person={person} />
@@ -95,7 +87,7 @@ class About extends Component {
             GitHub
           </a>
         </Typography>
-      </div>
+      </>
     );
   }
 }

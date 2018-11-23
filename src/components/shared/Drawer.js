@@ -31,7 +31,8 @@ const styles = theme => ({
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    zIndex: 1
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
@@ -42,7 +43,8 @@ const styles = theme => ({
     width: theme.spacing.unit * 7 + 1,
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing.unit * 9 + 1
-    }
+    },
+    zIndex: 1
   },
   toolbar: {
     display: "flex",
@@ -62,7 +64,8 @@ class DrawerComponent extends Component {
     theme: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
     onDrawerClose: PropTypes.func.isRequired,
-    onTwoAboutClick: PropTypes.func.isRequired
+    onAboutClick: PropTypes.func.isRequired,
+    onAlbumsClick: PropTypes.func.isRequired
   };
 
   render() {
@@ -108,7 +111,7 @@ class DrawerComponent extends Component {
             </ListItemIcon>
             <ListItemText primary="My Songs" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={this.props.onAlbumsClick}>
             <ListItemIcon>
               <Album />
             </ListItemIcon>
@@ -123,7 +126,7 @@ class DrawerComponent extends Component {
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={this.props.onTwoAboutClick}>
+          <ListItem button onClick={this.props.onAboutClick}>
             <ListItemIcon>
               <Info />
             </ListItemIcon>

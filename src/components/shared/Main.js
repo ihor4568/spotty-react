@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import About from "./About";
+import Albums from "../albums/Albums";
 
 const styles = theme => ({
   main: {
@@ -9,7 +10,12 @@ const styles = theme => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+    height: "100%",
+    maxWidth: "80rem",
+    overflow: "hidden",
+    boxSizing: "border - box",
+    margin: "0 auto"
   },
   toolbar: {
     display: "flex",
@@ -33,6 +39,7 @@ class Main extends Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {this.props.itemMount === "About" ? <About /> : null}
+          {this.props.itemMount === "Albums" ? <Albums /> : null}
         </main>
       </div>
     );

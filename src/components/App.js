@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import Header from "./shared/Header";
 import Main from "./shared/Main";
-import Player from "./shared/Player";
+import PlayerContainer from "./player/PlayerContainer";
+
 import theme from "../theme";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -20,11 +21,15 @@ class App extends Component {
   };
 
   state = {
-    itemMount: ""
+    itemMount: "Albums"
   };
 
   handleAboutClick = () => {
     this.setState({ itemMount: "About" });
+  };
+
+  handleAlbumsClick = () => {
+    this.setState({ itemMount: "Albums" });
   };
 
   render() {
@@ -33,9 +38,12 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
-          <Header onAboutClick={this.handleAboutClick} />
+          <Header
+            onAboutClick={this.handleAboutClick}
+            onAlbumsClick={this.handleAlbumsClick}
+          />
           <Main itemMount={this.state.itemMount} />
-          <Player />
+          <PlayerContainer />
         </div>
       </MuiThemeProvider>
     );

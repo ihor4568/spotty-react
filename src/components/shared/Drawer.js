@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import classNames from "classnames";
 
 import Drawer from "@material-ui/core/Drawer";
@@ -18,6 +18,7 @@ import LibraryMusic from "@material-ui/icons/LibraryMusic";
 import Album from "@material-ui/icons/Album";
 import PersonOutline from "@material-ui/icons/PersonOutline";
 import Info from "@material-ui/icons/Info";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   drawer: {
@@ -55,7 +56,14 @@ const styles = theme => ({
   }
 });
 
-class DrawerComponent extends React.Component {
+class DrawerComponent extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    theme: PropTypes.object.isRequired,
+    open: PropTypes.func.isRequired,
+    onDrawerClose: PropTypes.func.isRequired
+  };
+
   render() {
     const { classes, theme } = this.props;
 
@@ -83,7 +91,7 @@ class DrawerComponent extends React.Component {
           >
             Library
           </Typography>
-          <IconButton onClick={this.props.handleDrawerClose}>
+          <IconButton onClick={this.props.onDrawerClose}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (

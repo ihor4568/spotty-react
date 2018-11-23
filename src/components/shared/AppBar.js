@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import classNames from "classnames";
 
 import ProfileMenu from "./ProfileMenu";
@@ -14,6 +14,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   appBar: {
@@ -92,7 +93,13 @@ const styles = theme => ({
   }
 });
 
-class AppBarComponent extends React.Component {
+class AppBarComponent extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    open: PropTypes.func.isRequired,
+    onDrawerOpen: PropTypes.func.isRequired
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -107,7 +114,7 @@ class AppBarComponent extends React.Component {
           <IconButton
             color="inherit"
             aria-label="Open drawer"
-            onClick={this.props.handleDrawerOpen}
+            onClick={this.props.onDrawerOpen}
             className={classNames(classes.menuButton, {
               [classes.hide]: this.props.open
             })}

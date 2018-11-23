@@ -4,7 +4,7 @@ import { MuiThemeProvider } from "@material-ui/core/styles";
 
 import Header from "./shared/Header";
 import Main from "./shared/Main";
-import Player from "./shared/Player";
+import PlayerContainer from "./player/PlayerContainer";
 
 import theme from "../theme";
 
@@ -31,7 +31,7 @@ class App extends Component {
         <div className={classes.root}>
           <Header />
           <Main />
-          <Player />
+          <PlayerContainer />
         </div>
       </MuiThemeProvider>
     );

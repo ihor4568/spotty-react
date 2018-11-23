@@ -23,19 +23,10 @@ export default class DotsMenu extends Component {
 
     return (
       <div>
-        <IconButton
-          aria-owns={anchorEl ? "simple-menu" : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
+        <IconButton aria-haspopup="true" onClick={this.handleClick}>
           <MoreVertIcon />
         </IconButton>
-        <Menu
-          id="simple-menu"
-          anchorEl={anchorEl}
-          open={!!anchorEl}
-          onClose={this.handleClose}
-        >
+        <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleClose}>
           <MenuItem onClick={this.handleClose}>Legal info</MenuItem>
           <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
           <MenuItem onClick={this.handleClose}>Share</MenuItem>

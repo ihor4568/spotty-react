@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import AboutCard from "./AboutCard";
+import AboutCard from "../AboutCard";
 import Grid from "@material-ui/core/Grid";
 
 const styles = () => ({
   title: {
-    paddingBottom: "1.5rem"
+    padding: "3rem 0 1.5rem 0"
   },
   container: {
     height: "100%",

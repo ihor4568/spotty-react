@@ -7,7 +7,7 @@ import Previous from "@material-ui/icons/SkipPrevious";
 import Next from "@material-ui/icons/SkipNext";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/lab/Slider";
-import DotsMenu from "../DotsMenu";
+import DotsMenu from "../shared/DotsMenu";
 import PropTypes from "prop-types";
 
 const styles = theme => ({

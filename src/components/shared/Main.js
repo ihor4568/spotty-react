@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import About from "./About";
+import About from "../about/About";
 import Albums from "../albums/Albums";
 
 const styles = theme => ({

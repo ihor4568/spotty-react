@@ -21,15 +21,11 @@ class App extends Component {
   };
 
   state = {
-    itemMount: "Albums"
+    currentPage: "albums"
   };
 
-  handleAboutClick = () => {
-    this.setState({ itemMount: "About" });
-  };
-
-  handleAlbumsClick = () => {
-    this.setState({ itemMount: "Albums" });
+  handleItemClick = name => {
+    this.setState({ currentPage: name });
   };
 
   render() {
@@ -38,11 +34,8 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
-          <Header
-            onAboutClick={this.handleAboutClick}
-            onAlbumsClick={this.handleAlbumsClick}
-          />
-          <Main itemMount={this.state.itemMount} />
+          <Header onItemClick={this.handleItemClick} />
+          <Main currentPage={this.state.currentPage} />
           <PlayerContainer />
         </div>
       </MuiThemeProvider>

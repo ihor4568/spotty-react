@@ -10,6 +10,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
+import Title from "../shared/Title";
+
 const ALBUMS_INFO = [
   {
     imageUrl:
@@ -54,9 +56,6 @@ const styles = {
     width: `100%`,
     margin: 0
   },
-  title: {
-    paddingBottom: "1.5rem"
-  },
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
@@ -76,9 +75,7 @@ class Albums extends Component {
     const { classes } = this.props;
     return (
       <>
-        <Typography variant="h4" component="h2" className={classes.title}>
-          Albums
-        </Typography>
+        <Title name="Albums" />
         <Grid container spacing={32} className={classes.container}>
           {ALBUMS_INFO.map((album, i) => (
             <Grid key={i} item xl={2} md={3}>

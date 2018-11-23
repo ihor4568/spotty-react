@@ -8,8 +8,7 @@ import PropTypes from "prop-types";
 
 export default class Header extends Component {
   static propTypes = {
-    onAboutClick: PropTypes.func.isRequired,
-    onAlbumsClick: PropTypes.func.isRequired
+    onItemClick: PropTypes.func.isRequired
   };
 
   state = {
@@ -32,8 +31,7 @@ export default class Header extends Component {
         <Drawer
           open={this.state.open}
           onDrawerClose={this.handleDrawerClose}
-          onAboutClick={this.props.onAboutClick}
-          onAlbumsClick={this.props.onAlbumsClick}
+          onItemClick={this.props.onItemClick}
         />
       </div>
     );

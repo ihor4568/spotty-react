@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Player from "./Player";
-import FiveStars from "./FiveStars";
+import StarsRating from "../StarsRating";
 import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeMute from "@material-ui/icons/VolumeMute";
 import VolumeDown from "@material-ui/icons/VolumeDown";
@@ -35,15 +35,15 @@ class PlayerContainer extends Component {
     song: SONG
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.audio.addEventListener("play", this.handlePlay);
     this.audio.addEventListener("timeupdate", this.handlePlay);
-  };
+  }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
     this.audio.removeEventListener("play", this.handlePlay);
     this.audio.removeEventListener("timeupdate", this.handlePlay);
-  };
+  }
 
   handleChangePlayingState = () => {
     this.setState(
@@ -117,7 +117,7 @@ class PlayerContainer extends Component {
           volume={volumeValue}
           volumeIcon={this.getVolumeIcon(volumeValue)}
           onChangeVolume={this.handleChangeVolume}
-          fiveStarsElement={<FiveStars />}
+          ratingElement={<StarsRating />}
         />
       </>
     );

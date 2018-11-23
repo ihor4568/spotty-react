@@ -115,7 +115,7 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
-  fiveStarsElement
+  ratingElement
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
@@ -166,7 +166,7 @@ const Player = ({
           </div>
         </div>
       </div>
-      <div>{fiveStarsElement}</div>
+      <div>{ratingElement}</div>
       <div className={classes.threeDotMenu}>
         <ThreeDot />
       </div>

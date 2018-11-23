@@ -3,7 +3,7 @@ import React from "react";
 import { withStyles } from "@material-ui/core";
 
 const styles = {
-  starsRaiting: {
+  starsRating: {
     color: "gray",
     "&:hover": {
       color: "orange"
@@ -11,19 +11,19 @@ const styles = {
   }
 };
 
-class StarsRaiting extends React.Component {
+class StarsRating extends React.Component {
   render() {
     const { classes } = this.props;
 
     return (
       <>
-        <Star className={classes.starsRaiting} />
-        <Star className={classes.starsRaiting} />
-        <Star className={classes.starsRaiting} />
-        <Star className={classes.starsRaiting} />
-        <Star className={classes.starsRaiting} />
+        <Star className={classes.starsRating} />
+        <Star className={classes.starsRating} />
+        <Star className={classes.starsRating} />
+        <Star className={classes.starsRating} />
+        <Star className={classes.starsRating} />
       </>
     );
   }
 }
-export default withStyles(styles, { withTheme: true })(StarsRaiting);
+export default withStyles(styles, { withTheme: true })(StarsRating);

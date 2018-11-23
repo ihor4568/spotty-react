@@ -7,7 +7,7 @@ import Previous from "@material-ui/icons/SkipPrevious";
 import Next from "@material-ui/icons/SkipNext";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/lab/Slider";
-import ThreeDot from "@material-ui/icons/MoreVert";
+import DotsMenu from "../DotsMenu";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -167,7 +167,7 @@ const Player = ({
       </div>
       <div>{ratingElement}</div>
       <div className={classes.threeDotMenu}>
-        <ThreeDot />
+        <DotsMenu />
       </div>
     </div>
   </div>

@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Player from "./Player";
-import StarsRating from "../StarsRating";
+import StarsRating from "../shared/StarsRating";
 import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeMute from "@material-ui/icons/VolumeMute";
 import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeUp from "@material-ui/icons/VolumeUp";
+import PropTypes from "prop-types";
 
 const SONG = {
   source:
@@ -33,6 +34,16 @@ class PlayerContainer extends Component {
 
   static defaultProps = {
     song: SONG
+  };
+
+  static propTypes = {
+    song: PropTypes.shape({
+      source: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      songName: PropTypes.string.isRequired,
+      albumName: PropTypes.string.isRequired,
+      authorName: PropTypes.string.isRequired
+    })
   };
 
   componentDidMount() {

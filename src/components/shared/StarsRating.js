@@ -1,6 +1,7 @@
 import Star from "@material-ui/icons/StarBorder";
 import React from "react";
 import { withStyles } from "@material-ui/core";
+import PropTypes from "prop-types";
 
 const styles = {
   starsRating: {
@@ -12,6 +13,10 @@ const styles = {
 };
 
 class StarsRating extends React.Component {
+  static propTypes = {
+    classes: PropTypes.string
+  };
+
   render() {
     const { classes } = this.props;
 

@@ -9,7 +9,9 @@
     "no-debugger": "error",
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "react/prop-types": "error",
+    "lines-between-class-members": "error"
   },
   "plugins": ["prettier"]
 }

@@ -65,6 +65,10 @@ const styles = {
 };
 
 class Albums extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -104,7 +108,4 @@ class Albums extends Component {
   }
 }
 
-Albums.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 export default withStyles(styles)(Albums);

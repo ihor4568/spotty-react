@@ -1,13 +1,41 @@
 import React, { Component } from "react";
 
-import Albums from "./Albums";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 
-export default class App extends Component {
+import Header from "./shared/Header";
+import Main from "./shared/Main";
+import Player from "./shared/Player";
+
+import theme from "../theme";
+
+import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+
+const styles = theme => ({
+  root: {
+    display: "flex",
+    width: "100%"
+  }
+});
+
+class App extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   render() {
+    const { classes } = this.props;
+
     return (
-      <>
-        <Albums />
-      </>
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <Header />
+          <Main />
+          <Player />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
+
+export default withStyles(styles, { withTheme: true })(App);

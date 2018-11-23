@@ -96,7 +96,7 @@ const styles = theme => ({
 class AppBarComponent extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    open: PropTypes.func.isRequired,
+    open: PropTypes.bool.isRequired,
     onDrawerOpen: PropTypes.func.isRequired
   };
 

@@ -9,7 +9,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 const styles = {
   media: {
-    minHeight: 200
+    minHeight: 220,
+    minWidth: 220
   },
   title: {
     textAlign: "center",
@@ -31,7 +32,7 @@ function AboutCard(props) {
               className={classes.media}
               image={"https://github.com/" + props.person + ".png?size=400"}
             />
-            <Typography className={classes.title} component="h2" variant="h5">
+            <Typography className={classes.title} component="h2" variant="h6">
               {props.person}
             </Typography>
           </CardContent>

@@ -20,6 +20,9 @@ const styles = () => ({
   },
   mentor: {
     padding: "2rem 0 1rem"
+  },
+  card: {
+    margin: "0 auto"
   }
 });
 
@@ -55,7 +58,7 @@ function About(props) {
       </Typography>
       <Grid container spacing={32}>
         {team.map((person, i) => (
-          <Grid key={i} item xs={3}>
+          <Grid className={classes.card} key={i} item lg={3} md={4}>
             <AboutCard person={person} />
           </Grid>
         ))}

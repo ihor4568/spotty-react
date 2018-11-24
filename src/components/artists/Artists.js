@@ -47,7 +47,8 @@ const styles = {
     margin: 0
   },
   artistCard: {
-    boxShadow: `none`
+    boxShadow: `none`,
+    backgroundColor: `inherit`
   },
   artistAction: {
     borderRadius: `50%`,

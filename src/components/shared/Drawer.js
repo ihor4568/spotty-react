@@ -63,7 +63,8 @@ class DrawerComponent extends Component {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
-    onDrawerClose: PropTypes.func.isRequired
+    onDrawerClose: PropTypes.func.isRequired,
+    onItemClick: PropTypes.func.isRequired
   };
 
   render() {
@@ -103,19 +104,19 @@ class DrawerComponent extends Component {
         </div>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button onClick={() => this.props.onItemClick("mysongs")}>
             <ListItemIcon>
               <LibraryMusic />
             </ListItemIcon>
             <ListItemText primary="My Songs" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={() => this.props.onItemClick("albums")}>
             <ListItemIcon>
               <Album />
             </ListItemIcon>
             <ListItemText primary="Albums" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={() => this.props.onItemClick("artists")}>
             <ListItemIcon>
               <PersonOutline />
             </ListItemIcon>
@@ -124,7 +125,7 @@ class DrawerComponent extends Component {
         </List>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem button onClick={() => this.props.onItemClick("about")}>
             <ListItemIcon>
               <Info />
             </ListItemIcon>

@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import TimerSharp from "@material-ui/icons/TimerSharp";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import Typography from "@material-ui/core/Typography";
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -46,7 +47,7 @@ const TABLE_DATA = [
 const styles = theme => ({
   root: {
     width: "calc(100% - 2rem)",
-    margin: "2rem auto 0",
+    margin: "1rem auto 0",
     overflowX: "auto"
   },
   image: {
@@ -132,141 +133,146 @@ class MySongsTable extends React.Component {
     const { classes } = this.props;
     const { order, orderBy } = this.state;
     return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table className={classes.table} aria-labelledby="tableTitle">
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  className={`${classes.tableCell} ${classes.fixedWidth}`}
-                />
-                <TableCell
-                  className={`${classes.tableCell} ${classes.fixedWidth}`}
-                >
-                  <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
-                      active={orderBy === "number"}
-                      direction={order}
-                      onClick={this.handleSortCreate("number")}
-                    >
-                      #
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell
-                  className={`${classes.tableCell} ${classes.fixedWidth}`}
-                />
-                <TableCell className={classes.tableCell}>
-                  <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
-                      active={orderBy === "name"}
-                      direction={order}
-                      onClick={this.handleSortCreate("name")}
-                    >
-                      Name
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell
-                  className={`${classes.tableCell} ${classes.fixedWidth}`}
-                >
-                  <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
-                      active={orderBy === "time"}
-                      direction={order}
-                      onClick={this.handleSortCreate("time")}
-                    >
-                      <TimerSharp className={classes.icon} />
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
-                      active={orderBy === "artist"}
-                      direction={order}
-                      onClick={this.handleSortCreate("artist")}
-                    >
-                      Artist
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell className={classes.tableCell}>
-                  <Tooltip title="Sort" enterDelay={300}>
-                    <TableSortLabel
-                      active={orderBy === "album"}
-                      direction={order}
-                      onClick={this.handleSortCreate("album")}
-                    >
-                      Album
-                    </TableSortLabel>
-                  </Tooltip>
-                </TableCell>
-                <TableCell
-                  className={`${classes.tableCell} ${classes.fixedWidth}`}
-                />
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {this.stableSort(
-                this.createNewSongsArray(TABLE_DATA),
-                this.getSorting(order, orderBy)
-              ).map((data, i) => {
-                return (
-                  <TableRow hover key={i}>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.fixedWidth}`}
-                    >
-                      <Button
-                        mini={true}
-                        variant="fab"
-                        aria-label="PlayArrow"
-                        className={classes.button}
+      <>
+        <Typography variant="h4" component="h2">
+          My Songs
+        </Typography>
+        <Paper className={classes.root}>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.fixedWidth}`}
+                  />
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.fixedWidth}`}
+                  >
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === "number"}
+                        direction={order}
+                        onClick={this.handleSortCreate("number")}
                       >
-                        <PlayArrow className={classes.icon} />
-                      </Button>
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.fixedWidth}`}
-                    >
-                      {data.number}
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.fixedWidth}`}
-                    >
-                      <img
-                        src={data.image}
-                        alt="album"
-                        className={classes.image}
-                      />
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {data.name}
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.fixedWidth}`}
-                    >
-                      {data.time}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {data.artist}
-                    </TableCell>
-                    <TableCell className={classes.tableCell}>
-                      {data.album}
-                    </TableCell>
-                    <TableCell
-                      className={`${classes.tableCell} ${classes.fixedWidth}`}
-                    >
-                      <MoreVertIcon />
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </div>
-      </Paper>
+                        #
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.fixedWidth}`}
+                  />
+                  <TableCell className={classes.tableCell}>
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === "name"}
+                        direction={order}
+                        onClick={this.handleSortCreate("name")}
+                      >
+                        Name
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.fixedWidth}`}
+                  >
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === "time"}
+                        direction={order}
+                        onClick={this.handleSortCreate("time")}
+                      >
+                        <TimerSharp className={classes.icon} />
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === "artist"}
+                        direction={order}
+                        onClick={this.handleSortCreate("artist")}
+                      >
+                        Artist
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell className={classes.tableCell}>
+                    <Tooltip title="Sort" enterDelay={300}>
+                      <TableSortLabel
+                        active={orderBy === "album"}
+                        direction={order}
+                        onClick={this.handleSortCreate("album")}
+                      >
+                        Album
+                      </TableSortLabel>
+                    </Tooltip>
+                  </TableCell>
+                  <TableCell
+                    className={`${classes.tableCell} ${classes.fixedWidth}`}
+                  />
+                </TableRow>
+              </TableHead>
+
+              <TableBody>
+                {this.stableSort(
+                  this.createNewSongsArray(TABLE_DATA),
+                  this.getSorting(order, orderBy)
+                ).map((data, i) => {
+                  return (
+                    <TableRow hover key={i}>
+                      <TableCell
+                        className={`${classes.tableCell} ${classes.fixedWidth}`}
+                      >
+                        <Button
+                          mini={true}
+                          variant="fab"
+                          aria-label="PlayArrow"
+                          className={classes.button}
+                        >
+                          <PlayArrow className={classes.icon} />
+                        </Button>
+                      </TableCell>
+                      <TableCell
+                        className={`${classes.tableCell} ${classes.fixedWidth}`}
+                      >
+                        {data.number}
+                      </TableCell>
+                      <TableCell
+                        className={`${classes.tableCell} ${classes.fixedWidth}`}
+                      >
+                        <img
+                          src={data.image}
+                          alt="album"
+                          className={classes.image}
+                        />
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        {data.name}
+                      </TableCell>
+                      <TableCell
+                        className={`${classes.tableCell} ${classes.fixedWidth}`}
+                      >
+                        {data.time}
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        {data.artist}
+                      </TableCell>
+                      <TableCell className={classes.tableCell}>
+                        {data.album}
+                      </TableCell>
+                      <TableCell
+                        className={`${classes.tableCell} ${classes.fixedWidth}`}
+                      >
+                        <MoreVertIcon />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </div>
+        </Paper>
+      </>
     );
   }
 }

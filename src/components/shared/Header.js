@@ -4,8 +4,13 @@ import AppBar from "./AppBar";
 import Drawer from "./Drawer";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
+import PropTypes from "prop-types";
 
 export default class Header extends Component {
+  static propTypes = {
+    onItemClick: PropTypes.func.isRequired
+  };
+
   state = {
     open: false
   };
@@ -23,7 +28,11 @@ export default class Header extends Component {
       <div>
         <CssBaseline />
         <AppBar open={this.state.open} onDrawerOpen={this.handleDrawerOpen} />
-        <Drawer open={this.state.open} onDrawerClose={this.handleDrawerClose} />
+        <Drawer
+          open={this.state.open}
+          onDrawerClose={this.handleDrawerClose}
+          onItemClick={this.props.onItemClick}
+        />
       </div>
     );
   }

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import Player from "./Player";
-import StarsRating from "../shared/StarsRating";
 import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeMute from "@material-ui/icons/VolumeMute";
 import VolumeDown from "@material-ui/icons/VolumeDown";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 import PropTypes from "prop-types";
+
+import Player from "./Player";
+import StarsRating from "../shared/StarsRating";
 
 const SONG = {
   source:
@@ -29,7 +30,8 @@ class PlayerContainer extends Component {
     isPlaying: false,
     songDuration: 0,
     playingProgress: 0,
-    volumeValue: 0.5
+    volumeValue: 0.5,
+    isMuted: false
   };
 
   static defaultProps = {
@@ -96,8 +98,19 @@ class PlayerContainer extends Component {
   };
 
   handleChangeVolume = (event, value) => {
-    this.setState({ volumeValue: Number(value.toFixed(1)) });
-    this.audio.volume = this.state.volumeValue;
+    const volume = Number(value.toFixed(1));
+
+    this.setState({ volumeValue: volume, isMuted: volume === 0 });
+    this.audio.volume = volume;
+  };
+
+  handleMute = () => {
+    this.setState(prevState => {
+      const isMuted = !prevState.isMuted;
+      const volume = prevState.volumeValue || 0.5;
+      this.audio.volume = isMuted ? 0 : volume;
+      return { isMuted, volumeValue: volume };
+    });
   };
 
   getVolumeIcon = volume => {
@@ -113,8 +126,9 @@ class PlayerContainer extends Component {
   };
 
   render() {
-    const { playingProgress, isPlaying, volumeValue } = this.state;
+    const { playingProgress, isPlaying, volumeValue, isMuted } = this.state;
     const { song } = this.props;
+    const volume = isMuted ? 0 : volumeValue;
 
     return (
       <>
@@ -125,10 +139,11 @@ class PlayerContainer extends Component {
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}
-          volume={volumeValue}
-          volumeIcon={this.getVolumeIcon(volumeValue)}
+          volume={volume}
+          volumeIcon={this.getVolumeIcon(volume)}
           onChangeVolume={this.handleChangeVolume}
           ratingElement={<StarsRating />}
+          onMute={this.handleMute}
         />
       </>
     );

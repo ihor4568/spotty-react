@@ -114,7 +114,8 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
-  ratingElement
+  ratingElement,
+  onMute
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
@@ -154,7 +155,11 @@ const Player = ({
           </Button>
         </div>
         <div className={classes.volumeControls}>
-          <div className={classes.volumeBar}>{volumeIcon}</div>
+          <div className={classes.volumeBar}>
+            <div role="button" onClick={onMute}>
+              {volumeIcon}
+            </div>
+          </div>
           <div className={classes.volumeSlider}>
             <Slider
               className={classes.volumeSlider}
@@ -189,7 +194,8 @@ Player.propTypes = {
     songName: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired
-  })
+  }),
+  onMute: PropTypes.func.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

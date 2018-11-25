@@ -4,10 +4,11 @@
   "description": "Simple music streaming service",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.5.1",
-    "@material-ui/icons": "^3.0.1",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
+    "@material-ui/core": "3.5.1",
+    "@material-ui/icons": "3.0.1",
+    "prop-types": "15.6.2",
+    "react": "16.6.1",
+    "react-dom": "16.6.1",
     "react-scripts": "2.1.1"
   },
   "scripts": {

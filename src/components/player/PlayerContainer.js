@@ -47,14 +47,22 @@ class PlayerContainer extends Component {
   };
 
   componentDidMount() {
-    this.audio.addEventListener("play", this.handlePlay);
-    this.audio.addEventListener("timeupdate", this.handlePlay);
+    this.addListeners();
   }
 
   componentWillUnmount() {
+    this.removeListeners();
+  }
+
+  addListeners = () => {
+    this.audio.addEventListener("play", this.handlePlay);
+    this.audio.addEventListener("timeupdate", this.handlePlay);
+  };
+
+  removeListeners = () => {
     this.audio.removeEventListener("play", this.handlePlay);
     this.audio.removeEventListener("timeupdate", this.handlePlay);
-  }
+  };
 
   handleChangePlayingState = () => {
     this.setState(
@@ -65,7 +73,16 @@ class PlayerContainer extends Component {
 
   handleChangeProgress = (event, value) => {
     this.setState({ playingProgress: value });
-    this.audio.currentTime = (this.state.songDuration / 100) * value;
+  };
+
+  handleChangeProgressStart = () => {
+    this.removeListeners();
+  };
+
+  handleChangeProgressEnd = () => {
+    this.addListeners();
+    this.audio.currentTime =
+      (this.state.songDuration / 100) * this.state.playingProgress;
   };
 
   setPlayingState = () => {
@@ -129,6 +146,8 @@ class PlayerContainer extends Component {
           volumeIcon={this.getVolumeIcon(volumeValue)}
           onChangeVolume={this.handleChangeVolume}
           ratingElement={<StarsRating />}
+          onChangeProgressStart={this.handleChangeProgressStart}
+          onChangeProgressEnd={this.handleChangeProgressEnd}
         />
       </>
     );

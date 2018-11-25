@@ -114,11 +114,18 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
-  ratingElement
+  ratingElement,
+  onChangeProgressStart,
+  onChangeProgressEnd
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
-      <Slider value={progress} onChange={onChangeProgress} />
+      <Slider
+        value={progress}
+        onChange={onChangeProgress}
+        onDragStart={onChangeProgressStart}
+        onDragEnd={onChangeProgressEnd}
+      />
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
@@ -189,7 +196,9 @@ Player.propTypes = {
     songName: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired
-  })
+  }),
+  onChangeProgressStart: PropTypes.func.isRequired,
+  onChangeProgressEnd: PropTypes.func.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

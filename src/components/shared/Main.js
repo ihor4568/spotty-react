@@ -2,11 +2,12 @@ import React, { Component } from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import Albums from "../albums/Albums";
+import MySongsTable from "../MySongsTable";
 
 const styles = theme => ({
   main: {
-    paddingBottom: "6.5rem"
+    paddingBottom: "6.5rem",
+    width: "100%"
   },
   content: {
     flexGrow: 1,
@@ -31,7 +32,7 @@ class Main extends Component {
       <div className={classes.main}>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Albums />
+          <MySongsTable />
         </main>
       </div>
     );

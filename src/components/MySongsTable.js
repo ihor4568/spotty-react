@@ -12,6 +12,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import PlayArrow from "@material-ui/icons/PlayArrow";
 import TimerSharp from "@material-ui/icons/TimerSharp";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -42,7 +43,7 @@ const TABLE_DATA = [
   }
 ];
 
-const styles = {
+const styles = theme => ({
   root: {
     width: "calc(100% - 2rem)",
     margin: "2rem auto 0",
@@ -61,12 +62,9 @@ const styles = {
       backgroundColor: `inherit`
     },
     "&:active": {
-      backgroundColor: `#inherit`,
+      backgroundColor: `inherit`,
       boxShadow: `none`
     }
-  },
-  icon: {
-    color: `#000`
   },
   tableCell: {
     padding: 0,
@@ -75,7 +73,7 @@ const styles = {
   fixedWidth: {
     width: `auto`
   }
-};
+});
 
 class MySongsTable extends React.Component {
   state = {
@@ -84,30 +82,27 @@ class MySongsTable extends React.Component {
   };
 
   createNewSongsArray = arr => {
-    let newData = arr;
-
-    newData.map((item, i) => {
+    arr.map((item, i) => {
       return (item.number = i + 1);
     });
-    return newData;
+    return arr;
   };
 
-  createSortHandler = property => event => {
+  handleSortCreate = property => event => {
     this.handleRequestSort(event, property);
   };
 
   handleRequestSort = (event, property) => {
-    const orderBy = property;
     let order = "desc";
 
     if (this.state.orderBy === property && this.state.order === "desc") {
       order = "asc";
     }
 
-    this.setState({ order, orderBy });
+    this.setState({ order, orderBy: property });
   };
 
-  desc = (a, b, orderBy) => {
+  compareDesc = (a, b, orderBy) => {
     if (b[orderBy] < a[orderBy]) {
       return -1;
     }
@@ -129,8 +124,8 @@ class MySongsTable extends React.Component {
 
   getSorting = (order, orderBy) => {
     return order === "desc"
-      ? (a, b) => this.desc(a, b, orderBy)
-      : (a, b) => -this.desc(a, b, orderBy);
+      ? (a, b) => this.compareDesc(a, b, orderBy)
+      : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
   render() {
@@ -152,7 +147,7 @@ class MySongsTable extends React.Component {
                     <TableSortLabel
                       active={orderBy === "number"}
                       direction={order}
-                      onClick={this.createSortHandler("number")}
+                      onClick={this.handleSortCreate("number")}
                     >
                       #
                     </TableSortLabel>
@@ -166,7 +161,7 @@ class MySongsTable extends React.Component {
                     <TableSortLabel
                       active={orderBy === "name"}
                       direction={order}
-                      onClick={this.createSortHandler("name")}
+                      onClick={this.handleSortCreate("name")}
                     >
                       Name
                     </TableSortLabel>
@@ -179,7 +174,7 @@ class MySongsTable extends React.Component {
                     <TableSortLabel
                       active={orderBy === "time"}
                       direction={order}
-                      onClick={this.createSortHandler("time")}
+                      onClick={this.handleSortCreate("time")}
                     >
                       <TimerSharp className={classes.icon} />
                     </TableSortLabel>
@@ -190,7 +185,7 @@ class MySongsTable extends React.Component {
                     <TableSortLabel
                       active={orderBy === "artist"}
                       direction={order}
-                      onClick={this.createSortHandler("artist")}
+                      onClick={this.handleSortCreate("artist")}
                     >
                       Artist
                     </TableSortLabel>
@@ -201,7 +196,7 @@ class MySongsTable extends React.Component {
                     <TableSortLabel
                       active={orderBy === "album"}
                       direction={order}
-                      onClick={this.createSortHandler("album")}
+                      onClick={this.handleSortCreate("album")}
                     >
                       Album
                     </TableSortLabel>
@@ -263,8 +258,7 @@ class MySongsTable extends React.Component {
                     <TableCell
                       className={`${classes.tableCell} ${classes.fixedWidth}`}
                     >
-                      {" "}
-                      ...{" "}
+                      <MoreVertIcon />
                     </TableCell>
                   </TableRow>
                 );

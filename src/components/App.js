@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import SimpleTable from "./simpleTable";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 

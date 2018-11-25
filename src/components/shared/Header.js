@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Component } from "react";
 
 import AppBar from "./AppBar";
 import Drawer from "./Drawer";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-export default class Header extends React.Component {
+export default class Header extends Component {
   state = {
     open: false
   };
@@ -22,14 +22,8 @@ export default class Header extends React.Component {
     return (
       <div>
         <CssBaseline />
-        <AppBar
-          open={this.state.open}
-          handleDrawerOpen={this.handleDrawerOpen}
-        />
-        <Drawer
-          open={this.state.open}
-          handleDrawerClose={this.handleDrawerClose}
-        />
+        <AppBar open={this.state.open} onDrawerOpen={this.handleDrawerOpen} />
+        <Drawer open={this.state.open} onDrawerClose={this.handleDrawerClose} />
       </div>
     );
   }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 import IconButton from "@material-ui/core/IconButton";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -8,6 +8,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   exitToApp: {
@@ -15,7 +16,11 @@ const styles = theme => ({
   }
 });
 
-class ProfileMenu extends React.Component {
+class ProfileMenu extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   state = {
     anchorEl: null
   };

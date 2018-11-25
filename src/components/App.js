@@ -1,14 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import Header from "./Header";
-import Main from "./Main";
-import Player from "./Player";
+import Header from "./shared/Header";
+import Main from "./shared/Main";
+import PlayerContainer from "./player/PlayerContainer";
 
 import theme from "../theme";
 
 import { withStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
 
 const styles = theme => ({
   root: {
@@ -17,7 +18,11 @@ const styles = theme => ({
   }
 });
 
-class App extends React.Component {
+class App extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   render() {
     const { classes } = this.props;
 
@@ -26,7 +31,7 @@ class App extends React.Component {
         <div className={classes.root}>
           <Header />
           <Main />
-          <Player />
+          <PlayerContainer />
         </div>
       </MuiThemeProvider>
     );

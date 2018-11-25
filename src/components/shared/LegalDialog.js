@@ -32,11 +32,9 @@ class LegalDialog extends React.Component {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
-          {"License information"}
-        </DialogTitle>
+        <DialogTitle>License information</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          <DialogContentText>
             BJ Block & Dawn Pemberton is licensed under a
             Attribution-NonCommercial-NoDerivatives (aka Music Sharing) 3.0
             International License.

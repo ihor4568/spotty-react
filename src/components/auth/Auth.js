@@ -3,7 +3,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { withStyles } from "@material-ui/styles";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   container: {
@@ -16,6 +17,10 @@ const styles = {
 };
 
 class Auth extends Component {
+  static propTypes = {
+    classes: PropTypes.object
+  };
+
   state = {
     activeTab: 0
   };

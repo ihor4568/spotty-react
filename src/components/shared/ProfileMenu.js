@@ -1,11 +1,7 @@
 import React, { Component } from "react";
 
-import IconButton from "@material-ui/core/IconButton";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
-
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import ExitToApp from "@material-ui/icons/ExitToApp";
+import { IconButton, MenuItem, Menu } from "@material-ui/core";
+import { AccountCircle, ExitToApp } from "@material-ui/icons";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";

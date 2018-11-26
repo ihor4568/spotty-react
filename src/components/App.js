@@ -1,12 +1,21 @@
 import React, { Component } from "react";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
 import Header from "./shared/Header";
 import Main from "./shared/Main";
 import PlayerContainer from "./player/PlayerContainer";
 
 import theme from "../theme";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+
+import MySongs from "./MySongs";
+import Artists from "./Artists";
+import About from "./about/About";
+import Albums from "./albums/Albums";
+import AlbumTable from "./albums/AlbumTable";
+import ArtistTable from "./ArtistTable";
+import NotFound from "./NotFound";
 
 const styles = theme => ({
   root: {
@@ -32,13 +41,26 @@ class App extends Component {
     const { classes } = this.props;
 
     return (
-      <MuiThemeProvider theme={theme}>
-        <div className={classes.root}>
-          <Header onItemClick={this.handleItemClick} />
-          <Main currentPage={this.state.currentPage} />
-          <PlayerContainer />
-        </div>
-      </MuiThemeProvider>
+      <BrowserRouter>
+        <MuiThemeProvider theme={theme}>
+          <div className={classes.root}>
+            <Header />
+            <Main>
+              <Switch>
+                <Redirect exact from="/" to="/albums" />
+                <Route exact path="/mysongs" component={MySongs} />
+                <Route exact path="/albums" component={Albums} />
+                <Route exact path="/artists" component={Artists} />
+                <Route path="/about" component={About} />
+                <Route path="/albums/:id" component={AlbumTable} />
+                <Route path="/artists/:id" component={ArtistTable} />
+                <Route component={NotFound} />
+              </Switch>
+            </Main>
+            <PlayerContainer />
+          </div>
+        </MuiThemeProvider>
+      </BrowserRouter>
     );
   }
 }

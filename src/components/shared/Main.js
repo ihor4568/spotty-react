@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
-import About from "../about/About";
-import Albums from "../albums/Albums";
 
 const styles = theme => ({
   main: {
@@ -28,19 +26,16 @@ const styles = theme => ({
 class Main extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    currentPage: PropTypes.string.isRequired
+    children: PropTypes.object.isRequired
   };
 
   render() {
-    const { classes } = this.props;
-    const { currentPage } = this.props;
-
+    const { classes, children } = this.props;
     return (
       <div className={classes.main}>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          {currentPage === "about" && <About />}
-          {currentPage === "albums" && <Albums />}
+          {children}
         </main>
       </div>
     );

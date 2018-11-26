@@ -1,11 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
-import PlayIcon from "@material-ui/icons/PlayArrow";
-import PauseIcon from "@material-ui/icons/Pause";
-import Previous from "@material-ui/icons/SkipPrevious";
-import Next from "@material-ui/icons/SkipNext";
-import Typography from "@material-ui/core/Typography";
+import { Button, Typography } from "@material-ui/core";
+import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
 import DotsMenu from "../shared/DotsMenu";
 import PropTypes from "prop-types";
@@ -137,7 +133,7 @@ const Player = ({
       <div className={classes.controlsContainer}>
         <div className={classes.controls}>
           <Button className={classes.prevNextButton} variant="contained">
-            {<Previous fontSize={"large"} />}
+            {<SkipPrevious fontSize={"large"} />}
           </Button>
           <Button
             className={classes.playButtonContainer}
@@ -146,11 +142,13 @@ const Player = ({
             color="primary"
             aria-label="Play"
           >
-            {isPlaying && <PauseIcon className={classes.playButtonStateIcon} />}
-            {!isPlaying && <PlayIcon className={classes.playButtonStateIcon} />}
+            {isPlaying && <Pause className={classes.playButtonStateIcon} />}
+            {!isPlaying && (
+              <PlayArrow className={classes.playButtonStateIcon} />
+            )}
           </Button>
           <Button className={classes.prevNextButton} variant="contained">
-            {<Next fontSize={"large"} />}
+            {<SkipNext fontSize={"large"} />}
           </Button>
         </div>
         <div className={classes.volumeControls}>

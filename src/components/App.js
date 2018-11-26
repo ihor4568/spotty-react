@@ -26,8 +26,7 @@ const styles = theme => ({
 
 class App extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
-    match: PropTypes.object
+    classes: PropTypes.object.isRequired
   };
 
   render() {

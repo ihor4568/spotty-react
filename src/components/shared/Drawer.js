@@ -21,7 +21,6 @@ import {
   PersonOutline,
   Info
 } from "@material-ui/icons";
-import { compose } from "recompose";
 
 const MySongsLink = props => <Link to="/mysongs" {...props} />;
 const AlbumsLink = props => <Link to="/albums" {...props} />;
@@ -161,7 +160,6 @@ class DrawerComponent extends Component {
   }
 }
 
-export default compose(
-  withRouter,
-  withStyles(styles, { withTheme: true })
-)(DrawerComponent);
+export default withRouter(
+  withStyles(styles, { withTheme: true })(DrawerComponent)
+);

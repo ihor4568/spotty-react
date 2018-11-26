@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -12,7 +12,7 @@ const LEGAL_DIALOG_INFO = {
   licenseURL: "https://creativecommons.org/licenses/by-nc-nd/3.0/"
 };
 
-class LegalDialog extends React.Component {
+class LegalDialog extends Component {
   state = {
     open: false
   };

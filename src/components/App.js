@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Header from "./shared/Header";
 import Main from "./shared/Main";
 import PlayerContainer from "./player/PlayerContainer";
 
 import theme from "../theme";
-
-import { withStyles } from "@material-ui/core/styles";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import Auth from "./Auth";
 import MySongs from "./MySongs";
 import Albums from "./albums/Albums";
 import Artists from "./Artists";
@@ -35,35 +32,28 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    const loggedIn = true;
 
     return (
-      <Router>
+      <BrowserRouter>
         <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
             <Header />
             <Main>
-              <Route
-                exact
-                path="/"
-                render={() => (loggedIn ? <Redirect to="/albums" /> : <Auth />)}
-              />
-              <Route exact path="/mysongs" component={MySongs} />
-              <Route
-                exact
-                path="/albums"
-                render={props => <Albums {...props} />}
-              />
-              <Route exact path="/artists" component={Artists} />
-              <Route exact path="/about" component={About} />
-              <Route path="/albums/:id" component={AlbumTable} />
-              <Route path="/artists/:id" component={ArtistTable} />
-              <Route component={NotFound} />
+              <Switch>
+                <Redirect exact from="/" to="/albums" />
+                <Route exact path="/mysongs" component={MySongs} />
+                <Route exact path="/albums" component={Albums} />
+                <Route exact path="/artists" component={Artists} />
+                <Route path="/about" component={About} />
+                <Route path="/albums/:id" component={AlbumTable} />
+                <Route path="/artists/:id" component={ArtistTable} />
+                <Route component={NotFound} />
+              </Switch>
             </Main>
             <PlayerContainer />
           </div>
         </MuiThemeProvider>
-      </Router>
+      </BrowserRouter>
     );
   }
 }

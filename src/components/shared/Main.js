@@ -22,7 +22,7 @@ const styles = theme => ({
 class Main extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    children: PropTypes.array.isRequired
+    children: PropTypes.object.isRequired
   };
 
   render() {

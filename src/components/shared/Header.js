@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 
 export default class Header extends Component {
   static propTypes = {
-    onItemClick: PropTypes.func.isRequired
+    onItemClick: PropTypes.func
   };
 
   state = {

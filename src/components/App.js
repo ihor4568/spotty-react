@@ -17,6 +17,9 @@ import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./ArtistTable";
 import NotFound from "./NotFound";
 
+import { connect } from "react-redux";
+import { loadSongs } from "../store/actionCreators/mySongsTable";
+
 const styles = theme => ({
   root: {
     display: "flex",
@@ -26,7 +29,8 @@ const styles = theme => ({
 
 class App extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loadSongs: PropTypes.func
   };
 
   state = {
@@ -36,6 +40,10 @@ class App extends Component {
   handleItemClick = name => {
     this.setState({ currentPage: name });
   };
+
+  componentDidMount() {
+    this.props.loadSongs();
+  }
 
   render() {
     const { classes } = this.props;
@@ -65,4 +73,11 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+const mapDispatchToProps = {
+  loadSongs
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(App));

@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import Input from "@material-ui/core/Input";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+import {
+  Input,
+  InputLabel,
+  FormControl,
+  Button,
+  withStyles
+} from "@material-ui/core";
 
 const styles = {
   button: {

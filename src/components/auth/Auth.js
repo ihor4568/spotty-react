@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import { Tabs, Tab, withStyles } from "@material-ui/core/";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   container: {

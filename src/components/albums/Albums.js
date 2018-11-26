@@ -70,7 +70,14 @@ const styles = {
     textOverflow: `ellipsis`
   },
   link: {
-    textDecoration: "none"
+    textDecoration: "none",
+    "&:hover": {
+      color: `inherit`
+    },
+    "&:active": {
+      color: `inherit`,
+      boxShadow: `none`
+    }
   }
 };
 

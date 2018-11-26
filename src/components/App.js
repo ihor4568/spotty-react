@@ -14,7 +14,7 @@ import Albums from "./albums/Albums";
 import Artists from "./artists/Artists";
 import About from "./About";
 import AlbumTable from "./albums/AlbumTable";
-import ArtistTable from "./ArtistTable";
+import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./NotFound";
 
 const styles = theme => ({

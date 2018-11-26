@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
 
 export default class DotsMenu extends Component {
   state = {

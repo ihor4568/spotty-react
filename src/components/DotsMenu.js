@@ -6,7 +6,8 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 export default class DotsMenu extends Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
+    isOpen: false
   };
 
   handleClick = event => {
@@ -15,6 +16,14 @@ export default class DotsMenu extends Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleClickOpen = () => {
+    this.setState({ isOpen: true });
+  };
+
+  handleClickClose = () => {
+    this.setState({ isOpen: false });
   };
 
   render() {
@@ -26,10 +35,11 @@ export default class DotsMenu extends Component {
           <MoreVertIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleClose}>
-          <LegalDialog ref="child" />
-          <MenuItem onClick={() => this.refs.child.handleClickOpen()}>
-            Legal info
-          </MenuItem>
+          <LegalDialog
+            isOpen={this.state.isOpen}
+            onClose={this.handleClickClose}
+          />
+          <MenuItem onClick={this.handleClickOpen}>Legal info</MenuItem>
           <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
           <MenuItem onClick={this.handleClose}>Share</MenuItem>
         </Menu>

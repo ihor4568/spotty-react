@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import PropTypes from "prop-types";
 
 const LEGAL_DIALOG_INFO = {
   licenseInfo:
@@ -13,28 +14,18 @@ const LEGAL_DIALOG_INFO = {
 };
 
 class LegalDialog extends Component {
-  state = {
-    open: false
-  };
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
-
   handleReadMore = () => {
     window.open(LEGAL_DIALOG_INFO.licenseURL);
-    this.handleClose();
+    this.props.onClose();
   };
 
   render() {
+    const { isOpen } = this.props;
+
     return (
       <Dialog
-        open={this.state.open}
-        onClose={this.handleClose}
+        open={isOpen}
+        onClose={this.props.onClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -46,7 +37,7 @@ class LegalDialog extends Component {
           <Button onClick={this.handleReadMore} color="primary">
             READ MORE
           </Button>
-          <Button onClick={this.handleClose} color="primary" autoFocus>
+          <Button onClick={this.props.onClose} color="primary" autoFocus>
             CLOSE
           </Button>
         </DialogActions>
@@ -54,5 +45,10 @@ class LegalDialog extends Component {
     );
   }
 }
+
+LegalDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired
+};
 
 export default LegalDialog;

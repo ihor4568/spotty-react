@@ -9,7 +9,9 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
-import { MusicService } from "../services/MusicService";
+import { connect } from "react-redux";
+
+import { MusicService } from "../../services/MusicService";
 
 const SHARE_INFO = {
   imageUrl:
@@ -77,4 +79,10 @@ class ShareView extends Component {
   }
 }
 
-export default withStyles(styles)(ShareView);
+function mapStateToProps(state) {
+  return {
+    shareInfo: state.shareViewReducer.artistName
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(ShareView));

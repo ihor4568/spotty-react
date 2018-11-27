@@ -9,11 +9,14 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+// import { loadAlbums } from '../store/actionCreators/albums'
+
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
 import Albums from "./albums/Albums";
-import ShareView from "./ShareView";
+import ShareView from "./shareView/ShareView";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
@@ -59,4 +62,4 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+export default connect()(withStyles(styles, { withTheme: true })(App));

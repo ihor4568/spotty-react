@@ -1,24 +1,31 @@
 import React, { Component } from "react";
 import classNames from "classnames";
-
-import Drawer from "@material-ui/core/Drawer";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-
+import { Link, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import LibraryMusic from "@material-ui/icons/LibraryMusic";
-import Album from "@material-ui/icons/Album";
-import PersonOutline from "@material-ui/icons/PersonOutline";
-import Info from "@material-ui/icons/Info";
 import PropTypes from "prop-types";
+import {
+  Drawer,
+  IconButton,
+  Typography,
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "@material-ui/core";
+import {
+  ChevronLeft,
+  ChevronRight,
+  LibraryMusic,
+  Album,
+  PersonOutline,
+  Info
+} from "@material-ui/icons";
+
+const MySongsLink = props => <Link to="/mysongs" {...props} />;
+const AlbumsLink = props => <Link to="/albums" {...props} />;
+const ArtistsLink = props => <Link to="/artists" {...props} />;
+const AboutLink = props => <Link to="/about" {...props} />;
 
 const styles = theme => ({
   drawer: {
@@ -63,11 +70,16 @@ class DrawerComponent extends Component {
     classes: PropTypes.object.isRequired,
     theme: PropTypes.object.isRequired,
     open: PropTypes.bool.isRequired,
-    onDrawerClose: PropTypes.func.isRequired
+    onDrawerClose: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const {
+      classes,
+      location: { pathname },
+      theme
+    } = this.props;
 
     return (
       <Drawer
@@ -94,28 +106,36 @@ class DrawerComponent extends Component {
             Library
           </Typography>
           <IconButton onClick={this.props.onDrawerClose}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
+            {theme.direction === "rtl" ? <ChevronRight /> : <ChevronLeft />}
           </IconButton>
         </div>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem
+            button
+            component={MySongsLink}
+            selected={"/mysongs" === pathname}
+          >
             <ListItemIcon>
               <LibraryMusic />
             </ListItemIcon>
             <ListItemText primary="My Songs" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            component={AlbumsLink}
+            selected={"/albums" === pathname}
+          >
             <ListItemIcon>
               <Album />
             </ListItemIcon>
             <ListItemText primary="Albums" />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            component={ArtistsLink}
+            selected={"/artists" === pathname}
+          >
             <ListItemIcon>
               <PersonOutline />
             </ListItemIcon>
@@ -124,7 +144,11 @@ class DrawerComponent extends Component {
         </List>
         <Divider />
         <List>
-          <ListItem button>
+          <ListItem
+            button
+            component={AboutLink}
+            selected={"/about" === pathname}
+          >
             <ListItemIcon>
               <Info />
             </ListItemIcon>
@@ -136,4 +160,6 @@ class DrawerComponent extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(DrawerComponent);
+export default withRouter(
+  withStyles(styles, { withTheme: true })(DrawerComponent)
+);

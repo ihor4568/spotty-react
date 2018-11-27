@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import VolumeOff from "@material-ui/icons/VolumeOff";
-import VolumeMute from "@material-ui/icons/VolumeMute";
-import VolumeDown from "@material-ui/icons/VolumeDown";
-import VolumeUp from "@material-ui/icons/VolumeUp";
+import {
+  VolumeOff,
+  VolumeMute,
+  VolumeDown,
+  VolumeUp
+} from "@material-ui/icons";
 import PropTypes from "prop-types";
 
 import Player from "./Player";
-import StarsRating from "../shared/StarsRating";
 
 const SONG = {
   source:
@@ -49,14 +50,22 @@ class PlayerContainer extends Component {
   };
 
   componentDidMount() {
-    this.audio.addEventListener("play", this.handlePlay);
-    this.audio.addEventListener("timeupdate", this.handlePlay);
+    this.addListeners();
   }
 
   componentWillUnmount() {
+    this.removeListeners();
+  }
+
+  addListeners = () => {
+    this.audio.addEventListener("play", this.handlePlay);
+    this.audio.addEventListener("timeupdate", this.handlePlay);
+  };
+
+  removeListeners = () => {
     this.audio.removeEventListener("play", this.handlePlay);
     this.audio.removeEventListener("timeupdate", this.handlePlay);
-  }
+  };
 
   handleChangePlayingState = () => {
     this.setState(
@@ -67,7 +76,16 @@ class PlayerContainer extends Component {
 
   handleChangeProgress = (event, value) => {
     this.setState({ playingProgress: value });
-    this.audio.currentTime = (this.state.songDuration / 100) * value;
+  };
+
+  handleChangeProgressStart = () => {
+    this.removeListeners();
+  };
+
+  handleChangeProgressEnd = () => {
+    this.addListeners();
+    this.audio.currentTime =
+      (this.state.songDuration / 100) * this.state.playingProgress;
   };
 
   setPlayingState = () => {
@@ -142,8 +160,9 @@ class PlayerContainer extends Component {
           volume={volume}
           volumeIcon={this.getVolumeIcon(volume)}
           onChangeVolume={this.handleChangeVolume}
-          ratingElement={<StarsRating />}
           onMute={this.handleMute}
+          onChangeProgressStart={this.handleChangeProgressStart}
+          onChangeProgressEnd={this.handleChangeProgressEnd}
         />
       </>
     );

@@ -1,19 +1,16 @@
 import React, { Component } from "react";
 import classNames from "classnames";
-
 import ProfileMenu from "./ProfileMenu";
-
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
-
 import { fade } from "@material-ui/core/styles/colorManipulator";
 import { withStyles } from "@material-ui/core/styles";
-
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase
+} from "@material-ui/core";
+import { Menu, Search } from "@material-ui/icons";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -23,7 +20,8 @@ const styles = theme => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    height: theme.props.appBar.appBarHeight
   },
   appBarShift: {
     width: `calc(100% - ${theme.props.drawer.drawerWidth}px)`,
@@ -64,7 +62,7 @@ const styles = theme => ({
       width: "auto"
     }
   },
-  searchIcon: {
+  Search: {
     width: theme.spacing.unit * 9,
     height: "100%",
     position: "absolute",
@@ -119,7 +117,7 @@ class AppBarComponent extends Component {
               [classes.hide]: this.props.open
             })}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
           <Typography
             className={classes.title}
@@ -131,8 +129,8 @@ class AppBarComponent extends Component {
           </Typography>
           <div className={classes.grow} />
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+            <div className={classes.Search}>
+              <Search />
             </div>
             <InputBase
               placeholder="Search…"

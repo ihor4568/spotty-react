@@ -12,51 +12,7 @@ import {
 } from "@material-ui/core";
 
 import Title from "../shared/Title";
-
-const ALBUMS_INFO = [
-  {
-    albumId: "album1",
-    imageUrl:
-      "http://1.bp.blogspot.com/-gJPfokcNytE/Uy0KljKYg8I/AAAAAAAAAKk/8UhzMrqWjbg/s1600/397803_10151392708761987_1614138446_n.jpg",
-    albumName: "The Eminem Show",
-    albumArtists: "Eminem"
-  },
-  {
-    albumId: "album2",
-    imageUrl:
-      "https://image-cdn.hypb.st/https%3A%2F%2Fhypebeast.com%2Fimage%2Fht%2F2013%2F11%2Fwhosampled-eminem-the-marshall-mathers-lp-2-album-samples.jpg?q=75&w=800&cbr=1&fit=max",
-    albumName: "The Marshall Mathers lp 2",
-    albumArtists: "Eminem"
-  },
-  {
-    albumId: "album3",
-    imageUrl:
-      "https://polishedblogger.files.wordpress.com/2016/02/sia___this_is_acting__cover_album__2015_by_jeanbox77-d9ahnd6.jpg?w=768",
-    albumName: "This is Acting",
-    albumArtists: "Sia"
-  },
-  {
-    albumId: "album4",
-    imageUrl:
-      "https://s-media-cache-ak0.pinimg.com/originals/61/11/5d/61115deef723a87e4a264e6b1f25b3f9.jpg",
-    albumName: "21",
-    albumArtists: "Adele"
-  },
-  {
-    albumId: "album5",
-    imageUrl:
-      "https://daz19uf2q56ul.cloudfront.net/20171103032838/Jeremy-Riddle-More-cover.jpg",
-    albumName: "MORE",
-    albumArtists: "Jeremy Riddle"
-  },
-  {
-    albumId: "album6",
-    imageUrl:
-      "https://daz19uf2q56ul.cloudfront.net/20170815132211/Come-Alive-Final-Cover-Art1.jpg",
-    albumName: "Come Alive",
-    albumArtists: "Bethel Music Kids"
-  }
-];
+import { connect } from "react-redux";
 
 const styles = {
   container: {
@@ -79,7 +35,8 @@ const styles = {
 class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired
+    albums: PropTypes.array.isRequired,
+    match: PropTypes.object
   };
 
   render() {
@@ -89,7 +46,7 @@ class Albums extends Component {
       <>
         <Title name="Albums" />
         <Grid container spacing={32} className={classes.container}>
-          {ALBUMS_INFO.map((album, i) => (
+          {this.props.albums.map((album, i) => (
             <Grid key={i} item xl={2} md={3}>
               <Card>
                 <Link
@@ -99,7 +56,7 @@ class Albums extends Component {
                   <CardActionArea>
                     <CardMedia
                       component="img"
-                      image={album.imageUrl}
+                      image={album.albumCoverURL}
                       title={album.albumName}
                     />
                     <CardContent className={classes.albumDescription}>
@@ -111,7 +68,7 @@ class Albums extends Component {
                         {album.albumName}
                       </Typography>
                       <Typography component="p" className={classes.albumInfo}>
-                        by {album.albumArtists}
+                        by {album.artistsNames.join(", ")}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
@@ -125,4 +82,10 @@ class Albums extends Component {
   }
 }
 
-export default withStyles(styles)(Albums);
+function mapStateToProps(state) {
+  return {
+    albums: state.albums
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Albums));

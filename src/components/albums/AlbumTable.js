@@ -5,7 +5,7 @@ import { Typography } from "@material-ui/core";
 function AlbumTable({ match }) {
   return (
     <Typography variant="h4" component="h2">
-      The chosen albumtId is: {match.params.id}
+      The chosen albumId is: {match.params.id}
     </Typography>
   );
 }

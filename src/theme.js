@@ -11,7 +11,8 @@ const theme = createMuiTheme({
   },
   props: {
     drawer: {
-      drawerWidth: 200
+      drawerWidth: 200,
+      isShared: "true"
     }
   }
 });

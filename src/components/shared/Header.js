@@ -28,11 +28,7 @@ export default class Header extends Component {
       <div>
         <CssBaseline />
         <AppBar open={this.state.open} onDrawerOpen={this.handleDrawerOpen} />
-        <Drawer
-          open={this.state.open}
-          onDrawerClose={this.handleDrawerClose}
-          onItemClick={this.props.onItemClick}
-        />
+        <Drawer open={this.state.open} onDrawerClose={this.handleDrawerClose} />
       </div>
     );
   }

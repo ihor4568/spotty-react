@@ -112,6 +112,7 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
+  onMute,
   onChangeProgressStart,
   onChangeProgressEnd
 }) => (
@@ -160,7 +161,11 @@ const Player = ({
           </Button>
         </div>
         <div className={classes.volumeControls}>
-          <div className={classes.volumeBar}>{volumeIcon}</div>
+          <div className={classes.volumeBar}>
+            <div role="button" onClick={onMute}>
+              {volumeIcon}
+            </div>
+          </div>
           <div className={classes.volumeSlider}>
             <Slider
               className={classes.volumeSlider}
@@ -197,6 +202,7 @@ Player.propTypes = {
     albumName: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired
   }),
+  onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired
 };

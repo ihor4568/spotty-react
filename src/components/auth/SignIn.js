@@ -20,47 +20,39 @@ class SignIn extends Component {
   };
 
   state = {
-    form: {
-      email: "",
-      password: ""
-    }
+    email: "",
+    password: ""
   };
 
   handleInputChange = event => {
     const { name, value } = event.target;
 
-    this.setState({
-      form: {
-        ...this.state.form,
-        [name]: value
-      }
-    });
+    this.setState({ [name]: value });
   };
 
   render() {
     const { classes } = this.props;
+    const { email, password } = this.state;
 
     return (
       <form>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="email">Email</InputLabel>
+          <InputLabel>Email</InputLabel>
           <Input
-            value={this.state.form.email}
+            value={email}
             onChange={this.handleInputChange}
             name="email"
-            id="email"
             autoComplete="email"
             autoFocus
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <InputLabel>Password</InputLabel>
           <Input
-            value={this.state.form.password}
+            value={password}
             onChange={this.handleInputChange}
             name="password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
         </FormControl>

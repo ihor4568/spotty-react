@@ -20,72 +20,62 @@ class SignUp extends Component {
   };
 
   state = {
-    form: {
-      email: "",
-      name: "",
-      password: "",
-      confirmPassword: ""
-    }
+    email: "",
+    name: "",
+    password: "",
+    confirmPassword: ""
   };
 
   handleInputChange = event => {
     const { name, value } = event.target;
 
-    this.setState({
-      form: {
-        ...this.state.form,
-        [name]: value
-      }
-    });
+    this.setState({ [name]: value });
   };
 
   render() {
     const { classes } = this.props;
+    const { email, name, password, confirmPassword } = this.state;
 
     return (
       <form>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="email">Email</InputLabel>
+          <InputLabel>Email</InputLabel>
           <Input
-            value={this.state.form.email}
+            value={email}
             onChange={this.handleInputChange}
             name="email"
             type="text"
-            id="email"
             autoComplete="email"
             autoFocus
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="name">Name</InputLabel>
+          <InputLabel>Name</InputLabel>
           <Input
-            value={this.state.form.name}
+            value={name}
             onChange={this.handleInputChange}
             name="name"
             type="text"
-            id="name"
             autoComplete="name"
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="password">Password</InputLabel>
+          <InputLabel>Password</InputLabel>
           <Input
-            value={this.state.form.password}
+            value={password}
             onChange={this.handleInputChange}
             name="password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel htmlFor="confirmPassword">Confirm password</InputLabel>
+          <InputLabel>Confirm password</InputLabel>
           <Input
-            value={this.state.form.confirmPassword}
+            value={confirmPassword}
             onChange={this.handleInputChange}
             name="confirmPassword"
             type="password"
-            id="confirmPassword"
             autoComplete="current-password"
           />
         </FormControl>

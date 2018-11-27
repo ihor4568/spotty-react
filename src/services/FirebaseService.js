@@ -5,7 +5,10 @@ import "firebase/auth";
 
 let config = {};
 try {
-  config = require("../config.sample.json");
-} catch (e) {}
+  // eslint-disable-next-line global-require, import/no-unresolved
+  config = require("../config.json");
+} catch (e) {
+  //
+}
 
 export const FirebaseService = initializeApp(config);

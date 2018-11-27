@@ -9,13 +9,13 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import MySongs from "./MySongs";
+import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
 import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
-import NotFound from "./shared/NotFound";
+import NotFound from "./notFound/NotFound";
 
 const styles = () => ({
   root: {

@@ -17,19 +17,18 @@ const styles = {
   }
 };
 
-function AboutCard(props) {
-  const { classes } = props;
+function AboutCard({ classes, person }) {
   return (
-    <a className={classes.link} href={"https://github.com/" + props.person}>
+    <a className={classes.link} href={"https://github.com/" + person}>
       <Card>
         <CardActionArea>
           <CardContent>
             <CardMedia
               component="img"
-              image={"https://github.com/" + props.person + ".png?size=400"}
+              image={"https://github.com/" + person + ".png?size=400"}
             />
             <Typography className={classes.title} component="h2" variant="h6">
-              {props.person}
+              {person}
             </Typography>
           </CardContent>
         </CardActionArea>

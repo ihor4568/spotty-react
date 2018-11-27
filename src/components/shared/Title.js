@@ -9,12 +9,10 @@ const styles = () => ({
   }
 });
 
-function Title(props) {
-  const { classes } = props;
-
+function Title({ classes, name }) {
   return (
     <Typography variant="h4" className={classes.title}>
-      {props.name}
+      {name}
     </Typography>
   );
 }

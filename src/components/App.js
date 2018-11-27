@@ -19,8 +19,7 @@ import NotFound from "./NotFound";
 
 const styles = theme => ({
   root: {
-    display: "flex",
-    width: "100%"
+    display: "flex"
   }
 });
 

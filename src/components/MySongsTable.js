@@ -1,21 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Paper from "@material-ui/core/Paper";
-import Tooltip from "@material-ui/core/Tooltip";
-import Button from "@material-ui/core/Button";
-import PlayArrow from "@material-ui/icons/PlayArrow";
-import TimerSharp from "@material-ui/icons/TimerSharp";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Typography from "@material-ui/core/Typography";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Paper,
+  Tooltip,
+  Button,
+  Typography
+} from "@material-ui/core";
+import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+import DotsMenu from "./DotsMenu";
 
 const TABLE_DATA = [
   {
@@ -53,7 +53,8 @@ const styles = theme => ({
   image: {
     width: "2rem",
     height: "2rem",
-    borderRadius: ".2rem"
+    borderRadius: ".2rem",
+    marginRight: `1rem`
   },
   button: {
     backgroundColor: `inherit`,
@@ -76,17 +77,23 @@ const styles = theme => ({
   }
 });
 
-class MySongsTable extends React.Component {
+class MySongsTable extends Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired
+  };
+
   state = {
     order: "asc",
     orderBy: "number"
   };
 
   createNewSongsArray = arr => {
-    arr.map((item, i) => {
-      return (item.number = i + 1);
+    return arr.map((item, i) => {
+      return {
+        ...item,
+        number: i + 1
+      };
     });
-    return arr;
   };
 
   handleSortCreate = property => event => {
@@ -263,7 +270,7 @@ class MySongsTable extends React.Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <MoreVertIcon />
+                        <DotsMenu />
                       </TableCell>
                     </TableRow>
                   );
@@ -276,9 +283,5 @@ class MySongsTable extends React.Component {
     );
   }
 }
-
-MySongsTable.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(MySongsTable);

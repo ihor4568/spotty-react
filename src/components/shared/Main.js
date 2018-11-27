@@ -6,10 +6,9 @@ import PropTypes from "prop-types";
 const styles = theme => ({
   main: {
     paddingBottom: "6.5rem",
-    width: "100%"
+    flexGrow: 1
   },
   content: {
-    flexGrow: 1,
     padding: theme.spacing.unit * 3
   },
   toolbar: {

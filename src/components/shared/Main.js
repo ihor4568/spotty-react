@@ -1,12 +1,15 @@
 import React, { Component } from "react";
-
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
   main: {
     paddingBottom: "6.5rem",
-    width: "100%"
+    height: "100%",
+    maxWidth: "80rem",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    margin: "0 auto"
   },
   content: {
     flexGrow: 1,

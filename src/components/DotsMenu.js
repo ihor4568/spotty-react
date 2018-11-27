@@ -15,6 +15,10 @@ export default class DotsMenu extends Component {
     this.setState({ anchorEl: null });
   };
 
+  handleShare() {
+    window.open(`/songs/song1`);
+  }
+
   render() {
     const { anchorEl } = this.state;
 
@@ -26,7 +30,7 @@ export default class DotsMenu extends Component {
         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleClose}>
           <MenuItem onClick={this.handleClose}>Legal info</MenuItem>
           <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
-          <MenuItem onClick={this.handleClose}>Share</MenuItem>
+          <MenuItem onClick={this.handleShare}>Share</MenuItem>
         </Menu>
       </div>
     );

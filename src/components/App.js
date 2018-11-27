@@ -13,6 +13,7 @@ import MySongs from "./MySongs";
 import Albums from "./albums/Albums";
 import Artists from "./Artists";
 import About from "./About";
+import ShareView from "./ShareView";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./ArtistTable";
 import NotFound from "./NotFound";
@@ -46,6 +47,7 @@ class App extends Component {
                 <Route path="/about" component={About} />
                 <Route path="/albums/:id" component={AlbumTable} />
                 <Route path="/artists/:id" component={ArtistTable} />
+                <Route path="/songs/:id" component={ShareView} />
                 <Route component={NotFound} />
               </Switch>
             </Main>

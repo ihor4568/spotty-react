@@ -17,7 +17,7 @@ import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: "flex",
     width: "100%"

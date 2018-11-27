@@ -1,7 +1,8 @@
 import React from "react";
+import Title from "./shared/Title";
 
-function MySongs(props) {
-  return <h1>My Songs</h1>;
+function MySongs() {
+  return <Title name="My Songs" />;
 }
 
 export default MySongs;

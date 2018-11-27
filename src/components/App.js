@@ -10,12 +10,12 @@ import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 import MySongs from "./MySongs";
+import Artists from "./artists/Artists";
+import About from "./about/About";
 import Albums from "./albums/Albums";
-import Artists from "./Artists";
-import About from "./About";
 import AlbumTable from "./albums/AlbumTable";
-import ArtistTable from "./ArtistTable";
-import NotFound from "./NotFound";
+import ArtistTable from "./artists/ArtistTable";
+import NotFound from "./shared/NotFound";
 
 const styles = theme => ({
   root: {

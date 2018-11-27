@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Player from "./Player";
-import StarsRating from "../shared/StarsRating";
 import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeMute from "@material-ui/icons/VolumeMute";
 import VolumeDown from "@material-ui/icons/VolumeDown";
@@ -145,7 +144,6 @@ class PlayerContainer extends Component {
           volume={volumeValue}
           volumeIcon={this.getVolumeIcon(volumeValue)}
           onChangeVolume={this.handleChangeVolume}
-          ratingElement={<StarsRating />}
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
         />

@@ -7,6 +7,7 @@ import Previous from "@material-ui/icons/SkipPrevious";
 import Next from "@material-ui/icons/SkipNext";
 import Typography from "@material-ui/core/Typography";
 import Slider from "@material-ui/lab/Slider";
+import StarsRating from "../shared/StarsRating";
 import DotsMenu from "../DotsMenu";
 import PropTypes from "prop-types";
 
@@ -114,7 +115,6 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
-  ratingElement,
   onChangeProgressStart,
   onChangeProgressEnd
 }) => (
@@ -172,7 +172,9 @@ const Player = ({
           </div>
         </div>
       </div>
-      <div>{ratingElement}</div>
+      <div>
+        <StarsRating />
+      </div>
       <div className={classes.threeDotMenu}>
         <DotsMenu />
       </div>
@@ -188,7 +190,6 @@ Player.propTypes = {
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
   onChangeVolume: PropTypes.func.isRequired,
-  ratingElement: PropTypes.element.isRequired,
   volumeIcon: PropTypes.element.isRequired,
   song: PropTypes.shape({
     source: PropTypes.string.isRequired,

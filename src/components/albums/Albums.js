@@ -11,6 +11,8 @@ import {
   Typography
 } from "@material-ui/core";
 
+import Title from "../shared/Title";
+
 const ALBUMS_INFO = [
   {
     albumId: "album1",
@@ -57,10 +59,6 @@ const ALBUMS_INFO = [
 ];
 
 const styles = {
-  container: {
-    width: `100%`,
-    margin: 0
-  },
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
@@ -70,7 +68,14 @@ const styles = {
     textOverflow: `ellipsis`
   },
   link: {
-    textDecoration: "none"
+    textDecoration: "none",
+    "&:hover": {
+      color: `inherit`
+    },
+    "&:active": {
+      color: `inherit`,
+      boxShadow: `none`
+    }
   }
 };
 
@@ -85,9 +90,7 @@ class Albums extends Component {
 
     return (
       <>
-        <Typography variant="h4" component="h2">
-          Albums
-        </Typography>
+        <Title name="Albums" />
         <Grid container spacing={32} className={classes.container}>
           {ALBUMS_INFO.map((album, i) => (
             <Grid key={i} item xl={2} md={3}>

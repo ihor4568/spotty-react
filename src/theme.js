@@ -12,6 +12,12 @@ const theme = createMuiTheme({
   props: {
     drawer: {
       drawerWidth: 200
+    },
+    mediaPlayer: {
+      mediaPlayerHeight: "6.8rem"
+    },
+    appBar: {
+      appBarHeight: "4rem"
     }
   }
 });

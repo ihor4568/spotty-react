@@ -1,15 +1,21 @@
 import React, { Component } from "react";
-
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
   main: {
-    paddingBottom: "6.5rem"
+    paddingBottom: "6.5rem",
+    height: "100%",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    margin: "0 auto"
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+    minHeight: `calc(100vh - (${theme.props.appBar.appBarHeight} + ${
+      theme.props.mediaPlayer.mediaPlayerHeight
+    }))`
   },
   toolbar: {
     display: "flex",

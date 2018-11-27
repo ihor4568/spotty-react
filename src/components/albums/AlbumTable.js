@@ -1,8 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Typography } from "@material-ui/core";
 
 function AlbumTable({ match }) {
-  return <div>The chosen albumtId is: {match.params.id}</div>;
+  return (
+    <Typography variant="h4" component="h2">
+      The chosen albumtId is: {match.params.id}
+    </Typography>
+  );
 }
 
 AlbumTable.propTypes = {

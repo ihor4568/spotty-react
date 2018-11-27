@@ -26,8 +26,7 @@ const styles = () => ({
   }
 });
 
-function About(props) {
-  const { classes } = props;
+function About({ classes }) {
   const team = [
     "WOLFRIEND",
     "lubovgribiniyk",
@@ -58,7 +57,7 @@ function About(props) {
       </Typography>
       <Grid container className={classes.container} spacing={32}>
         {team.map((person, i) => (
-          <Grid className={classes.card} key={i} item lg={3} sm={4}>
+          <Grid className={classes.card} key={i} item lg={3} md={4} sm={6}>
             <AboutCard person={person} />
           </Grid>
         ))}

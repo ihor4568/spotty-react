@@ -29,14 +29,6 @@ class App extends Component {
     classes: PropTypes.object.isRequired
   };
 
-  state = {
-    currentPage: "albums"
-  };
-
-  handleItemClick = name => {
-    this.setState({ currentPage: name });
-  };
-
   render() {
     const { classes } = this.props;
 

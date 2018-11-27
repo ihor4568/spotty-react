@@ -8,7 +8,7 @@ const styles = theme => ({
     height: "100%",
     maxWidth: "80rem",
     overflow: "hidden",
-    boxSizing: "border - box",
+    boxSizing: "border-box",
     margin: "0 auto"
   },
   content: {

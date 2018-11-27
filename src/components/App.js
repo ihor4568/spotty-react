@@ -9,13 +9,13 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import MySongsTable from "./MySongsTable";
+import MySongs from "./mySongs/MySongs";
+import Artists from "./artists/Artists";
+import About from "./about/About";
 import Albums from "./albums/Albums";
-import Artists from "./Artists";
-import About from "./About";
 import AlbumTable from "./albums/AlbumTable";
-import ArtistTable from "./ArtistTable";
-import NotFound from "./NotFound";
+import ArtistTable from "./artists/ArtistTable";
+import NotFound from "./shared/NotFound";
 
 const styles = theme => ({
   root: {
@@ -47,7 +47,7 @@ class App extends Component {
             <Main>
               <Switch>
                 <Redirect exact from="/" to="/albums" />
-                <Route exact path="/mysongs" component={MySongsTable} />
+                <Route exact path="/mysongs" component={MySongs} />
                 <Route exact path="/albums" component={Albums} />
                 <Route exact path="/artists" component={Artists} />
                 <Route path="/about" component={About} />

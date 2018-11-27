@@ -10,8 +10,7 @@ import {
   TableSortLabel,
   Paper,
   Tooltip,
-  Button,
-  Typography
+  Button
 } from "@material-ui/core";
 import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
@@ -141,9 +140,6 @@ class MySongsTable extends Component {
     const { order, orderBy } = this.state;
     return (
       <>
-        <Typography variant="h4" component="h2">
-          My Songs
-        </Typography>
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">

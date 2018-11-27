@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
-import DotsMenu from "../DotsMenu";
+import DotsMenu from "../shared/DotsMenu";
 import PropTypes from "prop-types";
 
 const styles = theme => ({

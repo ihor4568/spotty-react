@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Title from "../shared/Title";
 
 function AlbumTable({ match }) {
-  return <div>The chosen albumtId is: {match.params.id}</div>;
+  return <Title name={`The chosen albumId is: ${match.params.id}`} />;
 }
 
 AlbumTable.propTypes = {

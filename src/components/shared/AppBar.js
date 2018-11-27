@@ -20,7 +20,8 @@ const styles = theme => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    height: theme.props.appBar.appBarHeight
   },
   appBarShift: {
     width: `calc(100% - ${theme.props.drawer.drawerWidth}px)`,

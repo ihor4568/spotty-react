@@ -5,7 +5,7 @@ import "firebase/auth";
 
 let config = {};
 try {
-  config = require("../../config.json");
+  config = require("../config.json");
 } catch (e) {
   //
 }

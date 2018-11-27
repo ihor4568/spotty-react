@@ -51,8 +51,7 @@ const ARTISTS_INFO = [
 
 const styles = {
   container: {
-    width: `100%`,
-    margin: 0
+    marginTop: `.5rem`
   },
   artistCard: {
     boxShadow: `none`,

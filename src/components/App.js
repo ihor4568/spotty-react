@@ -17,6 +17,9 @@ import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 
+import { connect } from "react-redux";
+import { loadArtists } from "../store/actionCreators/artists";
+
 const styles = () => ({
   root: {
     display: "flex",
@@ -26,8 +29,13 @@ const styles = () => ({
 
 class App extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    loadArtists: PropTypes.func
   };
+
+  componentDidMount() {
+    this.props.loadArtists();
+  }
 
   render() {
     const { classes } = this.props;
@@ -57,4 +65,11 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(App);
+const mapDispatchToProps = {
+  loadArtists
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(App));

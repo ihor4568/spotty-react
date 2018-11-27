@@ -8,10 +8,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
 const styles = {
-  media: {
-    minHeight: 220,
-    minWidth: 220
-  },
   title: {
     textAlign: "center",
     padding: "1rem 0 1rem 0"
@@ -29,7 +25,7 @@ function AboutCard(props) {
         <CardActionArea>
           <CardContent>
             <CardMedia
-              className={classes.media}
+              component="img"
               image={"https://github.com/" + props.person + ".png?size=400"}
             />
             <Typography className={classes.title} component="h2" variant="h6">

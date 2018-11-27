@@ -56,9 +56,9 @@ function About(props) {
       <Typography component="p" variant="h6" className={classes.developed}>
         Developed by:
       </Typography>
-      <Grid container spacing={32}>
+      <Grid container className={classes.container} spacing={32}>
         {team.map((person, i) => (
-          <Grid className={classes.card} key={i} item lg={3} md={4}>
+          <Grid className={classes.card} key={i} item lg={3} sm={4}>
             <AboutCard person={person} />
           </Grid>
         ))}

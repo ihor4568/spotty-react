@@ -4,13 +4,8 @@ import AppBar from "./AppBar";
 import Drawer from "./Drawer";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
-import PropTypes from "prop-types";
 
 export default class Header extends Component {
-  static propTypes = {
-    onItemClick: PropTypes.func.isRequired
-  };
-
   state = {
     open: false
   };

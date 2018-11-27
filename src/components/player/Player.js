@@ -25,7 +25,7 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#fefefe",
-    height: "6.8rem"
+    height: theme.props.mediaPlayer.mediaPlayerHeight
   },
   audioInfoContainer: {
     flexBasis: "33%"

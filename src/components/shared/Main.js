@@ -11,7 +11,9 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    minHeight: "calc(100vh - 10rem)"
+    minHeight: `calc(100vh - (${theme.props.appBar.appBarHeight} + ${
+      theme.props.mediaPlayer.mediaPlayerHeight
+    }))`
   },
   toolbar: {
     display: "flex",

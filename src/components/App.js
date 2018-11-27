@@ -9,18 +9,18 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import MySongs from "./MySongs";
+import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
 import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
-import NotFound from "./shared/NotFound";
+/*import NotFound from "./notFound/NotFound";*/
 
 import { connect } from "react-redux";
 import { loadSongs } from "../store/actionCreators/mySongsTable";
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     display: "flex",
     width: "100%"
@@ -31,10 +31,6 @@ class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadSongs: PropTypes.func
-  };
-
-  handleItemClick = name => {
-    this.setState({ currentPage: name });
   };
 
   componentDidMount() {
@@ -58,7 +54,7 @@ class App extends Component {
                 <Route path="/about" component={About} />
                 <Route path="/albums/:id" component={AlbumTable} />
                 <Route path="/artists/:id" component={ArtistTable} />
-                <Route component={NotFound} />
+                {/* <Route component={NotFound} />*/}
               </Switch>
             </Main>
             <PlayerContainer />

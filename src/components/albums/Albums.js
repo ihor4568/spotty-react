@@ -59,9 +59,6 @@ const ALBUMS_INFO = [
 ];
 
 const styles = {
-  container: {
-    marginTop: `.5rem`
-  },
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },

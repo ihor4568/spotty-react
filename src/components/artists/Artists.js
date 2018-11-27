@@ -51,9 +51,6 @@ const ARTISTS_INFO = [
 ];
 
 const styles = {
-  container: {
-    marginTop: `.5rem`
-  },
   artistCard: {
     boxShadow: `none`,
     backgroundColor: `inherit`

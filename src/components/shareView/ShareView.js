@@ -81,7 +81,7 @@ class ShareView extends Component {
 
 function mapStateToProps(state) {
   return {
-    shareInfo: state.shareViewReducer.artistName
+    share: state.shareViewReducer
   };
 }
 

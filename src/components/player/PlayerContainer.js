@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Player from "./Player";
-import VolumeOff from "@material-ui/icons/VolumeOff";
-import VolumeMute from "@material-ui/icons/VolumeMute";
-import VolumeDown from "@material-ui/icons/VolumeDown";
-import VolumeUp from "@material-ui/icons/VolumeUp";
+import {
+  VolumeOff,
+  VolumeMute,
+  VolumeDown,
+  VolumeUp
+} from "@material-ui/icons";
 import PropTypes from "prop-types";
 
 const SONG = {

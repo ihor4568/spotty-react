@@ -6,6 +6,8 @@ import "firebase/auth";
 let config = {};
 try {
   config = require("../config.json");
-} catch (e) {}
+} catch (e) {
+  //
+}
 
 export const FirebaseService = initializeApp(config);

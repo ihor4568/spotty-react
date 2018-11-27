@@ -1,12 +1,8 @@
 import React from "react";
-import { Typography } from "@material-ui/core";
+import Title from "./shared/Title";
 
-function MySongs(props) {
-  return (
-    <Typography variant="h4" component="h2">
-      My Songs
-    </Typography>
-  );
+function MySongs() {
+  return <Title name="My Songs" />;
 }
 
 export default MySongs;

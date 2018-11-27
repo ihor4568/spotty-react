@@ -10,13 +10,15 @@
     "prop-types": "15.6.2",
     "react": "16.6.3",
     "react-dom": "16.6.3",
-    "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
-    "styled-components": "4.1.1"
+    "typeface-roboto": "0.0.54",
+    "react-router-dom": "4.3.1",
+    "firebase": "^5.5.9"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "npm run build && firebase deploy",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "fix": "eslint --fix ./src",
@@ -29,6 +31,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "firebase-tools": "^6.1.1",
     "eslint-config-prettier": "3.3.0",
     "eslint-plugin-prettier": "3.0.0",
     "husky": "1.1.4",

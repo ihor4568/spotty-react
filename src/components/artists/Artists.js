@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
+import Title from "../shared/Title";
 
 import {
   Grid,
@@ -97,9 +98,7 @@ class Artists extends Component {
     const { classes, match } = this.props;
     return (
       <>
-        <Typography variant="h4" component="h2">
-          Artists
-        </Typography>
+        <Title name="Artists" />
         <Grid container spacing={32} className={classes.container}>
           {ARTISTS_INFO.map((artist, i) => (
             <Grid key={i} item xl={2} md={3}>

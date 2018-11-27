@@ -138,6 +138,11 @@ class MySongsTable extends Component {
   render() {
     const { classes } = this.props;
     const { order, orderBy } = this.state;
+    const sortedData = this.stableSort(
+      this.createNewSongsArray(TABLE_DATA),
+      this.getSorting(order, orderBy)
+    );
+
     return (
       <>
         <Paper className={classes.root}>
@@ -217,10 +222,7 @@ class MySongsTable extends Component {
               </TableHead>
 
               <TableBody>
-                {this.stableSort(
-                  this.createNewSongsArray(TABLE_DATA),
-                  this.getSorting(order, orderBy)
-                ).map((data, i) => {
+                {sortedData.map((data, i) => {
                   return (
                     <TableRow hover key={i}>
                       <TableCell

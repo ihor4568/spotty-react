@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Player from "./Player";
-import StarsRating from "../shared/StarsRating";
+import StarsRating from "./StarsRating";
 import {
   VolumeOff,
   VolumeMute,

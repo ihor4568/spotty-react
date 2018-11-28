@@ -19,6 +19,9 @@ const theme = createMuiTheme({
     },
     appBar: {
       appBarHeight: "4rem"
+    },
+    auth: {
+      ButtonMarginTop: 30
     }
   }
 });

@@ -10,10 +10,10 @@ import {
 
 const styles = theme => ({
   button: {
-    marginTop: 30
+    marginTop: theme.props.auth.ButtonMarginTop
   },
   inputLabel: {
-    "&$inputFocused": {
+    inputFocused: {
       color: theme.palette.primary.main
     }
   },

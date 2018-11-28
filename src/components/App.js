@@ -18,6 +18,7 @@ import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 
 import { connect } from "react-redux";
+import { loadArtists } from "../store/actionCreators/artists";
 import { loadAlbums } from "../store/actionCreators/albums";
 
 const styles = () => ({
@@ -30,11 +31,13 @@ const styles = () => ({
 class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    loadArtists: PropTypes.func,
     loadAlbums: PropTypes.func
   };
 
   componentDidMount() {
     this.props.loadAlbums();
+    this.props.loadArtists();
   }
 
   render() {
@@ -66,6 +69,7 @@ class App extends Component {
 }
 
 const mapDispatchToProps = {
+  loadArtists,
   loadAlbums
 };
 

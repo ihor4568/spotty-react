@@ -49,7 +49,12 @@ class Auth extends Component {
 
     return (
       <div className={classes.container}>
-        <Tabs value={activeTab} onChange={this.handleTabChange} fullWidth>
+        <Tabs
+          value={activeTab}
+          onChange={this.handleTabChange}
+          indicatorColor="primary"
+          fullWidth
+        >
           <Tab className={classes.tab} label="Sign In" />
           <Tab className={classes.tab} label="Sign Up" />
         </Tabs>

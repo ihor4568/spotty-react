@@ -120,7 +120,7 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# environment variables file
 .env
 
 

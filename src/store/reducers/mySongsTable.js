@@ -1,8 +1,8 @@
 import { ADD_SONGS } from "../actionTypes";
 
-const initialState = [];
+const INITIAL_STATE = [];
 
-export default function mySongsTableReducer(state = initialState, action) {
+export default function mySongsTableReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ADD_SONGS:
       return action.payload;

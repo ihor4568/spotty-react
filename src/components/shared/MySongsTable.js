@@ -114,6 +114,11 @@ class MySongsTable extends Component {
   render() {
     const { classes } = this.props;
     const { order, orderBy } = this.state;
+    const sortedData = this.stableSort(
+      this.createNewSongsArray(this.props.songs),
+      this.getSorting(order, orderBy)
+    );
+
     return (
       <>
         <Paper className={classes.root}>
@@ -158,7 +163,7 @@ class MySongsTable extends Component {
                       <TableSortLabel
                         active={orderBy === "time"}
                         direction={order}
-                        onClick={this.handleSortCreate("duration")}
+                        onClick={this.handleSortCreate("time")}
                       >
                         <TimerSharp className={classes.icon} />
                       </TableSortLabel>
@@ -169,7 +174,7 @@ class MySongsTable extends Component {
                       <TableSortLabel
                         active={orderBy === "artist"}
                         direction={order}
-                        onClick={this.handleSortCreate("artistsNames")}
+                        onClick={this.handleSortCreate("artist")}
                       >
                         Artist
                       </TableSortLabel>
@@ -193,10 +198,7 @@ class MySongsTable extends Component {
               </TableHead>
 
               <TableBody>
-                {this.stableSort(
-                  this.createNewSongsArray(this.props.songs),
-                  this.getSorting(order, orderBy)
-                ).map((data, i) => {
+                {sortedData.map((data, i) => {
                   return (
                     <TableRow hover key={i}>
                       <TableCell

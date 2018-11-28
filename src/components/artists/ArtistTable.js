@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Title from "../shared/Title";
 
 function ArtistTable({ match }) {
-  return <div>The chosen artistId is: {match.params.id}</div>;
+  return <Title name={`The chosen artistId is: ${match.params.id}`} />;
 }
 
 ArtistTable.propTypes = {

@@ -3,7 +3,9 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button, Typography } from "@material-ui/core";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
+import StarsRating from "../shared/StarsRating";
 import DotsMenu from "../shared/DotsMenu";
+
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -21,7 +23,7 @@ const styles = theme => ({
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#fefefe",
-    height: "6.8rem"
+    height: theme.props.mediaPlayer.mediaPlayerHeight
   },
   audioInfoContainer: {
     flexBasis: "33%"
@@ -110,11 +112,18 @@ const Player = ({
   volume,
   volumeIcon,
   onChangeVolume,
-  ratingElement
+  onMute,
+  onChangeProgressStart,
+  onChangeProgressEnd
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
-      <Slider value={progress} onChange={onChangeProgress} />
+      <Slider
+        value={progress}
+        onChange={onChangeProgress}
+        onDragStart={onChangeProgressStart}
+        onDragEnd={onChangeProgressEnd}
+      />
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
@@ -152,7 +161,11 @@ const Player = ({
           </Button>
         </div>
         <div className={classes.volumeControls}>
-          <div className={classes.volumeBar}>{volumeIcon}</div>
+          <div className={classes.volumeBar}>
+            <div role="button" onClick={onMute}>
+              {volumeIcon}
+            </div>
+          </div>
           <div className={classes.volumeSlider}>
             <Slider
               className={classes.volumeSlider}
@@ -163,7 +176,9 @@ const Player = ({
           </div>
         </div>
       </div>
-      <div>{ratingElement}</div>
+      <div>
+        <StarsRating />
+      </div>
       <div className={classes.threeDotMenu}>
         <DotsMenu />
       </div>
@@ -179,7 +194,6 @@ Player.propTypes = {
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
   onChangeVolume: PropTypes.func.isRequired,
-  ratingElement: PropTypes.element.isRequired,
   volumeIcon: PropTypes.element.isRequired,
   song: PropTypes.shape({
     source: PropTypes.string.isRequired,
@@ -187,7 +201,10 @@ Player.propTypes = {
     songName: PropTypes.string.isRequired,
     albumName: PropTypes.string.isRequired,
     authorName: PropTypes.string.isRequired
-  })
+  }),
+  onMute: PropTypes.func.isRequired,
+  onChangeProgressStart: PropTypes.func.isRequired,
+  onChangeProgressEnd: PropTypes.func.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

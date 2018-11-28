@@ -15,7 +15,7 @@ import About from "./about/About";
 import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
-/*import NotFound from "./notFound/NotFound";*/
+import NotFound from "./notFound/NotFound";
 
 import { connect } from "react-redux";
 import { loadSongs } from "../store/actionCreators/mySongsTable";
@@ -54,7 +54,7 @@ class App extends Component {
                 <Route path="/about" component={About} />
                 <Route path="/albums/:id" component={AlbumTable} />
                 <Route path="/artists/:id" component={ArtistTable} />
-                {/* <Route component={NotFound} />*/}
+                <Route component={NotFound} />
               </Switch>
             </Main>
             <PlayerContainer />
@@ -65,9 +65,7 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = {
-  loadSongs
-};
+const mapDispatchToProps = { loadSongs };
 
 export default connect(
   null,

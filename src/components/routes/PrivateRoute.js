@@ -16,11 +16,9 @@ function PrivateRoute({ component: Component, ...rest }) {
 
         if (isLoaded && isLoggedIn) {
           return (
-            <>
-              <MainLayout>
-                <Component {...props} />
-              </MainLayout>
-            </>
+            <MainLayout>
+              <Component {...props} />
+            </MainLayout>
           );
         }
 

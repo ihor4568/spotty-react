@@ -32,7 +32,7 @@ const styles = theme => ({
     })
   },
   appBarDisabled: {
-    backgroundColor: "#ccc",
+    backgroundColor: theme.palette.disable,
     paddingLeft: "1.5rem"
   },
   menuButton: {

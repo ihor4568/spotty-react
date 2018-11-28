@@ -7,7 +7,8 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#1e88e5"
-    }
+    },
+    disable: "#cccccc"
   },
   props: {
     drawer: {

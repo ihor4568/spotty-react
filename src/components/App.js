@@ -13,10 +13,13 @@ import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
-import { connect } from "react-redux";
+
+import { loadAlbums } from "../store/actionCreators/albums";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+
+import { connect } from "react-redux";
 
 const styles = () => ({
   root: {
@@ -28,10 +31,12 @@ const styles = () => ({
 class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    loadAlbums: PropTypes.func,
     fetchUser: PropTypes.func.isRequired
   };
 
   componentDidMount() {
+    this.props.loadAlbums();
     this.props.fetchUser();
   }
 
@@ -62,5 +67,5 @@ class App extends Component {
 
 export default connect(
   null,
-  { fetchUser }
+  { loadAlbums, fetchUser }
 )(withStyles(styles, { withTheme: true })(App));

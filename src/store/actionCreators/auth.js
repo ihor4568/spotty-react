@@ -3,37 +3,35 @@ import { USER_FETCHED, USER_NOT_FOUND, SIGN_OUT } from "../actionTypes";
 import { AuthService } from "../../services/AuthService";
 
 export function signIn({ email, password }) {
-  return dispatch => {
-    AuthService.signIn(email, password).then(({ user }) => {
-      dispatch({ type: USER_FETCHED, user });
-    });
+  return async dispatch => {
+    const userInfo = await AuthService.signIn(email, password);
+    dispatch({ type: USER_FETCHED, user: userInfo.user });
   };
 }
 
 export function signUp({ email, password, name }) {
-  return dispatch => {
-    AuthService.signUp(email, password, name).then(user => {
-      dispatch({ type: USER_FETCHED, user });
-    });
+  return async dispatch => {
+    await AuthService.signUp(email, password, name);
+    const user = await AuthService.check();
+
+    dispatch({ type: USER_FETCHED, user });
   };
 }
 
 export function signOut() {
-  return dispatch => {
-    AuthService.signOut().then(() => {
-      dispatch({ type: SIGN_OUT });
-    });
+  return async dispatch => {
+    await AuthService.signOut();
+    dispatch({ type: SIGN_OUT });
   };
 }
 
 export function fetchUser() {
-  return dispatch => {
-    AuthService.check()
-      .then(user => {
-        dispatch({ type: USER_FETCHED, user });
-      })
-      .catch(() => {
-        dispatch({ type: USER_NOT_FOUND });
-      });
+  return async dispatch => {
+    try {
+      const user = await AuthService.check();
+      dispatch({ type: USER_FETCHED, user });
+    } catch (e) {
+      dispatch({ type: USER_NOT_FOUND });
+    }
   };
 }

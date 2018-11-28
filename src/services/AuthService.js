@@ -7,14 +7,9 @@ export class AuthService {
     return auth.signInWithEmailAndPassword(email, pass);
   }
 
-  static signUp(email, pass, name) {
-    return auth.createUserWithEmailAndPassword(email, pass).then(() => {
-      return new Promise(resolve => {
-        auth.currentUser.updateProfile({ displayName: name }).then(() => {
-          resolve(auth.currentUser);
-        });
-      });
-    });
+  static async signUp(email, pass, name) {
+    await auth.createUserWithEmailAndPassword(email, pass);
+    return auth.currentUser.updateProfile({ displayName: name });
   }
 
   static signOut() {

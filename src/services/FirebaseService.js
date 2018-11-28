@@ -6,7 +6,7 @@ import "firebase/auth";
 let config = {};
 try {
   // eslint-disable-next-line global-require, import/no-unresolved
-  config = require("../config.json");
+  config = require("../../config.json");
 } catch (e) {
   //
 }

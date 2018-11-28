@@ -1,4 +1,4 @@
-import { USER_FETCHED, USER_NOT_FOUND } from "../actionTypes";
+import { USER_FETCHED, USER_NOT_FOUND, SIGN_OUT } from "../actionTypes";
 
 const INITIAL_STATE = {
   isLoggedIn: false,
@@ -21,7 +21,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoggedIn: false,
         isLoaded: true
       };
-    case "SIGN_OUT":
+    case SIGN_OUT:
       return {
         ...state,
         isLoggedIn: false,

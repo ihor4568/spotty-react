@@ -8,11 +8,22 @@ import {
   withStyles
 } from "@material-ui/core";
 
-const styles = {
+const styles = theme => ({
   button: {
     marginTop: 30
+  },
+  inputLabel: {
+    "&$inputFocused": {
+      color: theme.palette.primary.main
+    }
+  },
+  inputFocused: {},
+  inputUnderline: {
+    "&:after": {
+      borderBottomColor: theme.palette.primary.main
+    }
   }
-};
+});
 
 class SignUp extends Component {
   static propTypes = {
@@ -39,7 +50,14 @@ class SignUp extends Component {
     return (
       <form>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Email</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Email
+          </InputLabel>
           <Input
             value={email}
             onChange={this.handleInputChange}
@@ -47,36 +65,69 @@ class SignUp extends Component {
             type="text"
             autoComplete="email"
             autoFocus
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Name</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Name
+          </InputLabel>
           <Input
             value={name}
             onChange={this.handleInputChange}
             name="name"
             type="text"
             autoComplete="name"
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Password</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Password
+          </InputLabel>
           <Input
             value={password}
             onChange={this.handleInputChange}
             name="password"
             type="password"
             autoComplete="current-password"
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Confirm password</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Confirm Password
+          </InputLabel>
           <Input
             value={confirmPassword}
             onChange={this.handleInputChange}
             name="confirmPassword"
             type="password"
             autoComplete="current-password"
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <Button

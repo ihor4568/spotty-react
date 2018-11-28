@@ -16,6 +16,7 @@ import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
+import Auth from "./auth/Auth";
 
 const styles = () => ({
   root: {
@@ -46,6 +47,7 @@ class App extends Component {
                 <Route path="/about" component={About} />
                 <Route path="/albums/:id" component={AlbumTable} />
                 <Route path="/artists/:id" component={ArtistTable} />
+                <Route path="/login" component={Auth} />
                 <Route component={NotFound} />
               </Switch>
             </Main>

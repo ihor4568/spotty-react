@@ -8,11 +8,22 @@ import {
   withStyles
 } from "@material-ui/core";
 
-const styles = {
+const styles = theme => ({
   button: {
     marginTop: 30
+  },
+  inputLabel: {
+    "&$inputFocused": {
+      color: theme.palette.primary.main
+    }
+  },
+  inputFocused: {},
+  inputUnderline: {
+    "&:after": {
+      borderBottomColor: theme.palette.primary.main
+    }
   }
-};
+});
 
 class SignIn extends Component {
   static propTypes = {
@@ -37,23 +48,43 @@ class SignIn extends Component {
     return (
       <form>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Email</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Email
+          </InputLabel>
           <Input
             value={email}
             onChange={this.handleInputChange}
             name="email"
             autoComplete="email"
             autoFocus
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Password</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputFocused
+            }}
+          >
+            Password
+          </InputLabel>
           <Input
             value={password}
             onChange={this.handleInputChange}
             name="password"
             type="password"
             autoComplete="current-password"
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <Button
@@ -70,4 +101,4 @@ class SignIn extends Component {
   }
 }
 
-export default withStyles(styles)(SignIn);
+export default withStyles(styles, { withTheme: true })(SignIn);

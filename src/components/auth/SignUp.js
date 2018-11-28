@@ -16,7 +16,8 @@ const styles = {
 
 class SignUp extends Component {
   static propTypes = {
-    classes: PropTypes.object
+    classes: PropTypes.object,
+    onSubmit: PropTypes.func.isRequired
   };
 
   state = {
@@ -32,12 +33,17 @@ class SignUp extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.onSubmit(this.state);
+  };
+
   render() {
     const { classes } = this.props;
     const { email, name, password, confirmPassword } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <FormControl margin="normal" required fullWidth>
           <InputLabel>Email</InputLabel>
           <Input

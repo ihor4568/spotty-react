@@ -19,6 +19,7 @@ import NotFound from "./notFound/NotFound";
 
 import { connect } from "react-redux";
 import { loadSongs } from "../store/actionCreators/mySongsTable";
+import { loadAlbums } from "../store/actionCreators/albums";
 
 const styles = () => ({
   root: {
@@ -30,11 +31,13 @@ const styles = () => ({
 class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    loadSongs: PropTypes.func
+    loadSongs: PropTypes.func,
+    loadAlbums: PropTypes.func
   };
 
   componentDidMount() {
     this.props.loadSongs();
+    this.props.loadAlbums();
   }
 
   render() {
@@ -65,7 +68,7 @@ class App extends Component {
   }
 }
 
-const mapDispatchToProps = { loadSongs };
+const mapDispatchToProps = { loadSongs, loadAlbums };
 
 export default connect(
   null,

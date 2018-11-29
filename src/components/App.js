@@ -24,8 +24,7 @@ import { connect } from "react-redux";
 
 const styles = () => ({
   root: {
-    display: "flex",
-    width: "100%"
+    display: "flex"
   }
 });
 

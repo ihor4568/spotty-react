@@ -21,6 +21,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
 
 import { connect } from "react-redux";
+import { loadSongs } from "../store/actionCreators/mySongsTable";
 
 const styles = () => ({
   root: {
@@ -33,13 +34,19 @@ class App extends Component {
     classes: PropTypes.object.isRequired,
     loadArtists: PropTypes.func,
     loadAlbums: PropTypes.func,
-    fetchUser: PropTypes.func.isRequired
+    fetchUser: PropTypes.func.isRequired,
+    loadSongs: PropTypes.func
+  };
+
+  state = {
+    currentPage: "albums"
   };
 
   componentDidMount() {
     this.props.loadAlbums();
     this.props.loadArtists();
     this.props.fetchUser();
+    this.props.loadSongs();
   }
 
   render() {
@@ -70,7 +77,8 @@ class App extends Component {
 const mapDispatchToProps = {
   loadArtists,
   loadAlbums,
-  fetchUser
+  fetchUser,
+  loadSongs
 };
 
 export default connect(

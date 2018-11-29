@@ -15,33 +15,9 @@ import {
 import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
 import DotsMenu from "./DotsMenu";
+import { connect } from "react-redux";
 
-const TABLE_DATA = [
-  {
-    name: "It was a good day",
-    image:
-      "https://cs4.pikabu.ru/post_img/2016/06/23/2/1466644368111684747.png",
-    time: "5:12",
-    artist: "Ice Cube",
-    album: "The Predator 1992"
-  },
-  {
-    name: "Numb",
-    image:
-      "https://i.pinimg.com/originals/55/86/39/5586394e2ce162b044d9d49e412f9ece.png",
-    time: "3:07",
-    artist: "Linkin Park",
-    album: "Meteora"
-  },
-  {
-    name: "Just Lose It",
-    image:
-      "https://hiphop4real.com/wp-content/uploads/2016/07/Eminem-Revival-Era-2017-ePro-600x600.jpg",
-    time: "4:06",
-    artist: "Eminem",
-    album: "Encore"
-  }
-];
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
   root: {
@@ -78,7 +54,8 @@ const styles = theme => ({
 
 class MySongsTable extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    songs: PropTypes.array.isRequired
   };
 
   state = {
@@ -138,10 +115,10 @@ class MySongsTable extends Component {
   render() {
     const { classes } = this.props;
     const { order, orderBy } = this.state;
-    const sortedData = this.stableSort(
-      this.createNewSongsArray(TABLE_DATA),
-      this.getSorting(order, orderBy)
-    );
+    // const sortedData = this.stableSort(
+    //   this.createNewSongsArray(this.props.songs),
+    //   this.getSorting(order, orderBy)
+    // );
 
     return (
       <>
@@ -187,7 +164,7 @@ class MySongsTable extends Component {
                       <TableSortLabel
                         active={orderBy === "time"}
                         direction={order}
-                        onClick={this.handleSortCreate("time")}
+                        onClick={this.handleSortCreate("duration")}
                       >
                         <TimerSharp className={classes.icon} />
                       </TableSortLabel>
@@ -198,7 +175,7 @@ class MySongsTable extends Component {
                       <TableSortLabel
                         active={orderBy === "artist"}
                         direction={order}
-                        onClick={this.handleSortCreate("artist")}
+                        onClick={this.handleSortCreate("artistsNames")}
                       >
                         Artist
                       </TableSortLabel>
@@ -222,7 +199,10 @@ class MySongsTable extends Component {
               </TableHead>
 
               <TableBody>
-                {sortedData.map((data, i) => {
+                {this.stableSort(
+                  this.createNewSongsArray(this.props.songs),
+                  this.getSorting(order, orderBy)
+                ).map((data, i) => {
                   return (
                     <TableRow hover key={i}>
                       <TableCell
@@ -246,7 +226,7 @@ class MySongsTable extends Component {
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
                         <img
-                          src={data.image}
+                          src={data.album.coverURL}
                           alt="album"
                           className={classes.image}
                         />
@@ -257,13 +237,13 @@ class MySongsTable extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        {data.time}
+                        {data.duration}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.artist}
+                        {data.artistsNames.join(", ")}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.album}
+                        {data.album.name}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
@@ -282,4 +262,10 @@ class MySongsTable extends Component {
   }
 }
 
-export default withStyles(styles)(MySongsTable);
+function mapStateToProps(state) {
+  return {
+    songs: state.songs
+  };
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(MySongsTable));

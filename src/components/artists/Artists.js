@@ -12,43 +12,7 @@ import {
   Typography
 } from "@material-ui/core";
 
-const ARTISTS_INFO = [
-  {
-    artistId: "artist1",
-    imageUrl:
-      "https://consequenceofsound.files.wordpress.com/2010/10/2010_10oct_24_jayzhiphopadvice.jpg?quality=80",
-    artistName: "Jay Z"
-  },
-  {
-    artistId: "artist2",
-    imageUrl: "https://lyricsforme.com/upload/image/artist/adele-profile.jpg",
-    artistName: "Adele"
-  },
-  {
-    artistId: "artist3",
-    imageUrl:
-      "http://static1.squarespace.com/static/578f89682994ca6eb42dac86/578f8b86d1758e8ac840fdb2/5b6c7fc68a922d83a728c122/1533839950211/LUDACRIS.jpg?format=1000w",
-    artistName: "Ludacris"
-  },
-  {
-    artistId: "artist4",
-    imageUrl:
-      "https://images.genius.com/fce1e2b08952b1596484d7ea9ce00db2.1000x1000x1.jpg",
-    artistName: "Xzibit"
-  },
-  {
-    artistId: "artist5",
-    imageUrl:
-      "https://fanart.tv/fanart/music/1d11e2a1-4531-4d61-a8c7-7b5c6a608fd2/artistthumb/ice-cube-53ffd45ce495f.jpg",
-    artistName: "Ice Cube"
-  },
-  {
-    artistId: "artist6",
-    imageUrl:
-      "https://www.shropshirestar.com/resizer/hqU1_vsIGbZkvKdwRSzpDYf59Vo=/1000x0/filters:quality(100)/arc-anglerfish-arc2-prod-shropshirestar-mna.s3.amazonaws.com/public/RBFEKBZ3PZDPHM662ZRIJZJNTA.jpg",
-    artistName: "Britney Spears"
-  }
-];
+import { connect } from "react-redux";
 
 const styles = {
   artistCard: {
@@ -88,7 +52,8 @@ const styles = {
 class Artists extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired
+    match: PropTypes.object.isRequired,
+    artists: PropTypes.array.isRequired
   };
 
   render() {
@@ -97,18 +62,15 @@ class Artists extends Component {
       <>
         <Title name="Artists" />
         <Grid container spacing={32} className={classes.container}>
-          {ARTISTS_INFO.map((artist, i) => (
+          {this.props.artists.map((artist, i) => (
             <Grid key={i} item xl={2} md={3}>
               <Card className={classes.artistCard}>
-                <Link
-                  to={`${match.url}/${artist.artistId}`}
-                  className={classes.link}
-                >
+                <Link to={`${match.url}/${artist.id}`} className={classes.link}>
                   <CardActionArea className={classes.artistAction}>
                     <CardMedia
                       component="img"
                       className={classes.artistImage}
-                      image={artist.imageUrl}
+                      image={artist.artistPhotoURL}
                       title={artist.artistName}
                     />
                   </CardActionArea>
@@ -129,4 +91,9 @@ class Artists extends Component {
   }
 }
 
-export default withStyles(styles)(Artists);
+function mapStateToProps(state) {
+  return {
+    artists: state.artists
+  };
+}
+export default connect(mapStateToProps)(withStyles(styles)(Artists));

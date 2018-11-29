@@ -4,10 +4,12 @@ import thunk from "redux-thunk";
 
 import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
+import authReducer from "./reducers/auth";
 
 const rootReducer = combineReducers({
+  albums: albumsReducer,
   artists: artistsReducer,
-  albums: albumsReducer
+  auth: authReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

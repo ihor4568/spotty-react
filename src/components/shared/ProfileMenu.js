@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { IconButton, MenuItem, Menu } from "@material-ui/core";
 import { AccountCircle, ExitToApp } from "@material-ui/icons";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
+
+import { signOut } from "../../store/actionCreators/auth";
 
 const styles = theme => ({
   exitToApp: {
@@ -14,7 +17,9 @@ const styles = theme => ({
 
 class ProfileMenu extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    signOut: PropTypes.func.isRequired,
+    userName: PropTypes.string.isRequired
   };
 
   state = {
@@ -27,6 +32,11 @@ class ProfileMenu extends Component {
 
   handleMenuClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleLogOutClick = () => {
+    this.props.signOut();
+    this.handleMenuClose();
   };
 
   render() {
@@ -51,8 +61,8 @@ class ProfileMenu extends Component {
           open={isMenuOpen}
           onClose={this.handleMenuClose}
         >
-          <MenuItem disabled={true}>Random Name</MenuItem>
-          <MenuItem onClick={this.handleMenuClose}>
+          <MenuItem disabled={true}>{this.props.userName}</MenuItem>
+          <MenuItem onClick={this.handleLogOutClick}>
             <div className={classes.exitToApp}>
               <ExitToApp />
             </div>
@@ -64,4 +74,11 @@ class ProfileMenu extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(ProfileMenu);
+const mapStateToProps = state => ({
+  userName: state.auth.user.displayName
+});
+
+export default connect(
+  mapStateToProps,
+  { signOut }
+)(withStyles(styles, { withTheme: true })(ProfileMenu));

@@ -1,9 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-
-import Header from "./shared/Header";
-import Main from "./shared/Main";
-import PlayerContainer from "./player/PlayerContainer";
+import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 
 import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
@@ -16,10 +12,15 @@ import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
+import Auth from "./auth/Auth";
 
-import { connect } from "react-redux";
 import { loadArtists } from "../store/actionCreators/artists";
 import { loadAlbums } from "../store/actionCreators/albums";
+import { fetchUser } from "../store/actionCreators/auth";
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
+
+import { connect } from "react-redux";
 
 const styles = () => ({
   root: {
@@ -32,12 +33,14 @@ class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadArtists: PropTypes.func,
-    loadAlbums: PropTypes.func
+    loadAlbums: PropTypes.func,
+    fetchUser: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     this.props.loadAlbums();
     this.props.loadArtists();
+    this.props.fetchUser();
   }
 
   render() {
@@ -47,20 +50,17 @@ class App extends Component {
       <BrowserRouter>
         <MuiThemeProvider theme={theme}>
           <div className={classes.root}>
-            <Header />
-            <Main>
-              <Switch>
-                <Redirect exact from="/" to="/albums" />
-                <Route exact path="/mysongs" component={MySongs} />
-                <Route exact path="/albums" component={Albums} />
-                <Route exact path="/artists" component={Artists} />
-                <Route path="/about" component={About} />
-                <Route path="/albums/:id" component={AlbumTable} />
-                <Route path="/artists/:id" component={ArtistTable} />
-                <Route component={NotFound} />
-              </Switch>
-            </Main>
-            <PlayerContainer />
+            <Switch>
+              <PublicRoute exact path="/login" component={Auth} />
+              <Redirect exact from="/" to="/albums" />
+              <PrivateRoute exact path="/mysongs" component={MySongs} />
+              <PrivateRoute exact path="/albums" component={Albums} />
+              <PrivateRoute exact path="/artists" component={Artists} />
+              <PrivateRoute path="/about" component={About} />
+              <PrivateRoute path="/albums/:id" component={AlbumTable} />
+              <PrivateRoute path="/artists/:id" component={ArtistTable} />
+              <PrivateRoute component={NotFound} />
+            </Switch>
           </div>
         </MuiThemeProvider>
       </BrowserRouter>
@@ -70,7 +70,8 @@ class App extends Component {
 
 const mapDispatchToProps = {
   loadArtists,
-  loadAlbums
+  loadAlbums,
+  fetchUser
 };
 
 export default connect(

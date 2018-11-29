@@ -1,1 +1,1 @@
-export const ADD_SHARE_SONG = "ADD_SHARE_SONG";
+export const ADD_SONG = "ADD_SONG";

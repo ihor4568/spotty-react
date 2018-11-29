@@ -1,4 +1,4 @@
-// import { ADD_SHARE_SONG } from "../actionTypes";
+import { ADD_SONG } from "../actionTypes";
 
 const initialState = {
   imageUrl:
@@ -7,6 +7,11 @@ const initialState = {
   artistName: "Eminemlol"
 };
 
-export default function shareViewReducer(state = initialState) {
-  return state;
+export default function shareViewReducer(state = initialState, action) {
+  switch (action.type) {
+    case ADD_SONG:
+      return action.payload;
+    default:
+      return state;
+  }
 }

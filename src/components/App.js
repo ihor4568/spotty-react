@@ -9,8 +9,7 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
-// import { loadAlbums } from '../store/actionCreators/albums'
+// import { connect } from "react-redux";
 
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
@@ -62,4 +61,4 @@ class App extends Component {
   }
 }
 
-export default connect()(withStyles(styles, { withTheme: true })(App));
+export default withStyles(styles, { withTheme: true })(App);

@@ -13,12 +13,6 @@ import { connect } from "react-redux";
 
 import { MusicService } from "../../services/MusicService";
 
-const SHARE_INFO = {
-  imageUrl:
-    "http://1.bp.blogspot.com/-gJPfokcNytE/Uy0KljKYg8I/AAAAAAAAAKk/8UhzMrqWjbg/s1600/397803_10151392708761987_1614138446_n.jpg",
-  songName: "The Eminem Song",
-  artistName: "Eminem"
-};
 const styles = {
   container: {
     width: `18rem`,
@@ -38,6 +32,7 @@ const styles = {
 class ShareView extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
+    info: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired
   };
 
@@ -57,8 +52,8 @@ class ShareView extends Component {
           <CardActionArea>
             <CardMedia
               component="img"
-              image={SHARE_INFO.imageUrl}
-              title={SHARE_INFO.songName}
+              image={this.props.info.imageUrl}
+              title={this.props.info.songName}
             />
             <CardContent className={classes.songDescription}>
               <Typography
@@ -66,10 +61,10 @@ class ShareView extends Component {
                 component="h2"
                 className={classes.songInfo}
               >
-                {SHARE_INFO.songName}
+                {this.props.info.songName}
               </Typography>
               <Typography component="p" className={classes.songInfo}>
-                by {SHARE_INFO.artistName}
+                by {this.props.info.artistName}
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -81,7 +76,7 @@ class ShareView extends Component {
 
 function mapStateToProps(state) {
   return {
-    share: state.shareViewReducer
+    info: state.shareViewReducer
   };
 }
 

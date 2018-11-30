@@ -10,7 +10,7 @@ import {
   Typography,
   InputBase
 } from "@material-ui/core";
-import { Menu, Search } from "@material-ui/icons";
+import { AccountCircle, Menu, Search } from "@material-ui/icons";
 import PropTypes from "prop-types";
 
 const styles = theme => ({
@@ -20,7 +20,8 @@ const styles = theme => ({
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
-    })
+    }),
+    height: theme.props.appBar.appBarHeight
   },
   appBarShift: {
     width: `calc(100% - ${theme.props.drawer.drawerWidth}px)`,
@@ -29,6 +30,10 @@ const styles = theme => ({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  appBarDisabled: {
+    backgroundColor: theme.palette.disable,
+    paddingLeft: "1.5rem"
   },
   menuButton: {
     marginLeft: 12,
@@ -93,31 +98,39 @@ const styles = theme => ({
 class AppBarComponent extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    open: PropTypes.bool.isRequired,
-    onDrawerOpen: PropTypes.func.isRequired
+    open: PropTypes.bool,
+    onDrawerOpen: PropTypes.func,
+    enabled: PropTypes.bool
+  };
+
+  static defaultProps = {
+    enabled: true
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, enabled } = this.props;
 
     return (
       <AppBar
         position="fixed"
         className={classNames(classes.appBar, {
-          [classes.appBarShift]: this.props.open
+          [classes.appBarShift]: this.props.open,
+          [classes.appBarDisabled]: !enabled
         })}
       >
         <Toolbar disableGutters={!this.props.open}>
-          <IconButton
-            color="inherit"
-            aria-label="Open drawer"
-            onClick={this.props.onDrawerOpen}
-            className={classNames(classes.menuButton, {
-              [classes.hide]: this.props.open
-            })}
-          >
-            <Menu />
-          </IconButton>
+          {enabled && (
+            <IconButton
+              color="inherit"
+              aria-label="Open drawer"
+              onClick={this.props.onDrawerOpen}
+              className={classNames(classes.menuButton, {
+                [classes.hide]: this.props.open
+              })}
+            >
+              <Menu />
+            </IconButton>
+          )}
           <Typography
             className={classes.title}
             variant="h6"
@@ -127,19 +140,32 @@ class AppBarComponent extends Component {
             Spotty
           </Typography>
           <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.Search}>
-              <Search />
+          {enabled && (
+            <div className={classes.search}>
+              <div className={classes.Search}>
+                <Search />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput
+                }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-            />
-          </div>
-          <ProfileMenu />
+          )}
+          {enabled ? (
+            <ProfileMenu />
+          ) : (
+            <IconButton
+              aria-owns="material-appbar"
+              aria-haspopup="true"
+              color="inherit"
+              disabled
+            >
+              <AccountCircle />
+            </IconButton>
+          )}
         </Toolbar>
       </AppBar>
     );

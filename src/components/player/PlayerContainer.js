@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import Player from "./Player";
-import StarsRating from "./StarsRating";
 import {
   VolumeOff,
   VolumeMute,
@@ -8,6 +6,8 @@ import {
   VolumeUp
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
+
+import Player from "./Player";
 
 const SONG = {
   source:
@@ -31,7 +31,8 @@ class PlayerContainer extends Component {
     isPlaying: false,
     songDuration: 0,
     playingProgress: 0,
-    volumeValue: 0.5
+    volumeValue: 0.5,
+    isMuted: false
   };
 
   static defaultProps = {
@@ -49,14 +50,22 @@ class PlayerContainer extends Component {
   };
 
   componentDidMount() {
-    this.audio.addEventListener("play", this.handlePlay);
-    this.audio.addEventListener("timeupdate", this.handlePlay);
+    this.addListeners();
   }
 
   componentWillUnmount() {
+    this.removeListeners();
+  }
+
+  addListeners = () => {
+    this.audio.addEventListener("play", this.handlePlay);
+    this.audio.addEventListener("timeupdate", this.handlePlay);
+  };
+
+  removeListeners = () => {
     this.audio.removeEventListener("play", this.handlePlay);
     this.audio.removeEventListener("timeupdate", this.handlePlay);
-  }
+  };
 
   handleChangePlayingState = () => {
     this.setState(
@@ -67,7 +76,16 @@ class PlayerContainer extends Component {
 
   handleChangeProgress = (event, value) => {
     this.setState({ playingProgress: value });
-    this.audio.currentTime = (this.state.songDuration / 100) * value;
+  };
+
+  handleChangeProgressStart = () => {
+    this.removeListeners();
+  };
+
+  handleChangeProgressEnd = () => {
+    this.addListeners();
+    this.audio.currentTime =
+      (this.state.songDuration / 100) * this.state.playingProgress;
   };
 
   setPlayingState = () => {
@@ -98,8 +116,19 @@ class PlayerContainer extends Component {
   };
 
   handleChangeVolume = (event, value) => {
-    this.setState({ volumeValue: Number(value.toFixed(1)) });
-    this.audio.volume = this.state.volumeValue;
+    const volume = Number(value.toFixed(1));
+
+    this.setState({ volumeValue: volume, isMuted: volume === 0 });
+    this.audio.volume = volume;
+  };
+
+  handleMute = () => {
+    this.setState(prevState => {
+      const isMuted = !prevState.isMuted;
+      const volume = prevState.volumeValue || 0.5;
+      this.audio.volume = isMuted ? 0 : volume;
+      return { isMuted, volumeValue: volume };
+    });
   };
 
   getVolumeIcon = volume => {
@@ -115,8 +144,9 @@ class PlayerContainer extends Component {
   };
 
   render() {
-    const { playingProgress, isPlaying, volumeValue } = this.state;
+    const { playingProgress, isPlaying, volumeValue, isMuted } = this.state;
     const { song } = this.props;
+    const volume = isMuted ? 0 : volumeValue;
 
     return (
       <>
@@ -127,10 +157,12 @@ class PlayerContainer extends Component {
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}
-          volume={volumeValue}
-          volumeIcon={this.getVolumeIcon(volumeValue)}
+          volume={volume}
+          volumeIcon={this.getVolumeIcon(volume)}
           onChangeVolume={this.handleChangeVolume}
-          ratingElement={<StarsRating />}
+          onMute={this.handleMute}
+          onChangeProgressStart={this.handleChangeProgressStart}
+          onChangeProgressEnd={this.handleChangeProgressEnd}
         />
       </>
     );

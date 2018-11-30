@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import "typeface-roboto";
 
 const theme = createMuiTheme({
   typography: {
@@ -7,11 +8,18 @@ const theme = createMuiTheme({
   palette: {
     primary: {
       main: "#1e88e5"
-    }
+    },
+    disable: "#cccccc"
   },
   props: {
     drawer: {
       drawerWidth: 200
+    },
+    mediaPlayer: {
+      mediaPlayerHeight: "6.8rem"
+    },
+    appBar: {
+      appBarHeight: "4rem"
     }
   }
 });

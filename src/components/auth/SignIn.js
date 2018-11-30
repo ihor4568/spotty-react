@@ -8,15 +8,27 @@ import {
   withStyles
 } from "@material-ui/core";
 
-const styles = {
+const styles = theme => ({
   button: {
     marginTop: 30
+  },
+  inputLabel: {
+    "&$inputLabelFocused": {
+      color: theme.palette.primary.main
+    }
+  },
+  inputLabelFocused: {},
+  inputUnderline: {
+    "&:after": {
+      borderBottomColor: theme.palette.primary.main
+    }
   }
-};
+});
 
 class SignIn extends Component {
   static propTypes = {
-    classes: PropTypes.object
+    classes: PropTypes.object,
+    onSubmit: PropTypes.func.isRequired
   };
 
   state = {
@@ -30,30 +42,55 @@ class SignIn extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSubmit = event => {
+    event.preventDefault();
+    this.props.onSubmit(this.state);
+  };
+
   render() {
     const { classes } = this.props;
     const { email, password } = this.state;
 
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Email</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputLabelFocused
+            }}
+          >
+            Email
+          </InputLabel>
           <Input
             value={email}
             onChange={this.handleInputChange}
             name="email"
             autoComplete="email"
+            classes={{
+              underline: classes.inputUnderline
+            }}
             autoFocus
           />
         </FormControl>
         <FormControl margin="normal" required fullWidth>
-          <InputLabel>Password</InputLabel>
+          <InputLabel
+            classes={{
+              root: classes.inputLabel,
+              focused: classes.inputLabelFocused
+            }}
+          >
+            Password
+          </InputLabel>
           <Input
             value={password}
             onChange={this.handleInputChange}
             name="password"
             type="password"
             autoComplete="current-password"
+            classes={{
+              underline: classes.inputUnderline
+            }}
           />
         </FormControl>
         <Button

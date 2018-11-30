@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+
+import Title from "../shared/Title";
+import DotsMenu from "../shared/DotsMenu";
+
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -16,12 +20,9 @@ import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
 import { connect } from "react-redux";
 
-import DotsMenu from "./DotsMenu";
-
 const styles = theme => ({
   root: {
-    width: "calc(100% - 2rem)",
-    margin: "1rem auto 0",
+    margin: "0 auto",
     overflowX: "auto"
   },
   image: {
@@ -121,6 +122,7 @@ class MySongsTable extends Component {
 
     return (
       <>
+        <Title name="My Songs" />
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">

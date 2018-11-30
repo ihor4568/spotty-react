@@ -20,6 +20,8 @@ import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
 import { connect } from "react-redux";
 
+import { playSong } from "../../store/actionCreators/player";
+
 const styles = theme => ({
   root: {
     margin: "0 auto",
@@ -206,6 +208,10 @@ class MySongsTable extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
+                        <audio
+                          src={data.songURL}
+                          ref={element => (this.audio = element)}
+                        />
                         <Button
                           mini={true}
                           variant="fab"
@@ -266,4 +272,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(MySongsTable));
+const mapDispatchToProps = {
+  playSong
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(MySongsTable));

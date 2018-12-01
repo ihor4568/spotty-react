@@ -5,7 +5,7 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import MySongs from "./mySongs/MySongs";
+import MySongs from "./mySongs/MySongsTable";
 import Artists from "./artists/Artists";
 import About from "./about/About";
 import Albums from "./albums/Albums";
@@ -24,8 +24,7 @@ import { connect } from "react-redux";
 
 const styles = () => ({
   root: {
-    display: "flex",
-    width: "100%"
+    display: "flex"
   }
 });
 

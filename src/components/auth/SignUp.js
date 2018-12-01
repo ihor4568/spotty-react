@@ -5,8 +5,12 @@ import {
   InputLabel,
   FormControl,
   Button,
-  withStyles
+  withStyles,
+  Avatar
 } from "@material-ui/core";
+import { AccountCircle, PhotoCamera } from "@material-ui/icons";
+import FileUploader from "react-firebase-file-uploader";
+import { FirebaseService } from "../../services/FirebaseService";
 
 const styles = theme => ({
   button: {
@@ -22,6 +26,17 @@ const styles = theme => ({
     "&:after": {
       borderBottomColor: theme.palette.primary.main
     }
+  },
+  avatarContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: "1rem"
+  },
+  avatarImage: {
+    maxWidth: "3rem",
+    maxHeight: "3rem",
+    borderRadius: "50%"
   }
 });
 
@@ -35,7 +50,9 @@ class SignUp extends Component {
     email: "",
     name: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    avatarURL: "",
+    canSubmit: true
   };
 
   handleInputChange = event => {
@@ -47,6 +64,25 @@ class SignUp extends Component {
   handleSubmit = event => {
     event.preventDefault();
     this.props.onSubmit(this.state);
+  };
+
+  handleUploadStart = () => {
+    this.setState({
+      canSubmit: false
+    });
+  };
+
+  handleUploadSuccess = filename => {
+    FirebaseService.storage()
+      .ref("images/avatars")
+      .child(filename)
+      .getDownloadURL()
+      .then(url => this.setState({ avatarURL: url }))
+      .then(
+        this.setState({
+          canSubmit: true
+        })
+      );
   };
 
   render() {
@@ -136,8 +172,33 @@ class SignUp extends Component {
             }}
           />
         </FormControl>
+        <div className={classes.avatarContainer}>
+          <Button variant="contained" component="label">
+            Add Your photo
+            <FileUploader
+              hidden
+              accept="image/*"
+              name="avatar"
+              filename={email.replace(/[^A-Za-zА_]/g, "") + "-avatar"}
+              storageRef={FirebaseService.storage().ref("images/avatars")}
+              onUploadStart={this.handleUploadStart}
+              onUploadSuccess={this.handleUploadSuccess}
+            />
+            <PhotoCamera />
+          </Button>
+          {this.state.avatarURL ? (
+            <Avatar
+              src={this.state.avatarURL}
+              className={classes.avatarImage}
+              alt="user-avatar"
+            />
+          ) : (
+            <AccountCircle />
+          )}
+        </div>
         <Button
           type="submit"
+          disabled={!this.state.canSubmit}
           fullWidth
           variant="contained"
           color="primary"

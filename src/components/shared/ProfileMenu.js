@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { IconButton, MenuItem, Menu } from "@material-ui/core";
+import { IconButton, MenuItem, Menu, Avatar } from "@material-ui/core";
 import { AccountCircle, ExitToApp } from "@material-ui/icons";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -19,7 +19,8 @@ class ProfileMenu extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     signOut: PropTypes.func.isRequired,
-    userName: PropTypes.string.isRequired
+    userName: PropTypes.string.isRequired,
+    avatar: PropTypes.string
   };
 
   state = {
@@ -52,8 +53,17 @@ class ProfileMenu extends Component {
           onClick={this.handleProfileMenuOpen}
           color="inherit"
         >
-          <AccountCircle />
+          {!this.props.avatar ? (
+            <AccountCircle />
+          ) : (
+            <Avatar
+              alt={this.props.userName + " avatar"}
+              src={this.props.avatar}
+              className={classes.avatar}
+            />
+          )}
         </IconButton>
+
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -75,7 +85,8 @@ class ProfileMenu extends Component {
 }
 
 const mapStateToProps = state => ({
-  userName: state.auth.user.displayName
+  userName: state.auth.user.displayName,
+  avatar: state.auth.user.photoURL
 });
 
 export default connect(

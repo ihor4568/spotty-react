@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 
 const styles = theme => ({
   main: {
+    width: `100%`,
     paddingBottom: "6.5rem",
     height: "100%",
     overflow: "hidden",
-    boxSizing: "border-box",
-    margin: "0 auto"
+    boxSizing: "border-box"
   },
   content: {
     flexGrow: 1,

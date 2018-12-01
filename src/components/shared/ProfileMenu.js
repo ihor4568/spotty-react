@@ -63,7 +63,6 @@ class ProfileMenu extends Component {
             />
           )}
         </IconButton>
-
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}

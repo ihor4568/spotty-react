@@ -4,8 +4,10 @@ import { MusicService } from "../../services/MusicService";
 
 export function loadArtistsSongs(artist, payload) {
   return async dispatch => {
-    const songs = await MusicService.getArtistsSongs(artist);
-    dispatch(getArtistsSongs(Object.values(songs)));
+    try {
+      const songs = await MusicService.getArtistsSongs(artist);
+      dispatch(getArtistsSongs(Object.values(songs)));
+    } catch {}
   };
 }
 

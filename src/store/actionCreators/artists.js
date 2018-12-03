@@ -2,7 +2,7 @@ import { ADD_ARTISTS } from "../actionTypes";
 
 import { MusicService } from "../../services/MusicService";
 
-export function loadArtists(payload) {
+export function loadArtists() {
   return async dispatch => {
     const artists = await MusicService.getAllArtists();
     dispatch(addArtists(Object.values(artists)));

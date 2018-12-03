@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import LegalDialog from "./LegalDialog";
@@ -10,6 +11,10 @@ export default class DotsMenu extends Component {
     isOpen: false
   };
 
+  static propTypes = {
+    id: PropTypes.string.isRequired
+  };
+
   handleClick = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -18,9 +23,11 @@ export default class DotsMenu extends Component {
     this.setState({ anchorEl: null });
   };
 
-  handleShare() {
-    window.open(`/songs/song1`);
-  }
+  handleShare = () => {
+    if (this.props.id) {
+      window.open(`/songs/${this.props.id}`);
+    }
+  };
 
   handleClickOpen = () => {
     this.setState({ isOpen: true });

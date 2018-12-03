@@ -10,8 +10,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 
 import { connect } from "react-redux";
-
-import { MusicService } from "../../services/MusicService";
+import { getSong } from "../../store/actionCreators/shareView";
 
 const styles = {
   container: {
@@ -32,28 +31,33 @@ const styles = {
 class ShareView extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    info: PropTypes.object.isRequired,
-    match: PropTypes.object.isRequired
+    info: PropTypes.object,
+    match: PropTypes.object.isRequired,
+    onGetSong: PropTypes.func
   };
 
   componentDidMount() {
     const { id } = this.props.match.params;
-
     if (id) {
-      MusicService.getSong(id).then(song => song);
+      this.props.onGetSong(id);
     }
   }
 
   render() {
     const { classes } = this.props;
+
+    if (!this.props.info) {
+      return null;
+    }
+
     return (
       <div className={classes.container}>
         <Card>
           <CardActionArea>
             <CardMedia
               component="img"
-              image={this.props.info.imageUrl}
-              title={this.props.info.songName}
+              image={this.props.info.album.coverURL}
+              title={this.props.info.name}
             />
             <CardContent className={classes.songDescription}>
               <Typography
@@ -61,10 +65,10 @@ class ShareView extends Component {
                 component="h2"
                 className={classes.songInfo}
               >
-                {this.props.info.songName}
+                {this.props.info.name}
               </Typography>
               <Typography component="p" className={classes.songInfo}>
-                by {this.props.info.artistName}
+                by {this.props.info.artistsNames.join(", ")}
               </Typography>
             </CardContent>
           </CardActionArea>
@@ -74,10 +78,19 @@ class ShareView extends Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
-    info: state.shareViewReducer
+    info: state.shareView
   };
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(ShareView));
+const mapDispatchToProps = dispatch => {
+  return {
+    onGetSong: id => dispatch(getSong(id))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(ShareView));

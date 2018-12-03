@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   albums: albumsReducer,
   artists: artistsReducer,
   auth: authReducer,
-  shareViewReducer
+  shareView: shareViewReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

@@ -180,7 +180,7 @@ const Player = ({
         <StarsRating />
       </div>
       <div className={classes.threeDotMenu}>
-        <DotsMenu />
+        <DotsMenu id={song.id} />
       </div>
     </div>
   </div>

@@ -16,7 +16,9 @@ const SONG = {
     "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FBack_To_The_Sea.jpg?alt=media&token=a83f646a-9d63-4eaa-bcdf-e17cf6967126",
   songName: "Smile for me, sun",
   albumName: "Back to the sea",
-  authorName: "Adam Alma"
+  authorName: "Adam Alma",
+  id: "song2" //shareView takes this id to render necessary song
+  //please, keep it in mind while integrating playing songs
 };
 
 const VOLUME_ICON_SET = {

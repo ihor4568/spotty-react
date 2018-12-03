@@ -5,8 +5,6 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-// import { connect } from "react-redux";
-
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
@@ -55,6 +53,7 @@ class App extends Component {
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />
+              <PublicRoute exact path="/songs/:id" component={ShareView} />
               <Redirect exact from="/" to="/albums" />
               <PrivateRoute exact path="/mysongs" component={MySongs} />
               <PrivateRoute exact path="/albums" component={Albums} />
@@ -62,7 +61,7 @@ class App extends Component {
               <PrivateRoute path="/about" component={About} />
               <PrivateRoute path="/albums/:id" component={AlbumTable} />
               <PrivateRoute path="/artists/:id" component={ArtistTable} />
-              <PrivateRoute path="/songs/:id" component={ShareView} />
+              {/* <PrivateRoute path="/songs/:id" component={ShareView} /> */}
               <PrivateRoute component={NotFound} />
             </Switch>
           </div>

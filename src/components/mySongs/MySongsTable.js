@@ -17,10 +17,10 @@ import {
   Button
 } from "@material-ui/core";
 import { PlayArrow, TimerSharp } from "@material-ui/icons";
-
 import { connect } from "react-redux";
 
 import { playSong } from "../../store/actionCreators/player";
+import { pauseSong } from "../../store/actionCreators/player";
 
 const styles = theme => ({
   root: {
@@ -57,7 +57,10 @@ const styles = theme => ({
 class MySongsTable extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    songs: PropTypes.array.isRequired
+    songs: PropTypes.array.isRequired,
+    player: PropTypes.object.isRequired,
+    playSong: PropTypes.func.isRequired,
+    pauseSong: PropTypes.func.isRequired
   };
 
   state = {
@@ -208,15 +211,18 @@ class MySongsTable extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <audio
-                          src={data.songURL}
-                          ref={element => (this.audio = element)}
-                        />
                         <Button
                           mini={true}
                           variant="fab"
                           aria-label="PlayArrow"
                           className={classes.button}
+                          onClick={() => {
+                            if (this.props.player.isPlaying) {
+                              this.props.pauseSong(data.id);
+                            } else {
+                              this.props.playSong(data.id);
+                            }
+                          }}
                         >
                           <PlayArrow className={classes.icon} />
                         </Button>
@@ -268,12 +274,14 @@ class MySongsTable extends Component {
 
 function mapStateToProps(state) {
   return {
-    songs: state.songs
+    songs: state.songs,
+    player: state.player
   };
 }
 
 const mapDispatchToProps = {
-  playSong
+  playSong,
+  pauseSong
 };
 
 export default connect(

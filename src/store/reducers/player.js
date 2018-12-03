@@ -2,7 +2,8 @@ import { ON_PLAY } from "../actionTypes";
 import { ON_PAUSE } from "../actionTypes";
 
 const INITIAL_STATE = {
-  isPlaying: false
+  isPlaying: false,
+  payload: {}
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {

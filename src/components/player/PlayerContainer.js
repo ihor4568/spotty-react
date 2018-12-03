@@ -9,6 +9,8 @@ import PropTypes from "prop-types";
 
 import Player from "./Player";
 
+import { connect } from "react-redux";
+
 const SONG = {
   source:
     "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FAdam__Alma_-_04_-_Back_To_The_Sea.mp3?alt=media&token=f0f1439f-f09e-40d9-938d-c7f1a332a574",
@@ -26,7 +28,7 @@ const VOLUME_ICON_SET = {
   VolumeUp: <VolumeUp />
 };
 
-class PlayerContainer extends Component {
+export class PlayerContainer extends Component {
   state = {
     isPlaying: false,
     songDuration: 0,
@@ -46,7 +48,9 @@ class PlayerContainer extends Component {
       songName: PropTypes.string.isRequired,
       albumName: PropTypes.string.isRequired,
       authorName: PropTypes.string.isRequired
-    })
+    }),
+    songs: PropTypes.array.isRequired,
+    player: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -150,7 +154,10 @@ class PlayerContainer extends Component {
 
     return (
       <>
-        <audio src={song.source} ref={element => (this.audio = element)} />
+        <audio
+          src={this.props.player.payload.songURL}
+          ref={element => (this.audio = element)}
+        />
         <Player
           onPlay={this.handleChangePlayingState}
           isPlaying={isPlaying}
@@ -169,4 +176,11 @@ class PlayerContainer extends Component {
   }
 }
 
-export default PlayerContainer;
+function mapStateToProps(state) {
+  return {
+    songs: state.songs,
+    player: state.player
+  };
+}
+
+export default connect(mapStateToProps)(PlayerContainer);

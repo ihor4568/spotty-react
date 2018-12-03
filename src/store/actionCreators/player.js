@@ -5,14 +5,14 @@ import { MusicService } from "../../services/MusicService";
 export function playSong(songId) {
   return async dispatch => {
     const song = await MusicService.getSong(songId);
-    dispatch(onPlay(Object.values(song)));
+    dispatch(onPlay(song));
   };
 }
 
 export function pauseSong(songId) {
   return async dispatch => {
     const song = await MusicService.getSong(songId);
-    dispatch(onPause(Object.values(song)));
+    dispatch(onPause(song));
   };
 }
 

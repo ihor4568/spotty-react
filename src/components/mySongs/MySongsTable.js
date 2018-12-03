@@ -7,7 +7,7 @@ const TABLE_DATA = [
   {
     name: "It was a good day",
     duration: "5.12",
-    artistsNames: ["Ice Cube"],
+    artistsNames: ["Ice Cube", "ada"],
     album: {
       name: "The Predator 1992",
       coverURL:

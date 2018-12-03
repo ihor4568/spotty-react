@@ -174,9 +174,9 @@ class TableLayout extends Component {
                   <TableCell className={classes.tableCell}>
                     <Tooltip title="Sort" enterDelay={300}>
                       <TableSortLabel
-                        active={orderBy === "artist"}
+                        active={orderBy === "artists"}
                         direction={order}
-                        onClick={this.handleSortCreate("artist")}
+                        onClick={this.handleSortCreate("artists")}
                       >
                         Artist
                       </TableSortLabel>

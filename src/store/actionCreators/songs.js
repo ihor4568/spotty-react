@@ -7,7 +7,9 @@ export function loadArtistsSongs(artist, payload) {
     try {
       const songs = await MusicService.getArtistsSongs(artist);
       dispatch(getArtistsSongs(Object.values(songs)));
-    } catch {}
+    } catch (e) {
+      //
+    }
   };
 }
 

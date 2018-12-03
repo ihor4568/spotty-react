@@ -61,7 +61,6 @@ class App extends Component {
               <PrivateRoute path="/about" component={About} />
               <PrivateRoute path="/albums/:id" component={AlbumTable} />
               <PrivateRoute path="/artists/:id" component={ArtistTable} />
-              {/* <PrivateRoute path="/songs/:id" component={ShareView} /> */}
               <PrivateRoute component={NotFound} />
             </Switch>
           </div>

@@ -14,6 +14,7 @@ describe("albums reducer", () => {
         id: "34th37"
       }
     ];
+
     const action = { type: actionTypes.ADD_ALBUMS, payload };
     const res = albumsReducer(INITIAL_STATE, action);
 

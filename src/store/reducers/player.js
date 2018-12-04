@@ -1,7 +1,7 @@
 import { ON_PLAY } from "../actionTypes";
 import { ON_PAUSE } from "../actionTypes";
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   isPlaying: false,
   payload: {}
 };

@@ -11,7 +11,9 @@ import {
   InputBase
 } from "@material-ui/core";
 import { AccountCircle, Menu, Search } from "@material-ui/icons";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { addSearchQuery } from "../../store/actionCreators/search";
 
 const styles = theme => ({
   appBar: {
@@ -100,15 +102,21 @@ class AppBarComponent extends Component {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
-    enabled: PropTypes.bool
+    enabled: PropTypes.bool,
+    addSearchQuery: PropTypes.func,
+    searchQuery: PropTypes.string
   };
 
   static defaultProps = {
     enabled: true
   };
 
+  handleSearchChange = e => {
+    this.props.addSearchQuery(e.target.value);
+  };
+
   render() {
-    const { classes, enabled } = this.props;
+    const { classes, enabled, searchQuery } = this.props;
 
     return (
       <AppBar
@@ -147,6 +155,8 @@ class AppBarComponent extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
+                value={searchQuery}
+                onChange={this.handleSearchChange}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
@@ -172,4 +182,11 @@ class AppBarComponent extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AppBarComponent);
+const mapStateToProps = ({ search }) => ({
+  searchQuery: search
+});
+
+export default connect(
+  mapStateToProps,
+  { addSearchQuery }
+)(withStyles(styles, { withTheme: true })(AppBarComponent));

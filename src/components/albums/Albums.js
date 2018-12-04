@@ -85,10 +85,12 @@ class Albums extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    albums: state.albums
-  };
-}
+const mapStateToProps = ({ albums, search }) => ({
+  albums: albums.filter(album => {
+    const albumName = album.albumName.toLowerCase();
+
+    return albumName.indexOf(search.toLowerCase()) !== -1;
+  })
+});
 
 export default connect(mapStateToProps)(withStyles(styles)(Albums));

@@ -1,6 +1,6 @@
 import { ADD_ALBUMS } from "../actionTypes";
 
-const INITIAL_STATE = [];
+export const INITIAL_STATE = [];
 
 export default function albumsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

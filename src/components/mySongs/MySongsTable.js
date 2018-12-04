@@ -72,7 +72,10 @@ class MySongsTable extends Component {
     return arr.map((item, i) => {
       return {
         ...item,
-        number: i + 1
+        number: i + 1,
+        album: item.album.name,
+        artists: item.artistsNames.join(`, `),
+        image: item.album.coverURL
       };
     });
   };
@@ -168,9 +171,9 @@ class MySongsTable extends Component {
                   >
                     <Tooltip title="Sort" enterDelay={300}>
                       <TableSortLabel
-                        active={orderBy === "time"}
+                        active={orderBy === "duration"}
                         direction={order}
-                        onClick={this.handleSortCreate("time")}
+                        onClick={this.handleSortCreate("duration")}
                       >
                         <TimerSharp className={classes.icon} />
                       </TableSortLabel>
@@ -217,10 +220,13 @@ class MySongsTable extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            if (this.props.player.isPlaying) {
-                              this.props.pauseSong(data.id);
+                            if (
+                              this.props.player.isPlaying &&
+                              data.id === this.props.player.payload.id
+                            ) {
+                              this.props.pauseSong(data);
                             } else {
-                              this.props.playSong(data.id);
+                              this.props.playSong(data);
                             }
                           }}
                         >
@@ -236,7 +242,7 @@ class MySongsTable extends Component {
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
                         <img
-                          src={data.album.coverURL}
+                          src={data.image}
                           alt="album"
                           className={classes.image}
                         />
@@ -250,10 +256,10 @@ class MySongsTable extends Component {
                         {data.duration}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.artistsNames.join(", ")}
+                        {data.artists}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.album.name}
+                        {data.album}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}

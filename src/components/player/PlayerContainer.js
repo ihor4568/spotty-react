@@ -93,12 +93,22 @@ export class PlayerContainer extends Component {
   };
 
   setPlayingState = () => {
+    /*const { isPlaying } = this.state;
+
+    if (!isPlaying) {
+      this.audio.pause();
+      return;
+    }
+
+    this.audio.play();*/
+
     const { isPlaying } = this.state;
 
     if (!isPlaying) {
       this.audio.pause();
       return;
     }
+
     this.audio.play();
   };
 
@@ -151,6 +161,10 @@ export class PlayerContainer extends Component {
     const { playingProgress, isPlaying, volumeValue, isMuted } = this.state;
     const { song } = this.props;
     const volume = isMuted ? 0 : volumeValue;
+
+    if (this.audio) {
+      this.setPlayingState();
+    }
 
     return (
       <>

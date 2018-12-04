@@ -1,10 +1,10 @@
-import { ARTISTS_SONGS } from "../actionTypes";
+import * as ationTypes from "../actionTypes";
 
 const INITIAL_STATE = [];
 
 export default function songsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ARTISTS_SONGS:
+    case ationTypes.FETCH_ARTISTS_SONGS_SUCCESS:
       return action.payload;
     default:
       return state;

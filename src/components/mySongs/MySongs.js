@@ -6,8 +6,7 @@ function MySongs() {
   return (
     <>
       <Title name="My Songs" />
-      {/* <TableLayout songs={this.props.songs} /> */}
-      <TableLayout />
+      <TableLayout songs={this.props.songs} />
     </>
   );
 }

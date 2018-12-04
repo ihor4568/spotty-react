@@ -5,13 +5,14 @@ import { loadAlbumSongs } from "../../store/actionCreators/songs";
 // import { loadSongs } from "../store/actionCreators/TableLayout";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
+import { Card, CardActionArea, CardMedia, Typography } from "@material-ui/core";
 
 const styles = {};
 
 class AlbumTable extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
-    // artists: PropTypes.array.isRequired,
+    albums: PropTypes.array.isRequired,
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     loadAlbumSongs: PropTypes.isRequired
@@ -22,13 +23,36 @@ class AlbumTable extends Component {
   }
 
   render() {
-    // const { classes, match, songs } = this.props;
+    const { classes, match } = this.props;
     return (
       <>
-        {/* <AlbumCover albumId={match.params.id} /> */}
-        {/* <TableLayout songs={songs} /> */}
-        <TableLayout />
-        {/* <TableLayout albumId={match.params.id} /> */}
+        {this.props.albums.map(
+          (artist, i) =>
+            artist.id === match.params.id && (
+              <div key={i}>
+                <div className={classes.container}>
+                  <Card className={classes.artistCard} key={i}>
+                    <CardActionArea className={classes.artistAction}>
+                      <CardMedia
+                        component="img"
+                        className={classes.artistImage}
+                        image={artist.artistPhotoURL}
+                        title={artist.artistName}
+                      />
+                    </CardActionArea>
+                  </Card>
+                  <Typography
+                    variant="h6"
+                    component="h2"
+                    className={classes.artistName}
+                  >
+                    {artist.artistName}
+                  </Typography>
+                </div>
+                <TableLayout songs={this.props.songs} />
+              </div>
+            )
+        )}
       </>
     );
   }
@@ -36,7 +60,7 @@ class AlbumTable extends Component {
 
 function mapStateToProps(state) {
   return {
-    album: state.album,
+    albums: state.albums,
     songs: state.songs
   };
 }

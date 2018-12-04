@@ -52,10 +52,7 @@ class Albums extends Component {
           {this.props.albums.map((album, i) => (
             <Grid key={i} item xl={2} md={3}>
               <Card>
-                <Link
-                  to={`${match.url}/${album.albumId}`}
-                  className={classes.link}
-                >
+                <Link to={`${match.url}/${album.id}`} className={classes.link}>
                   <CardActionArea>
                     <CardMedia
                       component="img"

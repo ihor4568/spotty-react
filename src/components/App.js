@@ -14,14 +14,13 @@ import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 
+import { connect } from "react-redux";
+import { loadSongs } from "../store/actionCreators/songs";
 import { loadArtists } from "../store/actionCreators/artists";
 import { loadAlbums } from "../store/actionCreators/albums";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-
-import { connect } from "react-redux";
-import { loadSongs } from "../store/actionCreators/mySongsTable";
 
 const styles = () => ({
   root: {
@@ -36,10 +35,6 @@ class App extends Component {
     loadAlbums: PropTypes.func,
     fetchUser: PropTypes.func.isRequired,
     loadSongs: PropTypes.func
-  };
-
-  state = {
-    currentPage: "albums"
   };
 
   componentDidMount() {

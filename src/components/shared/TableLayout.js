@@ -17,12 +17,9 @@ import { PlayArrow, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 import { connect } from "react-redux";
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
-
-const styles = theme => ({
+const styles = () => ({
   root: {
-    width: "calc(100% - 2rem)",
-    margin: "1rem auto 0",
+    margin: "0 auto",
     overflowX: "auto"
   },
   image: {
@@ -52,7 +49,7 @@ const styles = theme => ({
   }
 });
 
-class MySongsTable extends Component {
+class TableLayout extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     songs: PropTypes.array.isRequired
@@ -68,6 +65,10 @@ class MySongsTable extends Component {
       return {
         ...item,
         number: i + 1
+        // ,
+        // album: item.album.name,
+        // artists: item.artistsNames.join(`, `),
+        // image: item.album.coverURL
       };
     });
   };
@@ -113,12 +114,8 @@ class MySongsTable extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
-    // const sortedData = this.stableSort(
-    //   this.createNewSongsArray(this.props.songs),
-    //   this.getSorting(order, orderBy)
-    // );
 
     return (
       <>
@@ -200,7 +197,7 @@ class MySongsTable extends Component {
 
               <TableBody>
                 {this.stableSort(
-                  this.createNewSongsArray(this.props.songs),
+                  this.createNewSongsArray(songs),
                   this.getSorting(order, orderBy)
                 ).map((data, i) => {
                   return (
@@ -268,4 +265,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(MySongsTable));
+export default connect(mapStateToProps)(withStyles(styles)(TableLayout));

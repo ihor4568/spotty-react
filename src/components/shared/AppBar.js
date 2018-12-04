@@ -10,8 +10,16 @@ import {
   Typography,
   InputBase
 } from "@material-ui/core";
-import { AccountCircle, Menu, Search } from "@material-ui/icons";
+import {
+  AccountCircle,
+  Menu,
+  Search,
+  Brightness1Outlined,
+  Brightness1
+} from "@material-ui/icons";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { boundChangeTheme } from "../../store/actionCreators/theme";
 
 const styles = theme => ({
   appBar: {
@@ -100,7 +108,11 @@ class AppBarComponent extends Component {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
-    enabled: PropTypes.bool
+    enabled: PropTypes.bool,
+    boundChangeTheme: PropTypes.func,
+    theme: PropTypes.object,
+    palette: PropTypes.object,
+    type: PropTypes.string
   };
 
   static defaultProps = {
@@ -154,6 +166,19 @@ class AppBarComponent extends Component {
               />
             </div>
           )}
+          <IconButton
+            color="inherit"
+            aria-label="Toggle light/dark theme"
+            data-ga-event-category="AppBar"
+            data-ga-event-action="dark"
+            onClick={this.props.boundChangeTheme}
+          >
+            {this.props.theme.palette.type === "light" ? (
+              <Brightness1Outlined />
+            ) : (
+              <Brightness1 />
+            )}
+          </IconButton>
           {enabled ? (
             <ProfileMenu />
           ) : (
@@ -172,4 +197,17 @@ class AppBarComponent extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AppBarComponent);
+function mapStateToProps(state) {
+  return {
+    theme: state.theme
+  };
+}
+
+const mapDispatchToProps = {
+  boundChangeTheme
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles, { withTheme: true })(AppBarComponent));

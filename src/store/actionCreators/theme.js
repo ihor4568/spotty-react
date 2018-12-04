@@ -1,9 +1,8 @@
 import { THEME_CHANGE_PALETTE_TYPE } from "../actionTypes";
-import theme from "../../theme";
 
-export function boundChangeTheme() {
+export function boundChangeTheme(type) {
   return dispatch => {
-    dispatch(changeTheme(theme));
+    dispatch(changeTheme(type));
   };
 }
 

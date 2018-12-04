@@ -13,6 +13,7 @@ import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
+import { getThemeType } from "../store/selectors/theme.js";
 
 import { loadArtists } from "../store/actionCreators/artists";
 import { loadAlbums } from "../store/actionCreators/albums";
@@ -34,7 +35,8 @@ export class App extends Component {
     classes: PropTypes.object.isRequired,
     loadArtists: PropTypes.func,
     loadAlbums: PropTypes.func,
-    fetchUser: PropTypes.func.isRequired
+    fetchUser: PropTypes.func.isRequired,
+    type: PropTypes.oneOf(["light", "dark"]).isRequired
   };
 
   componentDidMount() {
@@ -44,11 +46,17 @@ export class App extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, type } = this.props;
 
     return (
       <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider
+          theme={
+            type === "dark"
+              ? { ...theme, palette: { ...theme.palette, type: "dark" } }
+              : theme
+          }
+        >
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />
@@ -68,6 +76,10 @@ export class App extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  type: getThemeType(state)
+});
+
 const mapDispatchToProps = {
   loadArtists,
   loadAlbums,
@@ -75,6 +87,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(withStyles(styles, { withTheme: true })(App));

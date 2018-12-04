@@ -1,11 +1,12 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import "typeface-roboto";
 
-const theme = createMuiTheme({
+const themeProperties = {
   typography: {
     useNextVariants: true
   },
   palette: {
+    type: "light",
     primary: {
       main: "#1e88e5"
     },
@@ -22,6 +23,11 @@ const theme = createMuiTheme({
       appBarHeight: "4rem"
     }
   }
-});
+};
+
+const theme = createMuiTheme(themeProperties);
 
 export default theme;
+
+export const getThemeWithType = type =>
+  createMuiTheme({ ...theme, palette: { ...theme.palette, type } });

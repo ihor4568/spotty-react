@@ -119,6 +119,16 @@ class AppBarComponent extends Component {
     enabled: true
   };
 
+  isCurrentThemeLight = () => {
+    return this.props.theme.type === "light";
+  };
+
+  handleChangeTheme = () => {
+    const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
+
+    this.props.boundChangeTheme(nextThemeType);
+  };
+
   render() {
     const { classes, enabled } = this.props;
 
@@ -171,9 +181,9 @@ class AppBarComponent extends Component {
             aria-label="Toggle light/dark theme"
             data-ga-event-category="AppBar"
             data-ga-event-action="dark"
-            onClick={this.props.boundChangeTheme}
+            onClick={this.handleChangeTheme}
           >
-            {this.props.theme.palette.type === "light" ? (
+            {this.isCurrentThemeLight() ? (
               <Brightness1Outlined />
             ) : (
               <Brightness1 />

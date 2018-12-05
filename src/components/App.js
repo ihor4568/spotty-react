@@ -30,7 +30,7 @@ const styles = () => ({
   }
 });
 
-class App extends Component {
+export class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     loadArtists: PropTypes.func,

@@ -7,14 +7,13 @@ import PropTypes from "prop-types";
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
-import Albums from "./albums/Albums";
+import Albums from "./notFound/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 
 import { connect } from "react-redux";
-import { loadSongs } from "../store/actionCreators/songs";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -28,13 +27,11 @@ const styles = () => ({
 export class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    fetchUser: PropTypes.func.isRequired,
-    loadSongs: PropTypes.func
+    fetchUser: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     this.props.fetchUser();
-    this.props.loadSongs();
   }
 
   render() {
@@ -61,8 +58,7 @@ export class App extends Component {
 }
 
 const mapDispatchToProps = {
-  fetchUser,
-  loadSongs
+  fetchUser
 };
 
 export const ThemedApp = withStyles(styles, { withTheme: true })(App);

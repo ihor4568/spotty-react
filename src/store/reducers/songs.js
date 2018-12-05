@@ -10,6 +10,8 @@ export default function songsReducer(state = INITIAL_STATE, action) {
       return (window.location.pathname = "/404");
     case actionTypes.FETCH_ARTISTS_SONGS_SUCCESS:
       return action.payload;
+    case actionTypes.FETCH_ARTISTS_SONGS_FAIL:
+      return (window.location.pathname = "/404");
     default:
       return state;
   }

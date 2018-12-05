@@ -65,10 +65,6 @@ class TableLayout extends Component {
       return {
         ...item,
         number: i + 1
-        // ,
-        // album: item.album.name,
-        // artists: item.artistsNames.join(`, `),
-        // image: item.album.coverURL
       };
     });
   };

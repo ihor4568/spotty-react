@@ -1,13 +1,32 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TableLayout from "../shared/TableLayout";
-import { loadAlbumSongs } from "../../store/actionCreators/songs";
-// import { loadSongs } from "../store/actionCreators/TableLayout";
+import { loadSongs } from "../../store/actionCreators/songs";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
-import { Card, CardActionArea, CardMedia, Typography } from "@material-ui/core";
+import { Card, CardMedia, Typography } from "@material-ui/core";
 
-const styles = {};
+const styles = {
+  container: {
+    display: `flex`,
+    margin: `1rem 0 2.5rem`
+  },
+  albumAuthors: {
+    paddingLeft: `1.2rem`,
+    fontSize: `1.2rem`
+  },
+  albumImage: {
+    width: 350,
+    boxSizing: `border-box`
+  },
+  albumName: {
+    paddingLeft: `1rem`,
+    display: `inline-block`,
+    overflow: `hidden`,
+    whiteSpace: `nowrap`,
+    textOverflow: `ellipsis`
+  }
+};
 
 class AlbumTable extends Component {
   static propTypes = {
@@ -15,11 +34,11 @@ class AlbumTable extends Component {
     albums: PropTypes.array.isRequired,
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
-    loadAlbumSongs: PropTypes.isRequired
+    loadSongs: PropTypes.fun
   };
 
   componentDidMount() {
-    this.props.loadAlbumSongs(this.props.match.params.id);
+    this.props.loadSongs(this.props.match.params.id);
   }
 
   render() {
@@ -27,27 +46,35 @@ class AlbumTable extends Component {
     return (
       <>
         {this.props.albums.map(
-          (artist, i) =>
-            artist.id === match.params.id && (
+          (album, i) =>
+            album.id === match.params.id && (
               <div key={i}>
                 <div className={classes.container}>
-                  <Card className={classes.artistCard} key={i}>
-                    <CardActionArea className={classes.artistAction}>
-                      <CardMedia
-                        component="img"
-                        className={classes.artistImage}
-                        image={artist.artistPhotoURL}
-                        title={artist.artistName}
-                      />
-                    </CardActionArea>
+                  <Card className={classes.albumCard}>
+                    <CardMedia
+                      className={classes.albumImage}
+                      component="img"
+                      image={album.albumCoverURL}
+                      title={album.albumName}
+                    />
                   </Card>
-                  <Typography
-                    variant="h6"
-                    component="h2"
-                    className={classes.artistName}
-                  >
-                    {artist.artistName}
-                  </Typography>
+                  <div>
+                    <Typography
+                      className={classes.albumName}
+                      component="h2"
+                      variant="h4"
+                    >
+                      {album.albumName}
+                    </Typography>
+                    <Typography
+                      className={classes.albumAuthors}
+                      component="p"
+                      variant="body1"
+                    >
+                      {`by `}
+                      {album.artistsNames.join(", ")}
+                    </Typography>
+                  </div>
                 </div>
                 <TableLayout songs={this.props.songs} />
               </div>
@@ -66,7 +93,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadAlbumSongs
+  loadSongs
 };
 
 export default connect(

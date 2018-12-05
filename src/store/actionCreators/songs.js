@@ -7,7 +7,7 @@ export function loadSongs(albumId) {
       const songs = await MusicService.getAlbumsSongs(albumId);
       dispatch(addAlbumSongs(Object.values(songs)));
     } catch {
-      window.location.pathname = "/404";
+      // window.location.pathname = "/404";
     }
   };
 }

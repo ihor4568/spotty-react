@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { Card, CardActionArea, CardMedia, Typography } from "@material-ui/core";
+import { Card, CardMedia, Typography } from "@material-ui/core";
 
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 import TableLayout from "../shared/TableLayout";
@@ -17,11 +17,6 @@ const styles = {
   artistCard: {
     boxShadow: `none`,
     backgroundColor: `inherit`
-  },
-  artistAction: {
-    borderRadius: `50%`,
-    overflow: `hidden`,
-    padding: `0.5rem`
   },
   artistImage: {
     width: 220,
@@ -61,14 +56,12 @@ class ArtistTable extends Component {
               <div key={i}>
                 <div className={classes.container}>
                   <Card className={classes.artistCard} key={i}>
-                    <CardActionArea className={classes.artistAction}>
-                      <CardMedia
-                        component="img"
-                        className={classes.artistImage}
-                        image={artist.artistPhotoURL}
-                        title={artist.artistName}
-                      />
-                    </CardActionArea>
+                    <CardMedia
+                      component="img"
+                      className={classes.artistImage}
+                      image={artist.artistPhotoURL}
+                      title={artist.artistName}
+                    />
                   </Card>
                   <Typography
                     variant="h6"

@@ -5,7 +5,7 @@ import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
-import MySongsTable from "./mySongs/MySongsTable";
+import MySongsTable from "./mySongsTable/MySongsTable";
 import Artists from "./artists/Artists";
 import About from "./about/About";
 import Albums from "./albums/Albums";

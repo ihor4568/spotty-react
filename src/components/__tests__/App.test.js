@@ -2,7 +2,7 @@ import React from "react";
 import { App } from "../App";
 import renderer from "react-test-renderer";
 
-jest.mock("../mySongs/MySongs", () => "my-songs");
+jest.mock("../mySongsTable/MySongsTable", () => "my-songs");
 jest.mock("../artists/Artists", () => "artists");
 jest.mock("../about/About", () => "about");
 jest.mock("../albums/Albums", () => "albums");
@@ -31,8 +31,6 @@ describe("App component", () => {
   });
 
   it("should load initial data after mount", () => {
-    expect(props.loadArtists).toHaveBeenCalled();
-    expect(props.loadAlbums).toHaveBeenCalled();
     expect(props.fetchUser).toHaveBeenCalled();
   });
 });

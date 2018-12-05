@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
-import Albums from "./notFound/Albums";
+import Albums from "./albums/Albums";
 import AlbumTable from "./albums/AlbumTable";
 import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";

@@ -13,7 +13,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoggedIn: true,
         user: action.user,
-        isLoaded: true
+        isLoaded: true,
+        error: ""
       };
     case ationTypes.USER_FETCHED_FAIL:
       return {
@@ -27,6 +28,16 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoggedIn: false,
         user: null,
         isLoaded: true
+      };
+    case ationTypes.AUTH_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
+    case ationTypes.CLEAR_AUTH_ERROR:
+      return {
+        ...state,
+        error: ""
       };
     default:
       return state;

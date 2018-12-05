@@ -9,7 +9,7 @@ export function signIn({ email, password }) {
       const userInfo = await AuthService.signIn(email, password);
       dispatch({ type: actionTypes.USER_FETCHED_SUCCESS, user: userInfo.user });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCHED_FAIL });
+      dispatch(authError(e.message));
     }
   };
 }
@@ -22,7 +22,7 @@ export function signUp({ email, password, name }) {
       const user = await AuthService.check();
       dispatch({ type: actionTypes.USER_FETCHED_SUCCESS, user });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCHED_FAIL });
+      dispatch(authError(e.message));
     }
   };
 }
@@ -48,5 +48,18 @@ export function fetchUser() {
     } catch (e) {
       dispatch({ type: actionTypes.USER_FETCHED_FAIL });
     }
+  };
+}
+
+export function authError(message) {
+  return {
+    type: actionTypes.AUTH_ERROR,
+    error: message
+  };
+}
+
+export function clearAuthError() {
+  return {
+    type: actionTypes.CLEAR_AUTH_ERROR
   };
 }

@@ -44,7 +44,7 @@ export class App extends Component {
           <Switch>
             <PublicRoute exact path="/login" component={Auth} />
             <Redirect exact from="/" to="/albums" />
-            <PrivateRoute exact path="/Mysongs" component={MySongs} />
+            <PrivateRoute exact path="/mysongs" component={MySongs} />
             <PrivateRoute exact path="/albums" component={Albums} />
             <PrivateRoute exact path="/artists" component={Artists} />
             <PrivateRoute path="/about" component={About} />

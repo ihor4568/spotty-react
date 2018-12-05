@@ -9,7 +9,6 @@ export function loadSongs(albumId) {
       dispatch(addAlbumSongs(Object.values(songs)));
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALBUM_SONGS_FAIL });
-      // window.location.pathname = "/404";
     }
   };
 }

@@ -36,7 +36,7 @@ const TABLE_DATA = [
   }
 ];
 
-class MySongsTable extends Component {
+class MySongs extends Component {
   render() {
     return (
       <>
@@ -47,4 +47,4 @@ class MySongsTable extends Component {
   }
 }
 
-export default MySongsTable;
+export default MySongs;

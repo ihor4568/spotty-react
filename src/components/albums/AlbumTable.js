@@ -34,7 +34,7 @@ class AlbumTable extends Component {
     albums: PropTypes.array.isRequired,
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
-    loadSongs: PropTypes.fun
+    loadSongs: PropTypes.func
   };
 
   componentDidMount() {

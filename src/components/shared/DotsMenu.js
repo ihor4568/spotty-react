@@ -52,7 +52,9 @@ export default class DotsMenu extends Component {
           />
           <MenuItem onClick={this.handleClickOpen}>Legal info</MenuItem>
           <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
-          <MenuItem onClick={this.handleShare}>Share</MenuItem>
+          <MenuItem onClick={this.handleShare} onMouseUp={this.handleClose}>
+            Share
+          </MenuItem>
         </Menu>
       </div>
     );

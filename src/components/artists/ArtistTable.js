@@ -80,10 +80,14 @@ class ArtistTable extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ artists, songs, search }) {
   return {
-    artists: state.artists,
-    songs: state.songs
+    artists,
+    songs: songs.filter(song => {
+      const songName = song.name.toLowerCase();
+
+      return songName.indexOf(search.toLowerCase()) !== -1;
+    })
   };
 }
 

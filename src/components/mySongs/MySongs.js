@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import Title from "../shared/Title";
 import TableLayout from "../shared/TableLayout";
+import PropTypes from "prop-types";
 
 const TABLE_DATA = [
   {
@@ -37,14 +39,26 @@ const TABLE_DATA = [
 ];
 
 class MySongs extends Component {
+  static propTypes = {
+    songs: PropTypes.array.isRequired
+  };
+
   render() {
     return (
       <>
         <Title name="My Songs" />
-        <TableLayout songs={TABLE_DATA} />
+        <TableLayout songs={this.props.songs} />
       </>
     );
   }
 }
 
-export default MySongs;
+const mapStateToProps = ({ search }) => ({
+  songs: TABLE_DATA.filter(song => {
+    const songName = song.name.toLowerCase();
+
+    return songName.indexOf(search.toLowerCase()) !== -1;
+  })
+});
+
+export default connect(mapStateToProps)(MySongs);

@@ -8,14 +8,13 @@ describe("albums reducer", () => {
     expect(res).toEqual(INITIAL_STATE);
   });
 
-  it("should return action payload in case of ADD_ALBUMS action", () => {
+  it("should return action payload in case of ADD_ALBUMS_SUCCESS action", () => {
     const payload = [
       {
         id: "34th37"
       }
     ];
-
-    const action = { type: actionTypes.ADD_ALBUMS, payload };
+    const action = { type: actionTypes.ADD_ALBUMS_SUCCESS, payload };
     const res = albumsReducer(INITIAL_STATE, action);
 
     expect(res).toEqual(payload);

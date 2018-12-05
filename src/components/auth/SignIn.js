@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+
 import {
   Input,
   InputLabel,
@@ -7,6 +8,8 @@ import {
   Button,
   withStyles
 } from "@material-ui/core";
+
+import Error from "./Error";
 
 const styles = theme => ({
   button: {
@@ -22,13 +25,18 @@ const styles = theme => ({
     "&:after": {
       borderBottomColor: theme.palette.primary.main
     }
+  },
+  error: {
+    color: theme.palette.error.main,
+    marginTop: "1.5rem"
   }
 });
 
 class SignIn extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    errorText: PropTypes.string
   };
 
   state = {
@@ -102,6 +110,7 @@ class SignIn extends Component {
         >
           Sign in
         </Button>
+        {this.props.errorText && <Error text={this.props.errorText} />}
       </form>
     );
   }

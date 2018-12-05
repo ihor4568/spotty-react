@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-
-import Title from "../shared/Title";
-import DotsMenu from "../shared/DotsMenu";
-
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+
 import {
   Table,
   TableBody,
@@ -16,15 +12,20 @@ import {
   Tooltip,
   Button
 } from "@material-ui/core";
-import { PlayArrow, TimerSharp } from "@material-ui/icons";
-import { connect } from "react-redux";
 
+import { PlayArrow, TimerSharp } from "@material-ui/icons";
+import DotsMenu from "./DotsMenu";
+
+import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
+import { loadArtistsSongs } from "../../store/actionCreators/songs";
 
-const styles = theme => ({
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
   root: {
-    margin: "0 auto",
+    margin: "2rem auto",
     overflowX: "auto"
   },
   image: {
@@ -52,21 +53,26 @@ const styles = theme => ({
   fixedWidth: {
     width: `auto`
   }
-});
+};
 
-class MySongsTable extends Component {
+class TableLayout extends Component {
   static propTypes = {
-    classes: PropTypes.object.isRequired,
     songs: PropTypes.array.isRequired,
+    classes: PropTypes.object.isRequired,
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired
+    pauseSong: PropTypes.func.isRequired,
+    loadArtistsSongs: PropTypes.func
   };
 
   state = {
     order: "asc",
     orderBy: "number"
   };
+
+  componentDidMount() {
+    this.props.loadArtistsSongs("artist2");
+  }
 
   createNewSongsArray = arr => {
     return arr.map((item, i) => {
@@ -129,16 +135,15 @@ class MySongsTable extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
     const sortedData = this.stableSort(
-      this.createNewSongsArray(this.props.songs),
+      this.createNewSongsArray(songs),
       this.getSorting(order, orderBy)
     );
 
     return (
       <>
-        <Title name="My Songs" />
         <Paper className={classes.root}>
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
@@ -190,9 +195,9 @@ class MySongsTable extends Component {
                   <TableCell className={classes.tableCell}>
                     <Tooltip title="Sort" enterDelay={300}>
                       <TableSortLabel
-                        active={orderBy === "artist"}
+                        active={orderBy === "artists"}
                         direction={order}
-                        onClick={this.handleSortCreate("artist")}
+                        onClick={this.handleSortCreate("artists")}
                       >
                         Artist
                       </TableSortLabel>
@@ -214,11 +219,10 @@ class MySongsTable extends Component {
                   />
                 </TableRow>
               </TableHead>
-
               <TableBody>
-                {sortedData.map((data, i) => {
+                {sortedData.map((data, y) => {
                   return (
-                    <TableRow hover key={i}>
+                    <TableRow hover key={y}>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
@@ -288,10 +292,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   playSong,
-  pauseSong
+  pauseSong,
+  loadArtistsSongs
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(MySongsTable));
+)(withStyles(styles)(TableLayout));

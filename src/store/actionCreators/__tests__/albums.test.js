@@ -10,7 +10,7 @@ describe("albums action creators", () => {
     it("should return correct action", () => {
       const payload = { prop: 10 };
       const expected = {
-        type: actionTypes.ADD_ALBUMS,
+        type: actionTypes.ADD_ALBUMS_SUCCESS,
         payload
       };
       expect(actionCreators.addAlbums(payload)).toEqual(expected);

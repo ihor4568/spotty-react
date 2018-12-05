@@ -16,8 +16,6 @@ import Auth from "./auth/Auth";
 
 import { connect } from "react-redux";
 import { loadSongs } from "../store/actionCreators/songs";
-import { loadArtists } from "../store/actionCreators/artists";
-import { loadAlbums } from "../store/actionCreators/albums";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -31,15 +29,11 @@ const styles = () => ({
 class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    loadArtists: PropTypes.func,
-    loadAlbums: PropTypes.func,
     fetchUser: PropTypes.func.isRequired,
     loadSongs: PropTypes.func
   };
 
   componentDidMount() {
-    this.props.loadAlbums();
-    this.props.loadArtists();
     this.props.fetchUser();
     this.props.loadSongs();
   }
@@ -70,8 +64,6 @@ class App extends Component {
 }
 
 const mapDispatchToProps = {
-  loadArtists,
-  loadAlbums,
   fetchUser,
   loadSongs
 };

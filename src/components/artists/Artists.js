@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 
 import { connect } from "react-redux";
+import { loadArtists } from "../../store/actionCreators/artists";
 
 const styles = {
   artistCard: {
@@ -53,8 +54,13 @@ class Artists extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired
+    artists: PropTypes.array.isRequired,
+    loadArtists: PropTypes.func
   };
+
+  componentDidMount() {
+    this.props.loadArtists();
+  }
 
   render() {
     const { classes, match } = this.props;
@@ -96,4 +102,12 @@ function mapStateToProps(state) {
     artists: state.artists
   };
 }
-export default connect(mapStateToProps)(withStyles(styles)(Artists));
+
+const mapDispatchToProps = {
+  loadArtists
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Artists));

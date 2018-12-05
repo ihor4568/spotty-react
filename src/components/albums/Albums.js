@@ -13,12 +13,14 @@ import {
 
 import Title from "../shared/Title";
 import { connect } from "react-redux";
+import { loadAlbums } from "../../store/actionCreators/albums";
 
 const styles = {
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
   albumInfo: {
+    width: `190px`,
     overflow: `hidden`,
     whiteSpace: `nowrap`,
     textOverflow: `ellipsis`
@@ -39,8 +41,13 @@ class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
+    loadAlbums: PropTypes.func,
     match: PropTypes.object
   };
+
+  componentDidMount() {
+    this.props.loadAlbums();
+  }
 
   render() {
     const { classes, match } = this.props;
@@ -88,4 +95,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Albums));
+const mapDispatchToProps = {
+  loadAlbums
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Albums));

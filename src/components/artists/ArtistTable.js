@@ -55,7 +55,7 @@ class ArtistTable extends Component {
             artist.id === match.params.id && (
               <div key={i}>
                 <div className={classes.container}>
-                  <Card className={classes.artistCard} key={i}>
+                  <Card className={classes.artistCard}>
                     <CardMedia
                       component="img"
                       className={classes.artistImage}

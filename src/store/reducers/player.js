@@ -1,23 +1,23 @@
-import { ON_PLAY } from "../actionTypes";
-import { ON_PAUSE } from "../actionTypes";
+import { PLAY_SONG } from "../actionTypes";
+import { PAUSE_SONG } from "../actionTypes";
 
 export const INITIAL_STATE = {
   isPlaying: false,
-  payload: {}
+  song: {}
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ON_PLAY:
+    case PLAY_SONG:
       return {
         ...state,
-        payload: action.payload,
+        song: action.song,
         isPlaying: true
       };
-    case ON_PAUSE:
+    case PAUSE_SONG:
       return {
         ...state,
-        payload: action.payload,
+        song: action.song,
         isPlaying: false
       };
     default:

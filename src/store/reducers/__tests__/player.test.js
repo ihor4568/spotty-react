@@ -7,24 +7,24 @@ describe("player reducer", () => {
     expect(result).toEqual(INITIAL_STATE);
   });
 
-  it("should return Object in case of ON_PLAY action", () => {
+  it("should return Object in case of PLAY_SONG action", () => {
     const obj = {
       isPlaying: true,
-      payload: {}
+      song: {}
     };
-    const { payload } = obj;
-    const action = { type: actionTypes.ON_PLAY, payload };
+    const { song } = obj;
+    const action = { type: actionTypes.PLAY_SONG, song };
     const result = playerReducer(INITIAL_STATE, action);
     expect(result).toEqual(obj);
   });
 
-  it("should return Object in case of ON_PAUSE action", () => {
+  it("should return Object in case of PAUSE_SONG action", () => {
     const obj = {
       isPlaying: false,
-      payload: {}
+      song: {}
     };
-    const { payload } = obj;
-    const action = { type: actionTypes.ON_PAUSE, payload };
+    const { song } = obj;
+    const action = { type: actionTypes.PAUSE_SONG, song };
     const result = playerReducer(INITIAL_STATE, action);
     expect(result).toEqual(obj);
   });

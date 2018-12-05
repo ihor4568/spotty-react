@@ -120,6 +120,14 @@ class MySongsTable extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
+  handlePlayPauseButton = data => {
+    if (this.props.player.isPlaying && data.id === this.props.player.song.id) {
+      this.props.pauseSong(data);
+    } else {
+      this.props.playSong(data);
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { order, orderBy } = this.state;
@@ -220,14 +228,7 @@ class MySongsTable extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            if (
-                              this.props.player.isPlaying &&
-                              data.id === this.props.player.payload.id
-                            ) {
-                              this.props.pauseSong(data);
-                            } else {
-                              this.props.playSong(data);
-                            }
+                            this.handlePlayPauseButton(data);
                           }}
                         >
                           <PlayArrow className={classes.icon} />

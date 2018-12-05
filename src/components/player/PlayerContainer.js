@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import Player from "./Player";
 
 import { connect } from "react-redux";
+import { pauseSong, playSong } from "../../store/actionCreators/player";
 
 const SONG = {
   source:
@@ -50,7 +51,9 @@ export class PlayerContainer extends Component {
       authorName: PropTypes.string.isRequired
     }),
     songs: PropTypes.array.isRequired,
-    player: PropTypes.object.isRequired
+    player: PropTypes.object.isRequired,
+    playSong: PropTypes.func.isRequired,
+    pauseSong: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -59,6 +62,12 @@ export class PlayerContainer extends Component {
 
   componentWillUnmount() {
     this.removeListeners();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      this.setPlayingState();
+    }
   }
 
   addListeners = () => {
@@ -72,10 +81,12 @@ export class PlayerContainer extends Component {
   };
 
   handleChangePlayingState = () => {
-    this.setState(
-      prevState => ({ isPlaying: !prevState.isPlaying }),
-      this.setPlayingState
-    );
+    if (this.props.player.isPlaying) {
+      this.props.pauseSong(this.props.player.song);
+    } else {
+      this.props.playSong(this.props.player.song);
+    }
+    this.setPlayingState();
   };
 
   handleChangeProgress = (event, value) => {
@@ -102,7 +113,7 @@ export class PlayerContainer extends Component {
 
     this.audio.play();*/
 
-    const { isPlaying } = this.state;
+    const isPlaying = this.props.player.isPlaying;
 
     if (!isPlaying) {
       this.audio.pause();
@@ -162,14 +173,10 @@ export class PlayerContainer extends Component {
     const { song } = this.props;
     const volume = isMuted ? 0 : volumeValue;
 
-    if (this.audio) {
-      this.setPlayingState();
-    }
-
     return (
       <>
         <audio
-          src={this.props.player.payload.songURL}
+          src={this.props.player.song.songURL}
           ref={element => (this.audio = element)}
         />
         <Player
@@ -197,4 +204,12 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(PlayerContainer);
+const mapDispatchToProps = {
+  playSong,
+  pauseSong
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerContainer);

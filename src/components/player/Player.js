@@ -8,6 +8,8 @@ import DotsMenu from "../shared/DotsMenu";
 
 import PropTypes from "prop-types";
 
+import { connect } from "react-redux";
+
 const styles = theme => ({
   mediaPlayerAligner: {
     userSelect: "none",
@@ -114,7 +116,8 @@ const Player = ({
   onChangeVolume,
   onMute,
   onChangeProgressStart,
-  onChangeProgressEnd
+  onChangeProgressEnd,
+  player
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
@@ -151,8 +154,10 @@ const Player = ({
             color="primary"
             aria-label="Play"
           >
-            {isPlaying && <Pause className={classes.playButtonStateIcon} />}
-            {!isPlaying && (
+            {player.isPlaying && (
+              <Pause className={classes.playButtonStateIcon} />
+            )}
+            {!player.isPlaying && (
               <PlayArrow className={classes.playButtonStateIcon} />
             )}
           </Button>
@@ -204,7 +209,16 @@ Player.propTypes = {
   }),
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
-  onChangeProgressEnd: PropTypes.func.isRequired
+  onChangeProgressEnd: PropTypes.func.isRequired,
+  player: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(Player);
+function mapStateToProps(state) {
+  return {
+    player: state.player
+  };
+}
+
+export default connect(mapStateToProps)(
+  withStyles(styles, { withTheme: true })(Player)
+);

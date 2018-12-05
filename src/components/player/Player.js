@@ -107,7 +107,6 @@ const styles = theme => ({
 const Player = ({
   classes,
   onPlay,
-  isPlaying,
   onChangeProgress,
   progress,
   song,
@@ -130,14 +129,14 @@ const Player = ({
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
-            <img className={classes.image} src={song.title} alt="album title" />
+            <img className={classes.image} src={song.image} alt="album title" />
           </div>
           <div className={classes.audioInfoText}>
             <Typography variant="h6" className={classes.songInfo}>
-              {song.songName}
+              {song.name}
             </Typography>
             <Typography component="h2" className={classes.albumArtistInfo}>
-              {song.albumName} - {song.authorName}
+              {song.album} - {song.artists}
             </Typography>
           </div>
         </div>
@@ -193,20 +192,13 @@ const Player = ({
 
 Player.propTypes = {
   classes: PropTypes.object,
-  isPlaying: PropTypes.bool.isRequired,
   onPlay: PropTypes.func.isRequired,
   onChangeProgress: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
   onChangeVolume: PropTypes.func.isRequired,
   volumeIcon: PropTypes.element.isRequired,
-  song: PropTypes.shape({
-    source: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    songName: PropTypes.string.isRequired,
-    albumName: PropTypes.string.isRequired,
-    authorName: PropTypes.string.isRequired
-  }),
+  song: PropTypes.object.isRequired,
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired,

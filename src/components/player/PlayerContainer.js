@@ -12,16 +12,6 @@ import Player from "./Player";
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
 
-const SONG = {
-  source:
-    "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FAdam__Alma_-_04_-_Back_To_The_Sea.mp3?alt=media&token=f0f1439f-f09e-40d9-938d-c7f1a332a574",
-  title:
-    "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FBack_To_The_Sea.jpg?alt=media&token=a83f646a-9d63-4eaa-bcdf-e17cf6967126",
-  songName: "Smile for me, sun",
-  albumName: "Back to the sea",
-  authorName: "Adam Alma"
-};
-
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
   VolumeMute: <VolumeMute />,
@@ -31,25 +21,13 @@ const VOLUME_ICON_SET = {
 
 export class PlayerContainer extends Component {
   state = {
-    isPlaying: false,
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
     isMuted: false
   };
 
-  static defaultProps = {
-    song: SONG
-  };
-
   static propTypes = {
-    song: PropTypes.shape({
-      source: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      songName: PropTypes.string.isRequired,
-      albumName: PropTypes.string.isRequired,
-      authorName: PropTypes.string.isRequired
-    }),
     songs: PropTypes.array.isRequired,
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
@@ -104,16 +82,7 @@ export class PlayerContainer extends Component {
   };
 
   setPlayingState = () => {
-    /*const { isPlaying } = this.state;
-
-    if (!isPlaying) {
-      this.audio.pause();
-      return;
-    }
-
-    this.audio.play();*/
-
-    const isPlaying = this.props.player.isPlaying;
+    const { isPlaying } = this.props.player;
 
     if (!isPlaying) {
       this.audio.pause();
@@ -134,9 +103,9 @@ export class PlayerContainer extends Component {
 
     if (this.state.playingProgress === 100) {
       this.setState({
-        playingProgress: 0,
-        isPlaying: false
+        playingProgress: 0
       });
+      this.props.pauseSong(this.props.player.song);
     }
   };
 
@@ -169,19 +138,15 @@ export class PlayerContainer extends Component {
   };
 
   render() {
-    const { playingProgress, isPlaying, volumeValue, isMuted } = this.state;
-    const { song } = this.props;
+    const { playingProgress, volumeValue, isMuted } = this.state;
+    const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
 
     return (
       <>
-        <audio
-          src={this.props.player.song.songURL}
-          ref={element => (this.audio = element)}
-        />
+        <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
           onPlay={this.handleChangePlayingState}
-          isPlaying={isPlaying}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}

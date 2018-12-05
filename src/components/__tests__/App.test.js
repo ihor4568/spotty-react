@@ -5,8 +5,8 @@ import renderer from "react-test-renderer";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import theme from "../../theme";
 
-jest.mock("../artists/Artists", () => "artists");
 jest.mock("../mySongs/MySongs", () => "my-songs");
+jest.mock("../artists/Artists", () => "artists");
 jest.mock("../about/About", () => "about");
 jest.mock("../albums/Albums", () => "albums");
 jest.mock("../albums/AlbumTable", () => "album-table");

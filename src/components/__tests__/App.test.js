@@ -21,8 +21,6 @@ jest.mock("../../services/FirebaseService");
 
 describe("App component", () => {
   const props = {
-    loadArtists: jest.fn(),
-    loadAlbums: jest.fn(),
     fetchUser: jest.fn()
   };
 
@@ -39,8 +37,6 @@ describe("App component", () => {
   });
 
   it("should load initial data after mount", () => {
-    expect(props.loadArtists).toHaveBeenCalled();
-    expect(props.loadAlbums).toHaveBeenCalled();
     expect(props.fetchUser).toHaveBeenCalled();
   });
 });

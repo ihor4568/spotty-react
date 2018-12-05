@@ -6,12 +6,14 @@ import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
 import shareViewReducer from "./reducers/shareView";
+import songsReducer from "./reducers/songs";
 
 const rootReducer = combineReducers({
   albums: albumsReducer,
   artists: artistsReducer,
   auth: authReducer,
-  shareView: shareViewReducer
+  shareView: shareViewReducer,
+  songs: songsReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

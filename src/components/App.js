@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 
-import theme from "../theme";
-import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 import MySongs from "./mySongs/MySongs";
@@ -43,21 +42,19 @@ export class App extends Component {
 
     return (
       <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
-          <div className={classes.root}>
-            <Switch>
-              <PublicRoute exact path="/login" component={Auth} />
-              <Redirect exact from="/" to="/albums" />
-              <PrivateRoute exact path="/mysongs" component={MySongs} />
-              <PrivateRoute exact path="/albums" component={Albums} />
-              <PrivateRoute exact path="/artists" component={Artists} />
-              <PrivateRoute path="/about" component={About} />
-              <PrivateRoute path="/albums/:id" component={AlbumTable} />
-              <PrivateRoute path="/artists/:id" component={ArtistTable} />
-              <PrivateRoute component={NotFound} />
-            </Switch>
-          </div>
-        </MuiThemeProvider>
+        <div className={classes.root}>
+          <Switch>
+            <PublicRoute exact path="/login" component={Auth} />
+            <Redirect exact from="/" to="/albums" />
+            <PrivateRoute exact path="/mysongs" component={MySongs} />
+            <PrivateRoute exact path="/albums" component={Albums} />
+            <PrivateRoute exact path="/artists" component={Artists} />
+            <PrivateRoute path="/about" component={About} />
+            <PrivateRoute path="/albums/:id" component={AlbumTable} />
+            <PrivateRoute path="/artists/:id" component={ArtistTable} />
+            <PrivateRoute component={NotFound} />
+          </Switch>
+        </div>
       </BrowserRouter>
     );
   }
@@ -68,7 +65,8 @@ const mapDispatchToProps = {
   loadSongs
 };
 
+export const ThemedApp = withStyles(styles, { withTheme: true })(App);
 export default connect(
   null,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(App));
+)(ThemedApp);

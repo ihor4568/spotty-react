@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Title from "../shared/Title";
+import { loadArtists } from "../../store/actionCreators/artists";
 
 import {
   Grid,
@@ -13,7 +14,6 @@ import {
 } from "@material-ui/core";
 
 import { connect } from "react-redux";
-import { loadArtists } from "../../store/actionCreators/artists";
 
 const styles = {
   artistCard: {

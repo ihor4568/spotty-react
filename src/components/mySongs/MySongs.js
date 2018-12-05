@@ -8,7 +8,6 @@ import { connect } from "react-redux";
 class MySongs extends Component {
   static propTypes = {
     loadSongs: PropTypes.isRequired,
-    albums: PropTypes.array.isRequired,
     songs: PropTypes.array.isRequired
   };
 
@@ -28,7 +27,6 @@ class MySongs extends Component {
 
 function mapStateToProps(state) {
   return {
-    albums: state.albums,
     songs: state.songs
   };
 }

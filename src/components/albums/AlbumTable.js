@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TableLayout from "../shared/TableLayout";
 import { loadSongs } from "../../store/actionCreators/songs";
+import { loadAlbums } from "../../store/actionCreators/albums";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, CardMedia, Typography } from "@material-ui/core";
@@ -34,11 +35,13 @@ class AlbumTable extends Component {
     albums: PropTypes.array.isRequired,
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
-    loadSongs: PropTypes.func
+    loadSongs: PropTypes.func,
+    loadAlbums: PropTypes.func
   };
 
   componentDidMount() {
     this.props.loadSongs(this.props.match.params.id);
+    this.props.loadAlbums();
   }
 
   render() {
@@ -93,7 +96,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadSongs
+  loadSongs,
+  loadAlbums
 };
 
 export default connect(

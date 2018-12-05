@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+
 import {
   Table,
   TableBody,
@@ -12,14 +12,17 @@ import {
   Tooltip,
   Button
 } from "@material-ui/core";
+
 import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
 import DotsMenu from "./DotsMenu";
 import { connect } from "react-redux";
 
-const styles = () => ({
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
   root: {
-    margin: "0 auto",
+    margin: "2rem auto",
     overflowX: "auto"
   },
   image: {
@@ -47,7 +50,7 @@ const styles = () => ({
   fixedWidth: {
     width: `auto`
   }
-});
+};
 
 class TableLayout extends Component {
   static propTypes = {
@@ -64,7 +67,10 @@ class TableLayout extends Component {
     return arr.map((item, i) => {
       return {
         ...item,
-        number: i + 1
+        number: i + 1,
+        image: item.album.coverURL,
+        album: item.album.name,
+        artists: item.artistsNames.join(`, `)
       };
     });
   };
@@ -112,7 +118,6 @@ class TableLayout extends Component {
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
-
     return (
       <>
         <Paper className={classes.root}>
@@ -155,7 +160,7 @@ class TableLayout extends Component {
                   >
                     <Tooltip title="Sort" enterDelay={300}>
                       <TableSortLabel
-                        active={orderBy === "time"}
+                        active={orderBy === "duration"}
                         direction={order}
                         onClick={this.handleSortCreate("duration")}
                       >
@@ -166,9 +171,9 @@ class TableLayout extends Component {
                   <TableCell className={classes.tableCell}>
                     <Tooltip title="Sort" enterDelay={300}>
                       <TableSortLabel
-                        active={orderBy === "artist"}
+                        active={orderBy === "artists"}
                         direction={order}
-                        onClick={this.handleSortCreate("artistsNames")}
+                        onClick={this.handleSortCreate("artists")}
                       >
                         Artist
                       </TableSortLabel>
@@ -190,7 +195,6 @@ class TableLayout extends Component {
                   />
                 </TableRow>
               </TableHead>
-
               <TableBody>
                 {this.stableSort(
                   this.createNewSongsArray(songs),
@@ -219,7 +223,7 @@ class TableLayout extends Component {
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
                         <img
-                          src={data.album.coverURL}
+                          src={data.image}
                           alt="album"
                           className={classes.image}
                         />
@@ -233,10 +237,10 @@ class TableLayout extends Component {
                         {data.duration}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.artistsNames.join(", ")}
+                        {data.artists}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.album.name}
+                        {data.album}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}

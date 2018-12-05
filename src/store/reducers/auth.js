@@ -1,10 +1,4 @@
-import {
-  USER_FETCHED,
-  USER_NOT_FOUND,
-  SIGN_OUT,
-  AUTH_ERROR,
-  CLEAR_AUTH_ERROR
-} from "../actionTypes";
+import * as ationTypes from "../actionTypes";
 
 const INITIAL_STATE = {
   isLoggedIn: false,
@@ -14,7 +8,7 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case USER_FETCHED:
+    case ationTypes.USER_FETCHED_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
@@ -22,25 +16,25 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoaded: true,
         error: ""
       };
-    case USER_NOT_FOUND:
+    case ationTypes.USER_FETCHED_FAIL:
       return {
         ...state,
         isLoggedIn: false,
         isLoaded: true
       };
-    case SIGN_OUT:
+    case ationTypes.SIGN_OUT:
       return {
         ...state,
         isLoggedIn: false,
         user: null,
         isLoaded: true
       };
-    case AUTH_ERROR:
+    case ationTypes.AUTH_ERROR:
       return {
         ...state,
         error: action.error
       };
-    case CLEAR_AUTH_ERROR:
+    case ationTypes.CLEAR_AUTH_ERROR:
       return {
         ...state,
         error: ""

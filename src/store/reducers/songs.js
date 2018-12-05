@@ -1,10 +1,12 @@
-import { ADD_ALBUM_SONGS } from "../actionTypes";
+import * as ationTypes from "../actionTypes";
 
-const initialState = [];
+const INITIAL_STATE = [];
 
-export default function TableLayoutReducer(state = initialState, action) {
+export default function songsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD_ALBUM_SONGS:
+    case ationTypes.FETCH_ALBUM_SONGS_SUCCESS:
+      return action.payload;
+    case ationTypes.FETCH_ARTISTS_SONGS_SUCCESS:
       return action.payload;
     default:
       return state;

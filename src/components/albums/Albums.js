@@ -11,6 +11,8 @@ import {
   Typography
 } from "@material-ui/core";
 
+import { loadAlbums } from "../../store/actionCreators/albums";
+
 import Title from "../shared/Title";
 import { connect } from "react-redux";
 
@@ -39,8 +41,13 @@ class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
-    match: PropTypes.object
+    match: PropTypes.object,
+    loadAlbums: PropTypes.func
   };
+
+  componentDidMount() {
+    this.props.loadAlbums();
+  }
 
   render() {
     const { classes, match } = this.props;
@@ -91,4 +98,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Albums));
+const mapDispatchToProps = {
+  loadAlbums
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Albums));

@@ -1,17 +1,22 @@
-import { ADD_ARTISTS } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
 import { MusicService } from "../../services/MusicService";
 
 export function loadArtists() {
   return async dispatch => {
-    const artists = await MusicService.getAllArtists();
-    dispatch(addArtists(Object.values(artists)));
+    try {
+      dispatch({ type: actionTypes.ADD_ARTISTS_START });
+      const artists = await MusicService.getAllArtists();
+      dispatch(addArtists(Object.values(artists)));
+    } catch (e) {
+      dispatch({ type: actionTypes.ADD_ARTISTS_FAIL });
+    }
   };
 }
 
 export function addArtists(payload) {
   return {
-    type: ADD_ARTISTS,
+    type: actionTypes.ADD_ARTISTS_SUCCESS,
     payload
   };
 }

@@ -13,8 +13,6 @@ import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 
-import { loadArtists } from "../store/actionCreators/artists";
-import { loadAlbums } from "../store/actionCreators/albums";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
@@ -23,22 +21,17 @@ import { connect } from "react-redux";
 
 const styles = () => ({
   root: {
-    display: "flex",
-    width: "100%"
+    display: "flex"
   }
 });
 
 export class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    loadArtists: PropTypes.func,
-    loadAlbums: PropTypes.func,
     fetchUser: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.loadAlbums();
-    this.props.loadArtists();
     this.props.fetchUser();
   }
 
@@ -66,8 +59,6 @@ export class App extends Component {
 }
 
 const mapDispatchToProps = {
-  loadArtists,
-  loadAlbums,
   fetchUser
 };
 

@@ -11,6 +11,7 @@ import {
 import { AccountCircle, PhotoCamera } from "@material-ui/icons";
 import FileUploader from "react-firebase-file-uploader";
 import { FirebaseService } from "../../services/FirebaseService";
+import Error from "./Error";
 
 const styles = theme => ({
   button: {
@@ -43,7 +44,9 @@ const styles = theme => ({
 class SignUp extends Component {
   static propTypes = {
     classes: PropTypes.object,
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
+    onError: PropTypes.func.isRequired,
+    errorText: PropTypes.string
   };
 
   state = {
@@ -63,7 +66,11 @@ class SignUp extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit(this.state);
+    if (this.state.password === this.state.confirmPassword) {
+      this.props.onSubmit(this.state);
+    } else {
+      this.props.onError("Passwords do not match");
+    }
   };
 
   handleUploadStart = () => {
@@ -206,6 +213,7 @@ class SignUp extends Component {
         >
           Sign Up
         </Button>
+        {this.props.errorText && <Error text={this.props.errorText} />}
       </form>
     );
   }

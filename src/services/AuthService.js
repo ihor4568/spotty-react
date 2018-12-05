@@ -10,7 +10,7 @@ export class AuthService {
 
   static async signUp(email, pass, name, avatarURL) {
     await auth.createUserWithEmailAndPassword(email, pass);
-    db.ref(`users/${auth.currentUser.uid}`).set({
+    await db.ref(`users/${auth.currentUser.uid}`).set({
       name: name,
       avatar: avatarURL
     });

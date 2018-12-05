@@ -4,14 +4,15 @@ import PropTypes from "prop-types";
 
 const styles = theme => ({
   main: {
+    width: `100%`,
     paddingBottom: "6.5rem",
     height: "100%",
     overflow: "hidden",
     boxSizing: "border-box",
-    margin: "0 auto"
+    margin: "0 auto",
+    flexGrow: 1
   },
   content: {
-    flexGrow: 1,
     padding: theme.spacing.unit * 3,
     minHeight: `calc(100vh - (${theme.props.appBar.appBarHeight} + ${
       theme.props.mediaPlayer.mediaPlayerHeight

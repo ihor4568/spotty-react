@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Title from "../shared/Title";
 
+import { loadArtists } from "../../store/actionCreators/artists";
+
 import {
   Grid,
   Card,
@@ -53,8 +55,13 @@ class Artists extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired
+    artists: PropTypes.array.isRequired,
+    loadArtists: PropTypes.func
   };
+
+  componentDidMount() {
+    this.props.loadArtists();
+  }
 
   render() {
     const { classes, match } = this.props;
@@ -99,4 +106,11 @@ const mapStateToProps = ({ artists, search }) => ({
   })
 });
 
-export default connect(mapStateToProps)(withStyles(styles)(Artists));
+const mapDispatchToProps = {
+  loadArtists
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(Artists));

@@ -5,12 +5,14 @@ import thunk from "redux-thunk";
 import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
+import songsReducer from "./reducers/songs";
 import searchReducer from "./reducers/search";
 
 const rootReducer = combineReducers({
   albums: albumsReducer,
   artists: artistsReducer,
   auth: authReducer,
+  songs: songsReducer,
   search: searchReducer
 });
 

@@ -1,4 +1,4 @@
-import * as ationTypes from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
 const INITIAL_STATE = {
   isLoggedIn: false,
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case ationTypes.USER_FETCHED_SUCCESS:
+    case actionTypes.USER_FETCHED_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
@@ -16,25 +16,25 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoaded: true,
         error: ""
       };
-    case ationTypes.USER_FETCHED_FAIL:
+    case actionTypes.USER_FETCHED_FAIL:
       return {
         ...state,
         isLoggedIn: false,
         isLoaded: true
       };
-    case ationTypes.SIGN_OUT:
+    case actionTypes.SIGN_OUT:
       return {
         ...state,
         isLoggedIn: false,
         user: null,
         isLoaded: true
       };
-    case ationTypes.AUTH_ERROR:
+    case actionTypes.AUTH_ERROR:
       return {
         ...state,
         error: action.error
       };
-    case ationTypes.CLEAR_AUTH_ERROR:
+    case actionTypes.CLEAR_AUTH_ERROR:
       return {
         ...state,
         error: ""

@@ -24,7 +24,7 @@ export class MusicService {
       .then(artists => artists.val());
   }
 
-  static getArtistsSongs(artistId) {
+  static getArtistSongs(artistId) {
     return database
       .ref(`artists/${artistId}`)
       .once("value")
@@ -40,7 +40,7 @@ export class MusicService {
       );
   }
 
-  static getAlbumsSongs(albumId) {
+  static getAlbumSongs(albumId) {
     return database
       .ref(`albums/${albumId}`)
       .once("value")

@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actionTypes.USER_FETCHED_SUCCESS:
+    case actionTypes.USER_FETCH_SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
@@ -16,7 +16,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoaded: true,
         error: ""
       };
-    case actionTypes.USER_FETCHED_FAIL:
+    case actionTypes.USER_FETCH_FAIL:
       return {
         ...state,
         isLoggedIn: false,

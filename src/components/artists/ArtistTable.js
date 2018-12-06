@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Card, CardMedia, Typography } from "@material-ui/core";
 
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
-import { loadArtists } from "../../store/actionCreators/artists";
+import { loadCachedArtists } from "../../store/actionCreators/artists";
 import TableLayout from "../shared/TableLayout";
 
 import { connect } from "react-redux";
@@ -41,12 +41,12 @@ class ArtistTable extends Component {
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     loadArtistsSongs: PropTypes.func,
-    loadArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func
   };
 
   componentDidMount() {
     this.props.loadArtistsSongs(this.props.match.params.id);
-    this.props.loadArtists();
+    this.props.loadCachedArtists();
   }
 
   render() {
@@ -92,7 +92,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   loadArtistsSongs,
-  loadArtists
+  loadCachedArtists
 };
 
 export default connect(

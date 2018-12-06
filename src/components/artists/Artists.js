@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Title from "../shared/Title";
-import { loadArtists } from "../../store/actionCreators/artists";
+import { loadCachedArtists } from "../../store/actionCreators/artists";
 
 import {
   Grid,
@@ -55,11 +55,11 @@ class Artists extends Component {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     artists: PropTypes.array.isRequired,
-    loadArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func
   };
 
   componentDidMount() {
-    this.props.loadArtists();
+    this.props.loadCachedArtists();
   }
 
   render() {
@@ -104,7 +104,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadArtists
+  loadCachedArtists
 };
 
 export default connect(

@@ -13,7 +13,7 @@ import {
 
 import Title from "../shared/Title";
 import { connect } from "react-redux";
-import { loadAlbums } from "../../store/actionCreators/albums";
+import { loadCachedAlbums } from "../../store/actionCreators/albums";
 
 const styles = {
   albumDescription: {
@@ -41,12 +41,12 @@ class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
-    loadAlbums: PropTypes.func,
+    loadCachedAlbums: PropTypes.func,
     match: PropTypes.object
   };
 
   componentDidMount() {
-    this.props.loadAlbums();
+    this.props.loadCachedAlbums();
   }
 
   render() {
@@ -96,7 +96,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadAlbums
+  loadCachedAlbums
 };
 
 export default connect(

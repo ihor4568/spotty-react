@@ -1,17 +1,15 @@
 import * as actionTypes from "../actionTypes";
 
 import { MusicService } from "../../services/MusicService";
-import { AuthService } from "../../services/AuthService";
 
-export function getUserSongs() {
+export function getUserSongs(userId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.FETCH_USER_SONGS_START });
-      const user = await AuthService.check();
-      const songs = await MusicService.getUserSongs(user.uid);
+      const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.FETCH_USER_SONGS_SUCCESS,
-        payload: Object.values(songs)
+        payload: Object.values(userSongs)
       });
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_USER_SONGS_FAIL });
@@ -19,15 +17,15 @@ export function getUserSongs() {
   };
 }
 
-export function setUserSongs(songId) {
+export function setUserSongs(userId, songId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.ADD_USER_SONGS_START });
-      const user = await AuthService.check();
-      await MusicService.setUserSong(user.uid, songId);
+      await MusicService.setUserSong(userId, songId);
+      const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.ADD_USER_SONGS_SUCCESS,
-        payload: getUserSongs()
+        payload: Object.values(userSongs)
       });
     } catch (e) {
       dispatch({ type: actionTypes.ADD_USER_SONGS_FAIL });
@@ -35,15 +33,15 @@ export function setUserSongs(songId) {
   };
 }
 
-export function removeUserSongs(songId) {
+export function removeUserSongs(userId, songId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.REMOVE_USER_SONGS_START });
-      const user = await AuthService.check();
-      await MusicService.removeUserSong(user.uid, songId);
+      await MusicService.removeUserSong(userId, songId);
+      const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.REMOVE_USER_SONGS_SUCCESS,
-        payload: getUserSongs()
+        payload: Object.values(userSongs)
       });
     } catch (e) {
       dispatch({ type: actionTypes.REMOVE_USER_SONGS_FAIL });

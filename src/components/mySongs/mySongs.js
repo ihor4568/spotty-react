@@ -1,50 +1,66 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
-import Title from "../shared/Title";
+import { connect } from "react-redux";
+
 import TableLayout from "../shared/TableLayout";
+import Title from "../shared/Title";
 
-const TABLE_DATA = [
-  {
-    name: "It was a good day",
-    duration: "5.12",
-    artistsNames: ["Ice Cube", "ada"],
-    album: {
-      name: "The Predator 1992",
-      coverURL:
-        "https://cs4.pikabu.ru/post_img/2016/06/23/2/1466644368111684747.png"
-    }
-  },
-  {
-    name: "Numb",
-    duration: "3.07",
-    artistsNames: ["Linkin Park"],
-    album: {
-      name: "Meteora",
-      coverURL:
-        "https://i.pinimg.com/originals/55/86/39/5586394e2ce162b044d9d49e412f9ece.png"
-    }
-  },
-  {
-    name: "Just Lose It",
-    duration: "4.06",
-    artistsNames: ["Eminem"],
-    album: {
-      name: "Encore",
-      coverURL:
-        "https://hiphop4real.com/wp-content/uploads/2016/07/Eminem-Revival-Era-2017-ePro-600x600.jpg"
-    }
-  }
-];
+import {
+  getUserSongs,
+  setUserSongs,
+  removeUserSongs
+} from "../../store/actionCreators/user";
 
 class MySongs extends Component {
+  static propTypes = {
+    userSongs: PropTypes.array.isRequired,
+    auth: PropTypes.object.isRequired,
+    getUserSongs: PropTypes.func,
+    setUserSongs: PropTypes.func,
+    removeUserSongs: PropTypes.func
+  };
+
+  componentDidMount() {
+    this.props.getUserSongs(this.props.auth.user.uid);
+  }
+
+  // handleSet = () => {
+  //   this.props.setUserSongs(this.props.auth.user.uid, document.getElementById("set").value);
+  // }
+
+  // handleRem = () => {
+  //   this.props.removeUserSongs(this.props.auth.user.uid, document.getElementById("rem").value);
+  // }
+
+  // handleGet = () => {
+  //   this.props.getUserSongs(this.props.auth.user.uid);
+  // }
+
   render() {
     return (
       <>
         <Title name="My Songs" />
-        <TableLayout songs={TABLE_DATA} />
+        <TableLayout songs={this.props.userSongs} />
       </>
     );
   }
 }
 
-export default MySongs;
+function mapStateToProps(state) {
+  return {
+    userSongs: state.userSongs,
+    auth: state.auth
+  };
+}
+
+const mapDispatchToProps = {
+  getUserSongs,
+  setUserSongs,
+  removeUserSongs
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MySongs);

@@ -14,6 +14,15 @@ export function loadAlbums() {
   };
 }
 
+export function loadCachedAlbums() {
+  return (dispatch, getState) => {
+    if (getState().albums.length) {
+      return;
+    }
+    dispatch(loadAlbums());
+  };
+}
+
 export function addAlbums(payload) {
   return {
     type: actionTypes.ADD_ALBUMS_SUCCESS,

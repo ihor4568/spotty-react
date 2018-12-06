@@ -79,9 +79,9 @@ class TableLayout extends Component {
       return {
         ...item,
         number: i + 1,
+        image: item.album.coverURL,
         album: item.album.name,
-        artists: item.artistsNames.join(`, `),
-        image: item.album.coverURL
+        artists: item.artistsNames.join(`, `)
       };
     });
   };
@@ -137,11 +137,6 @@ class TableLayout extends Component {
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
-    const sortedData = this.stableSort(
-      this.createNewSongsArray(songs),
-      this.getSorting(order, orderBy)
-    );
-
     return (
       <>
         <Paper className={classes.root}>
@@ -220,9 +215,12 @@ class TableLayout extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((data, y) => {
+                {this.stableSort(
+                  this.createNewSongsArray(songs),
+                  this.getSorting(order, orderBy)
+                ).map((data, i) => {
                   return (
-                    <TableRow hover key={y}>
+                    <TableRow hover key={i}>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >

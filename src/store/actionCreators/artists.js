@@ -16,7 +16,7 @@ export function loadArtists() {
 
 export function loadCachedArtists() {
   return (dispatch, getState) => {
-    if (getState().albums.length) {
+    if (getState().artists.length) {
       return;
     }
     dispatch(loadArtists());

@@ -156,6 +156,7 @@ export class PlayerContainer extends Component {
           onMute={this.handleMute}
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
+          player={this.props.player}
         />
       </>
     );

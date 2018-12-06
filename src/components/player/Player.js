@@ -8,8 +8,6 @@ import DotsMenu from "../shared/DotsMenu";
 
 import PropTypes from "prop-types";
 
-import { connect } from "react-redux";
-
 const styles = theme => ({
   mediaPlayerAligner: {
     userSelect: "none",
@@ -17,7 +15,11 @@ const styles = theme => ({
     zIndex: 3,
     bottom: 0,
     width: "100%",
-    transition: "all 0.6s ease-in-out"
+    transition: "all 0.6s ease",
+    transform: "translateY(200px)"
+  },
+  show: {
+    transform: "translateY(0)"
   },
   mediaPlayer: {
     display: "flex",
@@ -118,7 +120,13 @@ const Player = ({
   onChangeProgressEnd,
   player
 }) => (
-  <div className={classes.mediaPlayerAligner}>
+  <div
+    className={
+      player.song.id
+        ? `${classes.mediaPlayerAligner} ${classes.show}`
+        : classes.mediaPlayerAligner
+    }
+  >
     <div className={classes.mediaPlayer}>
       <Slider
         value={progress}
@@ -205,12 +213,4 @@ Player.propTypes = {
   player: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    player: state.player
-  };
-}
-
-export default connect(mapStateToProps)(
-  withStyles(styles, { withTheme: true })(Player)
-);
+export default withStyles(styles, { withTheme: true })(Player);

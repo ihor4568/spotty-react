@@ -1,8 +1,0 @@
-{
-  "apiKey": "AIzaSyABZFMN_ILoJDe1KYxOhSbYBdJcaigiIsk",
-  "authDomain": "spotty-react.firebaseapp.com",
-  "databaseURL": "https://spotty-react.firebaseio.com",
-  "projectId": "spotty-react",
-  "storageBucket": "spotty-react.appspot.com",
-  "messagingSenderId": "894983225462"
-}

@@ -134,7 +134,7 @@ class TableLayout extends Component {
     }
   };
 
-  handleChangeIconButton = data => {
+  getButtonIcon = data => {
     const { classes } = this.props;
     const { isPlaying, song } = this.props.player;
 
@@ -244,7 +244,7 @@ class TableLayout extends Component {
                             this.handlePlayPauseButton(data);
                           }}
                         >
-                          {this.handleChangeIconButton(data)}
+                          {this.getButtonIcon(data)}
                         </Button>
                       </TableCell>
                       <TableCell

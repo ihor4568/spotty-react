@@ -7,10 +7,12 @@ import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
 import themeReducer from "./reducers/theme";
 import songsReducer from "./reducers/songs";
+import playerReducer from "./reducers/player";
 
 const rootReducer = combineReducers({
   albums: albumsReducer,
   artists: artistsReducer,
+  player: playerReducer,
   auth: authReducer,
   theme: themeReducer,
   songs: songsReducer

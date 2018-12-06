@@ -23,7 +23,7 @@ import { boundChangeTheme } from "../../store/actionCreators/theme";
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.props.appBar.appBarBackgroundColor,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,

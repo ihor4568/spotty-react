@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 
-import theme from "../theme";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
@@ -14,6 +13,7 @@ import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 import { getThemeType } from "../store/selectors/theme.js";
+import { lightTheme, darkTheme } from "../theme";
 
 import { loadArtists } from "../store/actionCreators/artists";
 import { loadAlbums } from "../store/actionCreators/albums";
@@ -50,13 +50,7 @@ export class App extends Component {
 
     return (
       <BrowserRouter>
-        <MuiThemeProvider
-          theme={
-            type === "dark"
-              ? { ...theme, palette: { ...theme.palette, type: "dark" } }
-              : theme
-          }
-        >
+        <MuiThemeProvider theme={type === "dark" ? darkTheme : lightTheme}>
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />

@@ -1,7 +1,7 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import "typeface-roboto";
 
-const themeProperties = {
+export const lightTheme = createMuiTheme({
   typography: {
     useNextVariants: true
   },
@@ -17,17 +17,40 @@ const themeProperties = {
       drawerWidth: 200
     },
     mediaPlayer: {
-      mediaPlayerHeight: "6.8rem"
+      mediaPlayerHeight: "6.8rem",
+      mediaPlayerBackgroundColor: "#fefefe",
+      mediaPlayerPlayButtonBackground: "#1e88e5"
     },
     appBar: {
-      appBarHeight: "4rem"
+      appBarHeight: "4rem",
+      appBarBackgroundColor: "#1e88e5"
     }
   }
-};
+});
 
-const theme = createMuiTheme(themeProperties);
-
-export default theme;
-
-export const getThemeWithType = type =>
-  createMuiTheme({ ...theme, palette: { ...theme.palette, type } });
+export const darkTheme = createMuiTheme({
+  typography: {
+    useNextVariants: true
+  },
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#1e88e5"
+    },
+    disable: "#cccccc"
+  },
+  props: {
+    drawer: {
+      drawerWidth: 200
+    },
+    mediaPlayer: {
+      mediaPlayerHeight: "6.8rem",
+      mediaPlayerBackgroundColor: "#424242",
+      mediaPlayerPlayButtonBackground: "#838383"
+    },
+    appBar: {
+      appBarHeight: "4rem",
+      appBarBackgroundColor: "#424242"
+    }
+  }
+});

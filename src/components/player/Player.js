@@ -22,7 +22,7 @@ const styles = theme => ({
     flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#fefefe",
+    backgroundColor: theme.props.mediaPlayer.mediaPlayerBackgroundColor,
     height: theme.props.mediaPlayer.mediaPlayerHeight
   },
   audioInfoContainer: {
@@ -91,7 +91,8 @@ const styles = theme => ({
     width: "4.5rem",
     height: "4.5rem",
     marginRight: "1.25rem",
-    marginLeft: "1.25rem"
+    marginLeft: "1.25rem",
+    background: theme.props.mediaPlayer.mediaPlayerPlayButtonBackground
   },
   playButtonStateIcon: {
     fontSize: "2.8rem"

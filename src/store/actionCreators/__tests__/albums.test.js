@@ -17,7 +17,7 @@ describe("albums action creators", () => {
     });
   });
 
-  describe("loadCachedAlbums", () => {
+  describe("loadAlbums", () => {
     let promise;
     const sampleAlbums = {
       album1: {
@@ -35,7 +35,7 @@ describe("albums action creators", () => {
 
     it("should dispatch correct action", async () => {
       const dispatchMock = jest.fn();
-      actionCreators.loadCachedAlbums()(dispatchMock);
+      actionCreators.loadAlbums()(dispatchMock);
 
       await promise;
 

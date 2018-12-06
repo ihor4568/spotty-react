@@ -15,7 +15,7 @@ import {
 
 import { PlayArrow, TimerSharp } from "@material-ui/icons";
 
-import DotsMenu from "./DotsMenu";
+import DotsMenu from "./DotsMenu/DotsMenu";
 
 import { withStyles } from "@material-ui/core/styles";
 

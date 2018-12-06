@@ -17,8 +17,7 @@ const SONG = {
   songName: "Smile for me, sun",
   albumName: "Back to the sea",
   authorName: "Adam Alma",
-  id: "song2" //shareView takes this id to render necessary song
-  //please, keep it in mind while integrating playing songs
+  id: "song2"
 };
 
 const VOLUME_ICON_SET = {
@@ -47,8 +46,25 @@ class PlayerContainer extends Component {
       title: PropTypes.string.isRequired,
       songName: PropTypes.string.isRequired,
       albumName: PropTypes.string.isRequired,
-      authorName: PropTypes.string.isRequired
+      authorName: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired
     })
+  };
+
+  constructor(props) {
+    super(props);
+
+    this.items = [
+      { name: "Legal info", handler: () => {} },
+      { name: "Remove from my songs", handler: () => {} },
+      { name: "Share", handler: this.handleShare }
+    ];
+  }
+
+  handleShare = () => {
+    if (this.props.song.id) {
+      window.open(`/songs/${this.props.song.id}`);
+    }
   };
 
   componentDidMount() {
@@ -154,6 +170,7 @@ class PlayerContainer extends Component {
       <>
         <audio src={song.source} ref={element => (this.audio = element)} />
         <Player
+          items={this.items}
           onPlay={this.handleChangePlayingState}
           isPlaying={isPlaying}
           onChangeProgress={this.handleChangeProgress}

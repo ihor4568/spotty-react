@@ -4,7 +4,7 @@ import { Button, Typography } from "@material-ui/core";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
 import StarsRating from "../shared/StarsRating";
-import DotsMenu from "../shared/DotsMenu";
+import DotsMenu from "../shared/DotsMenu/DotsMenu";
 
 import PropTypes from "prop-types";
 
@@ -114,7 +114,8 @@ const Player = ({
   onChangeVolume,
   onMute,
   onChangeProgressStart,
-  onChangeProgressEnd
+  onChangeProgressEnd,
+  items
 }) => (
   <div className={classes.mediaPlayerAligner}>
     <div className={classes.mediaPlayer}>
@@ -180,7 +181,7 @@ const Player = ({
         <StarsRating />
       </div>
       <div className={classes.threeDotMenu}>
-        <DotsMenu id={song.id} />
+        <DotsMenu items={items} />
       </div>
     </div>
   </div>
@@ -204,7 +205,8 @@ Player.propTypes = {
   }),
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
-  onChangeProgressEnd: PropTypes.func.isRequired
+  onChangeProgressEnd: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

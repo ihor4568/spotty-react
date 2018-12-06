@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import ProfileMenu from "./ProfileMenu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
@@ -112,7 +112,7 @@ class AppBarComponent extends Component {
     boundChangeTheme: PropTypes.func,
     theme: PropTypes.object,
     palette: PropTypes.object,
-    type: PropTypes.string
+    isLoggedIn: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
@@ -120,7 +120,7 @@ class AppBarComponent extends Component {
   };
 
   isCurrentThemeLight = () => {
-    return this.props.theme.type === "light";
+    return this.props.theme.palette.type === "light";
   };
 
   handleChangeTheme = () => {
@@ -131,6 +131,18 @@ class AppBarComponent extends Component {
 
   render() {
     const { classes, enabled } = this.props;
+
+    const themeSwitcher = (
+      <IconButton
+        color="inherit"
+        aria-label="Toggle light/dark theme"
+        data-ga-event-category="AppBar"
+        data-ga-event-action="dark"
+        onClick={this.handleChangeTheme}
+      >
+        {this.isCurrentThemeLight() ? <Brightness1Outlined /> : <Brightness1 />}
+      </IconButton>
+    );
 
     return (
       <AppBar
@@ -176,19 +188,7 @@ class AppBarComponent extends Component {
               />
             </div>
           )}
-          <IconButton
-            color="inherit"
-            aria-label="Toggle light/dark theme"
-            data-ga-event-category="AppBar"
-            data-ga-event-action="dark"
-            onClick={this.handleChangeTheme}
-          >
-            {this.isCurrentThemeLight() ? (
-              <Brightness1Outlined />
-            ) : (
-              <Brightness1 />
-            )}
-          </IconButton>
+          {this.props.isLoggedIn && themeSwitcher}
           {enabled ? (
             <ProfileMenu />
           ) : (
@@ -209,7 +209,7 @@ class AppBarComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    theme: state.theme
+    isLoggedIn: state.auth.isLoggedIn
   };
 }
 
@@ -220,4 +220,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(AppBarComponent));
+)(withTheme()(withStyles(styles)(AppBarComponent)));

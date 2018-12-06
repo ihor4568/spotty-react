@@ -5,9 +5,9 @@ import { AuthService } from "../../services/AuthService";
 export function signIn({ email, password }) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCHED_START });
+      dispatch({ type: actionTypes.USER_FETCH_START });
       const userInfo = await AuthService.signIn(email, password);
-      dispatch({ type: actionTypes.USER_FETCHED_SUCCESS, user: userInfo.user });
+      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user: userInfo.user });
     } catch (e) {
       dispatch(authError(e.message));
     }
@@ -17,10 +17,10 @@ export function signIn({ email, password }) {
 export function signUp({ email, password, name }) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCHED_START });
+      dispatch({ type: actionTypes.USER_FETCH_START });
       await AuthService.signUp(email, password, name);
       const user = await AuthService.check();
-      dispatch({ type: actionTypes.USER_FETCHED_SUCCESS, user });
+      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user });
     } catch (e) {
       dispatch(authError(e.message));
     }
@@ -30,11 +30,11 @@ export function signUp({ email, password, name }) {
 export function signOut() {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCHED_START });
+      dispatch({ type: actionTypes.USER_FETCH_START });
       await AuthService.signOut();
       dispatch({ type: actionTypes.SIGN_OUT });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCHED_FAIL });
+      dispatch({ type: actionTypes.USER_FETCH_FAIL });
     }
   };
 }
@@ -42,11 +42,11 @@ export function signOut() {
 export function fetchUser() {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCHED_START });
+      dispatch({ type: actionTypes.USER_FETCH_START });
       const user = await AuthService.check();
-      dispatch({ type: actionTypes.USER_FETCHED_SUCCESS, user });
+      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCHED_FAIL });
+      dispatch({ type: actionTypes.USER_FETCH_FAIL });
     }
   };
 }

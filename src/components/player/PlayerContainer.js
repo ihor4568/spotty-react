@@ -9,16 +9,8 @@ import PropTypes from "prop-types";
 
 import Player from "./Player";
 
-const SONG = {
-  source:
-    "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FAdam__Alma_-_04_-_Back_To_The_Sea.mp3?alt=media&token=f0f1439f-f09e-40d9-938d-c7f1a332a574",
-  title:
-    "https://firebasestorage.googleapis.com/v0/b/spotty-be0c7.appspot.com/o/Album1%2FBack_To_The_Sea.jpg?alt=media&token=a83f646a-9d63-4eaa-bcdf-e17cf6967126",
-  songName: "Smile for me, sun",
-  albumName: "Back to the sea",
-  authorName: "Adam Alma",
-  id: "song2"
-};
+import { connect } from "react-redux";
+import { pauseSong, playSong } from "../../store/actionCreators/player";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -27,28 +19,21 @@ const VOLUME_ICON_SET = {
   VolumeUp: <VolumeUp />
 };
 
-class PlayerContainer extends Component {
+export class PlayerContainer extends Component {
   state = {
-    isPlaying: false,
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
     isMuted: false
   };
 
-  static defaultProps = {
-    song: SONG
-  };
-
   static propTypes = {
-    song: PropTypes.shape({
-      source: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      songName: PropTypes.string.isRequired,
-      albumName: PropTypes.string.isRequired,
-      authorName: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired
-    })
+    songs: PropTypes.array.isRequired,
+    player: PropTypes.object.isRequired,
+    playSong: PropTypes.func.isRequired,
+    pauseSong: PropTypes.func.isRequired,
+    song: PropTypes.object.isRequired,
+    id: PropTypes.string.isRequired
   };
 
   constructor(props) {
@@ -75,6 +60,12 @@ class PlayerContainer extends Component {
     this.removeListeners();
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      this.setPlayingState();
+    }
+  }
+
   addListeners = () => {
     this.audio.addEventListener("play", this.handlePlay);
     this.audio.addEventListener("timeupdate", this.handlePlay);
@@ -86,10 +77,12 @@ class PlayerContainer extends Component {
   };
 
   handleChangePlayingState = () => {
-    this.setState(
-      prevState => ({ isPlaying: !prevState.isPlaying }),
-      this.setPlayingState
-    );
+    if (this.props.player.isPlaying) {
+      this.props.pauseSong(this.props.player.song);
+    } else {
+      this.props.playSong(this.props.player.song);
+    }
+    this.setPlayingState();
   };
 
   handleChangeProgress = (event, value) => {
@@ -107,12 +100,13 @@ class PlayerContainer extends Component {
   };
 
   setPlayingState = () => {
-    const { isPlaying } = this.state;
+    const { isPlaying } = this.props.player;
 
     if (!isPlaying) {
       this.audio.pause();
       return;
     }
+
     this.audio.play();
   };
 
@@ -127,9 +121,9 @@ class PlayerContainer extends Component {
 
     if (this.state.playingProgress === 100) {
       this.setState({
-        playingProgress: 0,
-        isPlaying: false
+        playingProgress: 0
       });
+      this.props.pauseSong(this.props.player.song);
     }
   };
 
@@ -162,17 +156,16 @@ class PlayerContainer extends Component {
   };
 
   render() {
-    const { playingProgress, isPlaying, volumeValue, isMuted } = this.state;
-    const { song } = this.props;
+    const { playingProgress, volumeValue, isMuted } = this.state;
+    const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
 
     return (
       <>
-        <audio src={song.source} ref={element => (this.audio = element)} />
+        <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
           items={this.items}
           onPlay={this.handleChangePlayingState}
-          isPlaying={isPlaying}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}
@@ -182,10 +175,26 @@ class PlayerContainer extends Component {
           onMute={this.handleMute}
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
+          player={this.props.player}
         />
       </>
     );
   }
 }
 
-export default PlayerContainer;
+function mapStateToProps(state) {
+  return {
+    songs: state.songs,
+    player: state.player
+  };
+}
+
+const mapDispatchToProps = {
+  playSong,
+  pauseSong
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerContainer);

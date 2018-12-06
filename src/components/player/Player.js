@@ -15,7 +15,11 @@ const styles = theme => ({
     zIndex: 3,
     bottom: 0,
     width: "100%",
-    transition: "all 0.6s ease-in-out"
+    transition: "all 0.6s ease",
+    transform: "translateY(200px)"
+  },
+  show: {
+    transform: "translateY(0)"
   },
   mediaPlayer: {
     display: "flex",
@@ -105,7 +109,6 @@ const styles = theme => ({
 const Player = ({
   classes,
   onPlay,
-  isPlaying,
   onChangeProgress,
   progress,
   song,
@@ -115,9 +118,16 @@ const Player = ({
   onMute,
   onChangeProgressStart,
   onChangeProgressEnd,
-  items
+  items,
+  player
 }) => (
-  <div className={classes.mediaPlayerAligner}>
+  <div
+    className={
+      player.song.id
+        ? `${classes.mediaPlayerAligner} ${classes.show}`
+        : classes.mediaPlayerAligner
+    }
+  >
     <div className={classes.mediaPlayer}>
       <Slider
         value={progress}
@@ -128,14 +138,14 @@ const Player = ({
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
-            <img className={classes.image} src={song.title} alt="album title" />
+            <img className={classes.image} src={song.image} alt="album title" />
           </div>
           <div className={classes.audioInfoText}>
             <Typography variant="h6" className={classes.songInfo}>
-              {song.songName}
+              {song.name}
             </Typography>
             <Typography component="h2" className={classes.albumArtistInfo}>
-              {song.albumName} - {song.authorName}
+              {song.album} - {song.artists}
             </Typography>
           </div>
         </div>
@@ -152,8 +162,10 @@ const Player = ({
             color="primary"
             aria-label="Play"
           >
-            {isPlaying && <Pause className={classes.playButtonStateIcon} />}
-            {!isPlaying && (
+            {player.isPlaying && (
+              <Pause className={classes.playButtonStateIcon} />
+            )}
+            {!player.isPlaying && (
               <PlayArrow className={classes.playButtonStateIcon} />
             )}
           </Button>
@@ -189,24 +201,18 @@ const Player = ({
 
 Player.propTypes = {
   classes: PropTypes.object,
-  isPlaying: PropTypes.bool.isRequired,
   onPlay: PropTypes.func.isRequired,
   onChangeProgress: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,
   onChangeVolume: PropTypes.func.isRequired,
   volumeIcon: PropTypes.element.isRequired,
-  song: PropTypes.shape({
-    source: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    songName: PropTypes.string.isRequired,
-    albumName: PropTypes.string.isRequired,
-    authorName: PropTypes.string.isRequired
-  }),
+  song: PropTypes.object.isRequired,
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired
+  items: PropTypes.array.isRequired,
+  player: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

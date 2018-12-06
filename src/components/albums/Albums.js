@@ -11,16 +11,16 @@ import {
   Typography
 } from "@material-ui/core";
 
-import { loadAlbums } from "../../store/actionCreators/albums";
-
 import Title from "../shared/Title";
 import { connect } from "react-redux";
+import { loadCachedAlbums } from "../../store/actionCreators/albums";
 
 const styles = {
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
   albumInfo: {
+    width: `190px`,
     overflow: `hidden`,
     whiteSpace: `nowrap`,
     textOverflow: `ellipsis`
@@ -41,12 +41,12 @@ class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
-    match: PropTypes.object,
-    loadAlbums: PropTypes.func
+    loadCachedAlbums: PropTypes.func,
+    match: PropTypes.object
   };
 
   componentDidMount() {
-    this.props.loadAlbums();
+    this.props.loadCachedAlbums();
   }
 
   render() {
@@ -59,10 +59,7 @@ class Albums extends Component {
           {this.props.albums.map((album, i) => (
             <Grid key={i} item xl={2} md={3}>
               <Card>
-                <Link
-                  to={`${match.url}/${album.albumId}`}
-                  className={classes.link}
-                >
+                <Link to={`${match.url}/${album.id}`} className={classes.link}>
                   <CardActionArea>
                     <CardMedia
                       component="img"
@@ -99,7 +96,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  loadAlbums
+  loadCachedAlbums
 };
 
 export default connect(

@@ -6,12 +6,14 @@ import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
 import themeReducer from "./reducers/theme";
+import songsReducer from "./reducers/songs";
 
 const rootReducer = combineReducers({
   albums: albumsReducer,
   artists: artistsReducer,
   auth: authReducer,
-  theme: themeReducer
+  theme: themeReducer,
+  songs: songsReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

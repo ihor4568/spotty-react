@@ -5,7 +5,12 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import { signIn, signUp } from "../../store/actionCreators/auth";
+import {
+  signIn,
+  signUp,
+  authError,
+  clearAuthError
+} from "../../store/actionCreators/auth";
 
 const styles = {
   container: {
@@ -22,7 +27,10 @@ class Auth extends Component {
     classes: PropTypes.object,
     signIn: PropTypes.func.isRequired,
     signUp: PropTypes.func.isRequired,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    clearAuthError: PropTypes.func.isRequired,
+    authError: PropTypes.func.isRequired,
+    error: PropTypes.string
   };
 
   state = {
@@ -31,6 +39,7 @@ class Auth extends Component {
 
   handleTabChange = (event, activeTab) => {
     this.setState({ activeTab });
+    this.props.clearAuthError();
   };
 
   render() {
@@ -58,17 +67,26 @@ class Auth extends Component {
           <Tab className={classes.tab} label="Sign In" />
           <Tab className={classes.tab} label="Sign Up" />
         </Tabs>
-        {activeTab === 0 && <SignIn onSubmit={this.props.signIn} />}
-        {activeTab === 1 && <SignUp onSubmit={this.props.signUp} />}
+        {activeTab === 0 && (
+          <SignIn onSubmit={this.props.signIn} errorText={this.props.error} />
+        )}
+        {activeTab === 1 && (
+          <SignUp
+            onSubmit={this.props.signUp}
+            onError={this.props.authError}
+            errorText={this.props.error}
+          />
+        )}
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  isLoggedIn: state.auth.isLoggedIn
+  isLoggedIn: state.auth.isLoggedIn,
+  error: state.auth.error
 });
 
 export default connect(
   mapStateToProps,
-  { signIn, signUp }
+  { signIn, signUp, authError, clearAuthError }
 )(withStyles(styles)(Auth));

@@ -12,6 +12,11 @@ import { AccountCircle, PhotoCamera } from "@material-ui/icons";
 import FileUploader from "react-firebase-file-uploader";
 import { FirebaseService } from "../../services/FirebaseService";
 import Error from "./Error";
+import { connect } from "react-redux";
+import {
+  startUpload,
+  uploadAvatarToStorage
+} from "../../store/actionCreators/avatar";
 
 const styles = theme => ({
   button: {
@@ -46,16 +51,17 @@ class SignUp extends Component {
     classes: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
-    errorText: PropTypes.string
+    errorText: PropTypes.string,
+    avatar: PropTypes.object,
+    startUpload: PropTypes.func,
+    uploadAvatarToStorage: PropTypes.func
   };
 
   state = {
     email: "",
     name: "",
     password: "",
-    confirmPassword: "",
-    avatarURL: "",
-    canSubmit: true
+    confirmPassword: ""
   };
 
   handleInputChange = event => {
@@ -67,29 +73,13 @@ class SignUp extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
-      this.props.onSubmit(this.state);
+      this.props.onSubmit({
+        ...this.state,
+        avatarURL: this.props.avatar.avatarURL
+      });
     } else {
       this.props.onError("Passwords do not match");
     }
-  };
-
-  handleUploadStart = () => {
-    this.setState({
-      canSubmit: false
-    });
-  };
-
-  handleUploadSuccess = filename => {
-    FirebaseService.storage()
-      .ref("images/avatars")
-      .child(filename)
-      .getDownloadURL()
-      .then(url => this.setState({ avatarURL: url }))
-      .then(
-        this.setState({
-          canSubmit: true
-        })
-      );
   };
 
   render() {
@@ -188,14 +178,14 @@ class SignUp extends Component {
               name="avatar"
               filename={email.replace(/[^A-Za-zА_]/g, "") + "-avatar"}
               storageRef={FirebaseService.storage().ref("images/avatars")}
-              onUploadStart={this.handleUploadStart}
-              onUploadSuccess={this.handleUploadSuccess}
+              onUploadStart={this.props.startUpload}
+              onUploadSuccess={this.props.uploadAvatarToStorage}
             />
             <PhotoCamera />
           </Button>
-          {this.state.avatarURL ? (
+          {this.props.avatar.avatarURL ? (
             <Avatar
-              src={this.state.avatarURL}
+              src={this.props.avatar.avatarURL}
               className={classes.avatarImage}
               alt="user-avatar"
             />
@@ -205,7 +195,7 @@ class SignUp extends Component {
         </div>
         <Button
           type="submit"
-          disabled={!this.state.canSubmit}
+          disabled={!this.props.avatar.canSubmit}
           fullWidth
           variant="contained"
           color="primary"
@@ -219,4 +209,18 @@ class SignUp extends Component {
   }
 }
 
-export default withStyles(styles)(SignUp);
+function mapStateToProps(state) {
+  return {
+    avatar: state.avatar
+  };
+}
+
+const mapDispatchToProps = {
+  startUpload,
+  uploadAvatarToStorage
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SignUp));

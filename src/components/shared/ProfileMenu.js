@@ -44,7 +44,6 @@ class ProfileMenu extends Component {
     const { anchorEl } = this.state;
     const { classes } = this.props;
     const isMenuOpen = !!anchorEl;
-
     return (
       <div>
         <IconButton

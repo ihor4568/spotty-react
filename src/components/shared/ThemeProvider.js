@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
-import { lightTheme, darkTheme } from "../../theme";
+import { lightTheme, darkTheme } from "../../themes";
 
 const ThemeProvider = ({ type, children }) => (
   <MuiThemeProvider theme={type === "dark" ? darkTheme : lightTheme}>

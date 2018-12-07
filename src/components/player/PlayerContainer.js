@@ -31,9 +31,7 @@ export class PlayerContainer extends Component {
     songs: PropTypes.array.isRequired,
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired,
-    song: PropTypes.object.isRequired,
-    id: PropTypes.string.isRequired
+    pauseSong: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -47,8 +45,8 @@ export class PlayerContainer extends Component {
   }
 
   handleShare = () => {
-    if (this.props.song.id) {
-      window.open(`/songs/${this.props.song.id}`);
+    if (this.props.player.song.id) {
+      window.open(`/songs/${this.props.player.song.id}`);
     }
   };
 

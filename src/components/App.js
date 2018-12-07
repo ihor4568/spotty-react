@@ -14,11 +14,10 @@ import ArtistTable from "./artists/ArtistTable";
 import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 
+import { connect } from "react-redux";
 import { fetchUser } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-
-import { connect } from "react-redux";
 
 const styles = () => ({
   root: {

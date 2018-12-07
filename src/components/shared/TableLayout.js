@@ -13,7 +13,7 @@ import {
   Button
 } from "@material-ui/core";
 
-import { PlayArrow, TimerSharp } from "@material-ui/icons";
+import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 
 import { connect } from "react-redux";
@@ -79,9 +79,9 @@ class TableLayout extends Component {
       return {
         ...item,
         number: i + 1,
+        image: item.album.coverURL,
         album: item.album.name,
-        artists: item.artistsNames.join(`, `),
-        image: item.album.coverURL
+        artists: item.artistsNames.join(`, `)
       };
     });
   };
@@ -134,14 +134,20 @@ class TableLayout extends Component {
     }
   };
 
+  getButtonIcon = data => {
+    const { classes } = this.props;
+    const { isPlaying, song } = this.props.player;
+
+    if (isPlaying && data.id === song.id) {
+      return <Pause className={classes.icon} />;
+    } else {
+      return <PlayArrow className={classes.icon} />;
+    }
+  };
+
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
-    const sortedData = this.stableSort(
-      this.createNewSongsArray(songs),
-      this.getSorting(order, orderBy)
-    );
-
     return (
       <>
         <Paper className={classes.root}>
@@ -220,9 +226,12 @@ class TableLayout extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((data, y) => {
+                {this.stableSort(
+                  this.createNewSongsArray(songs),
+                  this.getSorting(order, orderBy)
+                ).map((data, i) => {
                   return (
-                    <TableRow hover key={y}>
+                    <TableRow hover key={i}>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
@@ -235,7 +244,7 @@ class TableLayout extends Component {
                             this.handlePlayPauseButton(data);
                           }}
                         >
-                          <PlayArrow className={classes.icon} />
+                          {this.getButtonIcon(data)}
                         </Button>
                       </TableCell>
                       <TableCell

@@ -82,10 +82,14 @@ class ProfileMenu extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  userName: state.auth.user.displayName,
-  avatar: state.auth.user.photoURL
-});
+const mapStateToProps = state => {
+  const userName = state.auth.user ? state.auth.user.displayName : "";
+  const avatar = state.auth.user ? state.auth.user.photoURL : "";
+  return {
+    userName,
+    avatar
+  };
+};
 
 export default connect(
   mapStateToProps,

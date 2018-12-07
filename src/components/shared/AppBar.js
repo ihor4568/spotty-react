@@ -19,7 +19,7 @@ import {
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { onChangeTheme } from "../../store/actionCreators/themes";
+import { changeThemeType } from "../../store/actionCreators/themes";
 
 const styles = theme => ({
   appBar: {
@@ -214,7 +214,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  onChangeTheme: onChangeTheme
+  onChangeTheme: changeThemeType
 };
 
 export default connect(

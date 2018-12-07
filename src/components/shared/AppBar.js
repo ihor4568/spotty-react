@@ -109,7 +109,7 @@ class AppBarComponent extends Component {
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
     enabled: PropTypes.bool,
-    onChangeTheme: PropTypes.func,
+    changeThemeType: PropTypes.func,
     theme: PropTypes.object,
     palette: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired
@@ -126,7 +126,7 @@ class AppBarComponent extends Component {
   handleChangeTheme = () => {
     const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
 
-    this.props.onChangeTheme(nextThemeType);
+    this.props.changeThemeType(nextThemeType);
   };
 
   render() {
@@ -214,7 +214,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  onChangeTheme: changeThemeType
+  changeThemeType: changeThemeType
 };
 
 export default connect(

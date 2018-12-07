@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
-import themeReducer from "./reducers/theme";
+import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
 import playerReducer from "./reducers/player";
 

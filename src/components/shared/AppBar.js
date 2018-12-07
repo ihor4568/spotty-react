@@ -19,7 +19,7 @@ import {
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { boundChangeTheme } from "../../store/actionCreators/theme";
+import { onChangeTheme } from "../../store/actionCreators/themes";
 
 const styles = theme => ({
   appBar: {
@@ -109,7 +109,7 @@ class AppBarComponent extends Component {
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
     enabled: PropTypes.bool,
-    boundChangeTheme: PropTypes.func,
+    onChangeTheme: PropTypes.func,
     theme: PropTypes.object,
     palette: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired
@@ -126,7 +126,7 @@ class AppBarComponent extends Component {
   handleChangeTheme = () => {
     const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
 
-    this.props.boundChangeTheme(nextThemeType);
+    this.props.onChangeTheme(nextThemeType);
   };
 
   render() {
@@ -214,7 +214,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  boundChangeTheme
+  onChangeTheme: onChangeTheme
 };
 
 export default connect(

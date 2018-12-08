@@ -1,11 +1,11 @@
-import { ADD_SONG } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
 const INITIAL_STATE = null;
 
-export default function shareViewReducer(state = INITIAL_STATE, action) {
+export default function sharedSongReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD_SONG:
-      return action.song;
+    case actionTypes.ADD_SONG_SUCCESS:
+      return action.payload;
     default:
       return state;
   }

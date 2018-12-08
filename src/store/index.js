@@ -5,7 +5,7 @@ import thunk from "redux-thunk";
 import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
-import shareViewReducer from "./reducers/shareView";
+import sharedSongReducer from "./reducers/shareView";
 import songsReducer from "./reducers/songs";
 import playerReducer from "./reducers/player";
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   artists: artistsReducer,
   player: playerReducer,
   auth: authReducer,
-  shareView: shareViewReducer,
+  sharedSong: sharedSongReducer,
   songs: songsReducer
 });
 

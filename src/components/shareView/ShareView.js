@@ -80,7 +80,7 @@ class ShareView extends Component {
 
 const mapStateToProps = state => {
   return {
-    info: state.shareView
+    info: state.sharedSong
   };
 };
 

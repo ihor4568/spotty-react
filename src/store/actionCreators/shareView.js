@@ -1,15 +1,21 @@
-import { ADD_SONG } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 import { MusicService } from "../../services/MusicService";
 
-export const addSong = song => ({
-  type: ADD_SONG,
-  song
-});
-
-export const getSong = id => {
-  return dispatch => {
-    MusicService.getSong(id).then(song => {
+export function getSong(id) {
+  return async dispatch => {
+    try {
+      dispatch({ type: actionTypes.ADD_SONG_START });
+      const song = await MusicService.getSong(id);
       dispatch(addSong(song));
-    });
+    } catch (e) {
+      dispatch({ type: actionTypes.ADD_SONG_FAIL });
+    }
   };
-};
+}
+
+export function addSong(payload) {
+  return {
+    type: actionTypes.ADD_SONG_SUCCESS,
+    payload
+  };
+}

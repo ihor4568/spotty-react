@@ -13,9 +13,12 @@ import {
   Button
 } from "@material-ui/core";
 
-import { PlayArrow, TimerSharp } from "@material-ui/icons";
-
+import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
+
+import { connect } from "react-redux";
+import { playSong } from "../../store/actionCreators/player";
+import { pauseSong } from "../../store/actionCreators/player";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -54,7 +57,10 @@ const styles = {
 class TableLayout extends Component {
   static propTypes = {
     songs: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    player: PropTypes.object.isRequired,
+    playSong: PropTypes.func.isRequired,
+    pauseSong: PropTypes.func.isRequired
   };
 
   state = {
@@ -67,9 +73,9 @@ class TableLayout extends Component {
       return {
         ...item,
         number: i + 1,
+        image: item.album.coverURL,
         album: item.album.name,
-        artists: item.artistsNames.join(`, `),
-        image: item.album.coverURL
+        artists: item.artistsNames.join(`, `)
       };
     });
   };
@@ -114,13 +120,28 @@ class TableLayout extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
+  handlePlayPauseButton = data => {
+    if (this.props.player.isPlaying && data.id === this.props.player.song.id) {
+      this.props.pauseSong(data);
+    } else {
+      this.props.playSong(data);
+    }
+  };
+
+  getButtonIcon = data => {
+    const { classes } = this.props;
+    const { isPlaying, song } = this.props.player;
+
+    if (isPlaying && data.id === song.id) {
+      return <Pause className={classes.icon} />;
+    } else {
+      return <PlayArrow className={classes.icon} />;
+    }
+  };
+
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
-    const sortedData = this.stableSort(
-      this.createNewSongsArray(songs),
-      this.getSorting(order, orderBy)
-    );
     return (
       <>
         <Paper className={classes.root}>
@@ -199,9 +220,12 @@ class TableLayout extends Component {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {sortedData.map((data, y) => {
+                {this.stableSort(
+                  this.createNewSongsArray(songs),
+                  this.getSorting(order, orderBy)
+                ).map((data, i) => {
                   return (
-                    <TableRow hover key={y}>
+                    <TableRow hover key={i}>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
@@ -210,8 +234,11 @@ class TableLayout extends Component {
                           variant="fab"
                           aria-label="PlayArrow"
                           className={classes.button}
+                          onClick={() => {
+                            this.handlePlayPauseButton(data);
+                          }}
                         >
-                          <PlayArrow className={classes.icon} />
+                          {this.getButtonIcon(data)}
                         </Button>
                       </TableCell>
                       <TableCell
@@ -259,4 +286,18 @@ class TableLayout extends Component {
   }
 }
 
-export default withStyles(styles)(TableLayout);
+function mapStateToProps(state) {
+  return {
+    player: state.player
+  };
+}
+
+const mapDispatchToProps = {
+  playSong,
+  pauseSong
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(TableLayout));

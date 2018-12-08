@@ -2,8 +2,7 @@ import React from "react";
 import { ThemedApp } from "../App";
 import renderer from "react-test-renderer";
 
-import { MuiThemeProvider } from "@material-ui/core/styles";
-import theme from "../../theme";
+jest.mock("../shared/ThemeProvider", () => "theme-provider");
 
 jest.mock("../mySongs/MySongs", () => "my-songs");
 jest.mock("../artists/Artists", () => "artists");
@@ -25,13 +24,7 @@ describe("App component", () => {
   };
 
   it("should render correctly", () => {
-    const tree = renderer
-      .create(
-        <MuiThemeProvider theme={theme}>
-          <ThemedApp {...props} />
-        </MuiThemeProvider>
-      )
-      .toJSON();
+    const tree = renderer.create(<ThemedApp {...props} />).toJSON();
 
     expect(tree).toMatchSnapshot();
   });

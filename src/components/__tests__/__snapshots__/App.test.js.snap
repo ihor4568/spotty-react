@@ -19,7 +19,7 @@ exports[`App component should render correctly 1`] = `
       location={
         Object {
           "hash": "",
-          "key": "6rl6ko",
+          "key": "l3lpfm",
           "pathname": "/albums",
           "search": "",
           "state": undefined,

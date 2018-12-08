@@ -6,14 +6,14 @@ import { MusicService } from "../../../services/MusicService";
 jest.mock("../../../services/FirebaseService");
 
 describe("songs action creators", () => {
-  describe("getArtistsSongs", () => {
+  describe("getArtistSongs", () => {
     it("should return correct action", () => {
       const payload = { prop: 10 };
       const expected = {
         type: actionTypes.FETCH_ARTISTS_SONGS_SUCCESS,
         payload
       };
-      expect(actionCreators.getArtistsSongs(payload)).toEqual(expected);
+      expect(actionCreators.getArtistSongs(payload)).toEqual(expected);
     });
   });
 
@@ -29,7 +29,7 @@ describe("songs action creators", () => {
     beforeEach(() => {
       promise = Promise.resolve(sampleSongs);
       jest
-        .spyOn(MusicService, "getArtistsSongs")
+        .spyOn(MusicService, "getArtistSongs")
         .mockImplementation(() => promise);
     });
 
@@ -39,7 +39,7 @@ describe("songs action creators", () => {
 
       await promise;
 
-      const expected = actionCreators.getArtistsSongs(
+      const expected = actionCreators.getArtistSongs(
         Object.values(sampleSongs)
       );
 

@@ -2,7 +2,7 @@ import * as actionTypes from "../actionTypes";
 
 import { MusicService } from "../../services/MusicService";
 
-export function getUserSongs(userId) {
+export function loadUserSongs(userId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.FETCH_USER_SONGS_START });
@@ -17,7 +17,16 @@ export function getUserSongs(userId) {
   };
 }
 
-export function setUserSongs(userId, songId) {
+export function loadCachedUserSongs(userId) {
+  return (dispatch, getState) => {
+    if (getState().userSongs.length) {
+      return;
+    }
+    dispatch(loadUserSongs(userId));
+  };
+}
+
+export function addUserSongs(userId, songId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.ADD_USER_SONGS_START });

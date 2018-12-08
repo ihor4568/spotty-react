@@ -19,6 +19,11 @@ import DotsMenu from "./DotsMenu";
 import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
+import {
+  loadCachedUserSongs,
+  addUserSongs,
+  removeUserSongs
+} from "../../store/actionCreators/user";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -59,13 +64,65 @@ class TableLayout extends Component {
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     player: PropTypes.object.isRequired,
+    userSongs: PropTypes.array.isRequired,
+    auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired
+    pauseSong: PropTypes.func.isRequired,
+    loadCachedUserSongs: PropTypes.func.isRequired,
+    addUserSongs: PropTypes.func.isRequired,
+    removeUserSongs: PropTypes.func.isRequired
   };
 
   state = {
     order: "asc",
     orderBy: "number"
+  };
+
+  componentDidMount() {
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
+  }
+
+  getItems(data) {
+    return [
+      {
+        name: "Legal info",
+        handler: () => {}
+      },
+      {
+        name: this.handleCheck(data.id),
+        handler: this.handleOperation.bind(this, data.id)
+      },
+      { name: "Share", handler: this.handleShare.bind(this, data.id) }
+    ];
+  }
+
+  handleCheck = songId => {
+    if (
+      this.props.userSongs.some(elem => {
+        return elem.id === songId;
+      })
+    ) {
+      return "Remove from my songs";
+    }
+    return "Add to my songs";
+  };
+
+  handleOperation = songId => {
+    if (
+      this.props.userSongs.some(elem => {
+        return songId === elem.id;
+      })
+    ) {
+      this.props.removeUserSongs(this.props.auth.user.uid, songId);
+    } else {
+      this.props.addUserSongs(this.props.auth.user.uid, songId);
+    }
+  };
+
+  handleShare = songId => {
+    if (songId) {
+      window.open(`/songs/${songId}`);
+    }
   };
 
   createNewSongsArray = arr => {
@@ -272,7 +329,7 @@ class TableLayout extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu />
+                        <DotsMenu items={this.getItems(data)} />
                       </TableCell>
                     </TableRow>
                   );
@@ -288,13 +345,18 @@ class TableLayout extends Component {
 
 function mapStateToProps(state) {
   return {
-    player: state.player
+    player: state.player,
+    auth: state.auth,
+    userSongs: state.userSongs
   };
 }
 
 const mapDispatchToProps = {
   playSong,
-  pauseSong
+  pauseSong,
+  loadCachedUserSongs,
+  addUserSongs,
+  removeUserSongs
 };
 
 export default connect(

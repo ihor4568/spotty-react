@@ -2,18 +2,18 @@ import React, { Component } from "react";
 import Title from "../shared/Title";
 import TableLayout from "../shared/TableLayout";
 import PropTypes from "prop-types";
-import { getUserSongs } from "../../store/actionCreators/user";
 import { connect } from "react-redux";
+import { loadCachedUserSongs } from "../../store/actionCreators/user";
 
 class MySongs extends Component {
   static propTypes = {
     userSongs: PropTypes.array.isRequired,
     auth: PropTypes.object.isRequired,
-    getUserSongs: PropTypes.func
+    loadCachedUserSongs: PropTypes.func.isRequired
   };
 
   componentDidMount() {
-    this.props.getUserSongs(this.props.auth.user.uid);
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
@@ -28,13 +28,13 @@ class MySongs extends Component {
 
 function mapStateToProps(state) {
   return {
-    userSongs: state.userSongs,
-    auth: state.auth
+    auth: state.auth,
+    userSongs: state.userSongs
   };
 }
 
 const mapDispatchToProps = {
-  getUserSongs
+  loadCachedUserSongs
 };
 
 export default connect(

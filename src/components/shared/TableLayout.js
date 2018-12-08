@@ -78,10 +78,6 @@ class TableLayout extends Component {
     orderBy: "number"
   };
 
-  componentDidMount() {
-    this.props.loadCachedUserSongs(this.props.auth.user.uid);
-  }
-
   getItems(data) {
     return [
       {
@@ -94,6 +90,10 @@ class TableLayout extends Component {
       },
       { name: "Share", handler: this.handleShare.bind(this, data.id) }
     ];
+  }
+
+  componentDidMount() {
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   handleCheck = songId => {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
 import LegalDialog from "./LegalDialog";
@@ -8,6 +9,15 @@ export default class DotsMenu extends Component {
   state = {
     anchorEl: null,
     isOpen: false
+  };
+
+  static propTypes = {
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string,
+        handler: PropTypes.func
+      })
+    )
   };
 
   handleClick = event => {
@@ -39,9 +49,15 @@ export default class DotsMenu extends Component {
             isOpen={this.state.isOpen}
             onClose={this.handleClickClose}
           />
-          <MenuItem onClick={this.handleClickOpen}>Legal info</MenuItem>
-          <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
-          <MenuItem onClick={this.handleClose}>Share</MenuItem>
+          {this.props.items.map((item, index) => (
+            <MenuItem
+              key={index}
+              onClick={item.handler}
+              onMouseUp={this.handleClose}
+            >
+              {item.name}
+            </MenuItem>
+          ))}
         </Menu>
       </div>
     );

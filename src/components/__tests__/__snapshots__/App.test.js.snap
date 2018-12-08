@@ -2,53 +2,31 @@
 
 exports[`App component should render correctly 1`] = `
 <theme-provider>
-  <browser-router>
-    <div
-      className="App-root-1"
-    >
-      <router-switch>
-        <public-route
-          component="auth"
-          exact={true}
-          path="/login"
-        />
-        <router-redirect
-          exact={true}
-          from="/"
-          to="/albums"
-        />
-        <private-route
-          component="my-songs"
-          exact={true}
-          path="/mysongs"
-        />
-        <private-route
-          component="albums"
-          exact={true}
-          path="/albums"
-        />
-        <private-route
-          component="artists"
-          exact={true}
-          path="/artists"
-        />
-        <private-route
-          component="about"
-          path="/about"
-        />
-        <private-route
-          component="album-table"
-          path="/albums/:id"
-        />
-        <private-route
-          component="artist-table"
-          path="/artists/:id"
-        />
-        <private-route
-          component="not-found"
-        />
-      </router-switch>
-    </div>
-  </browser-router>
+  <div
+    className="App-root-1"
+  >
+    <private-route
+      component="albums"
+      computedMatch={
+        Object {
+          "isExact": true,
+          "params": Object {},
+          "path": "/albums",
+          "url": "/albums",
+        }
+      }
+      exact={true}
+      location={
+        Object {
+          "hash": "",
+          "key": "px2ye7",
+          "pathname": "/albums",
+          "search": "",
+          "state": undefined,
+        }
+      }
+      path="/albums"
+    />
+  </div>
 </theme-provider>
 `;

@@ -97,12 +97,7 @@ class DrawerComponent extends Component {
         open={this.props.open}
       >
         <div className={classes.toolbar}>
-          <Typography
-            className={classes.subtitle}
-            variant="h6"
-            color="inherit"
-            noWrap
-          >
+          <Typography className={classes.subtitle} variant="h6" noWrap>
             Library
           </Typography>
           <IconButton onClick={this.props.onDrawerClose}>

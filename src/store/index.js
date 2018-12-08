@@ -6,6 +6,7 @@ import artistsReducer from "./reducers/artists";
 import albumsReducer from "./reducers/albums";
 import authReducer from "./reducers/auth";
 import sharedSongReducer from "./reducers/shareView";
+import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
 import playerReducer from "./reducers/player";
 
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   player: playerReducer,
   auth: authReducer,
   sharedSong: sharedSongReducer,
+  theme: themeReducer,
   songs: songsReducer
 });
 

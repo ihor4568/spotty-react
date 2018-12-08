@@ -1,30 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App component should render correctly 1`] = `
-<div
-  className="App-root-1"
->
-  <private-route
-    component="albums"
-    computedMatch={
-      Object {
-        "isExact": true,
-        "params": Object {},
-        "path": "/albums",
-        "url": "/albums",
+<theme-provider>
+  <div
+    className="App-root-1"
+  >
+    <private-route
+      component="albums"
+      computedMatch={
+        Object {
+          "isExact": true,
+          "params": Object {},
+          "path": "/albums",
+          "url": "/albums",
+        }
       }
-    }
-    exact={true}
-    location={
-      Object {
-        "hash": "",
-        "key": "g0f5wd",
-        "pathname": "/albums",
-        "search": "",
-        "state": undefined,
+      exact={true}
+      location={
+        Object {
+          "hash": "",
+          "key": "6rl6ko",
+          "pathname": "/albums",
+          "search": "",
+          "state": undefined,
+        }
       }
-    }
-    path="/albums"
-  />
-</div>
+      path="/albums"
+    />
+  </div>
+</theme-provider>
 `;

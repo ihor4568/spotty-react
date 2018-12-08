@@ -13,7 +13,7 @@ import {
   Button
 } from "@material-ui/core";
 
-import { PlayArrow, TimerSharp } from "@material-ui/icons";
+import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 
 import { connect } from "react-redux";
@@ -151,6 +151,17 @@ class TableLayout extends Component {
     }
   };
 
+  getButtonIcon = data => {
+    const { classes } = this.props;
+    const { isPlaying, song } = this.props.player;
+
+    if (isPlaying && data.id === song.id) {
+      return <Pause className={classes.icon} />;
+    } else {
+      return <PlayArrow className={classes.icon} />;
+    }
+  };
+
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
@@ -250,7 +261,7 @@ class TableLayout extends Component {
                             this.handlePlayPauseButton(data);
                           }}
                         >
-                          <PlayArrow className={classes.icon} />
+                          {this.getButtonIcon(data)}
                         </Button>
                       </TableCell>
                       <TableCell

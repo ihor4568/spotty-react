@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
+import ThemeProvider from "./shared/ThemeProvider";
 import MySongs from "./mySongs/MySongs";
 import Artists from "./artists/Artists";
 import About from "./about/About";
@@ -39,22 +40,24 @@ export class App extends Component {
     const { classes } = this.props;
 
     return (
-      <BrowserRouter>
-        <div className={classes.root}>
-          <Switch>
-            <PublicRoute exact path="/login" component={Auth} />
-            <PublicRoute exact path="/songs/:id" component={ShareView} />
-            <Redirect exact from="/" to="/albums" />
-            <PrivateRoute exact path="/mysongs" component={MySongs} />
-            <PrivateRoute exact path="/albums" component={Albums} />
-            <PrivateRoute exact path="/artists" component={Artists} />
-            <PrivateRoute path="/about" component={About} />
-            <PrivateRoute path="/albums/:id" component={AlbumTable} />
-            <PrivateRoute path="/artists/:id" component={ArtistTable} />
-            <PrivateRoute component={NotFound} />
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <div className={classes.root}>
+            <Switch>
+              <PublicRoute exact path="/login" component={Auth} />
+              <PublicRoute exact path="/songs/:id" component={ShareView} />
+              <Redirect exact from="/" to="/albums" />
+              <PrivateRoute exact path="/mysongs" component={MySongs} />
+              <PrivateRoute exact path="/albums" component={Albums} />
+              <PrivateRoute exact path="/artists" component={Artists} />
+              <PrivateRoute path="/about" component={About} />
+              <PrivateRoute path="/albums/:id" component={AlbumTable} />
+              <PrivateRoute path="/artists/:id" component={ArtistTable} />
+              <PrivateRoute component={NotFound} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </ThemeProvider>
     );
   }
 }
@@ -63,7 +66,7 @@ const mapDispatchToProps = {
   fetchUser
 };
 
-export const ThemedApp = withStyles(styles, { withTheme: true })(App);
+export const ThemedApp = withStyles(styles)(App);
 export default connect(
   null,
   mapDispatchToProps

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import ProfileMenu from "./ProfileMenu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
@@ -10,14 +10,23 @@ import {
   Typography,
   InputBase
 } from "@material-ui/core";
-import { AccountCircle, Menu, Search } from "@material-ui/icons";
-import { connect } from "react-redux";
+import {
+  AccountCircle,
+  Menu,
+  Search,
+  Brightness1Outlined,
+  Brightness1
+} from "@material-ui/icons";
+
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { changeThemeType } from "../../store/actionCreators/themes";
 import { addSearchQuery } from "../../store/actionCreators/search";
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.props.appBar.appBarBackgroundColor,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -103,6 +112,10 @@ class AppBarComponent extends Component {
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
     enabled: PropTypes.bool,
+    changeThemeType: PropTypes.func,
+    theme: PropTypes.object,
+    palette: PropTypes.object,
+    isLoggedIn: PropTypes.bool.isRequired,
     addSearchQuery: PropTypes.func,
     searchQuery: PropTypes.string
   };
@@ -111,12 +124,34 @@ class AppBarComponent extends Component {
     enabled: true
   };
 
+  isCurrentThemeLight = () => {
+    return this.props.theme.palette.type === "light";
+  };
+
+  handleChangeTheme = () => {
+    const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
+
+    this.props.changeThemeType(nextThemeType);
+  };
+
   handleSearchChange = e => {
     this.props.addSearchQuery(e.target.value);
   };
 
   render() {
     const { classes, enabled, searchQuery } = this.props;
+
+    const themeSwitcher = (
+      <IconButton
+        color="inherit"
+        aria-label="Toggle light/dark theme"
+        data-ga-event-category="AppBar"
+        data-ga-event-action="dark"
+        onClick={this.handleChangeTheme}
+      >
+        {this.isCurrentThemeLight() ? <Brightness1Outlined /> : <Brightness1 />}
+      </IconButton>
+    );
 
     return (
       <AppBar
@@ -164,6 +199,7 @@ class AppBarComponent extends Component {
               />
             </div>
           )}
+          {this.props.isLoggedIn && themeSwitcher}
           {enabled ? (
             <ProfileMenu />
           ) : (
@@ -182,11 +218,17 @@ class AppBarComponent extends Component {
   }
 }
 
-const mapStateToProps = ({ search }) => ({
+const mapStateToProps = ({ auth, search }) => ({
+  isLoggedIn: auth.isLoggedIn,
   searchQuery: search
 });
 
+const mapDispatchToProps = {
+  changeThemeType,
+  addSearchQuery
+};
+
 export default connect(
   mapStateToProps,
-  { addSearchQuery }
-)(withStyles(styles, { withTheme: true })(AppBarComponent));
+  mapDispatchToProps
+)(withTheme()(withStyles(styles)(AppBarComponent)));

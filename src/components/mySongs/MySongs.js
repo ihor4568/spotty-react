@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 
 class MySongs extends Component {
   static propTypes = {
-    loadSongs: PropTypes.isRequired,
+    loadSongs: PropTypes.func,
     songs: PropTypes.array.isRequired
   };
 

@@ -20,7 +20,8 @@ jest.mock("../../services/FirebaseService");
 
 describe("App component", () => {
   const props = {
-    fetchUser: jest.fn()
+    fetchUser: jest.fn(),
+    fetchUserTheme: jest.fn()
   };
 
   it("should render correctly", () => {

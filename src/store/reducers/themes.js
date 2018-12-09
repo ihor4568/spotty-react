@@ -16,6 +16,11 @@ export default function changeTheme(state = initialState, action) {
         ...state,
         type: action.payload
       };
+    case actionTypes.SET_DEFAULT_THEME:
+      return {
+        ...state,
+        type: "light"
+      };
     default:
       return state;
   }

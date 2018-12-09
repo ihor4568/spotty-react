@@ -40,3 +40,9 @@ export function fetchUserTheme() {
     }
   };
 }
+
+export function setDefaultTheme() {
+  return {
+    type: actionTypes.SET_DEFAULT_THEME
+  };
+}

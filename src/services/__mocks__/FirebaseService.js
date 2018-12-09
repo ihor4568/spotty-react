@@ -16,5 +16,6 @@ database.mockReturnValue({
 });
 
 export const FirebaseService = {
-  database
+  database,
+  auth() {}
 };

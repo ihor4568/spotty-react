@@ -40,5 +40,25 @@ describe("Music Service", () => {
       const result = await MusicService.getSong(randomId);
       expect(result).toEqual(expectedResult);
     });
+
+    it("should call firebase function with proper arguments", async () => {
+      await MusicService.getSong(randomId);
+      expect(database.ref).toHaveBeenCalledWith(`songs/${randomId}`);
+      expect(database.once).toHaveBeenCalledWith("value");
+    });
+  });
+
+  describe("getAllArtists", () => {
+    it("should return an object with proper data", async () => {
+      const expected = { name: "noname", songs: ["song"] };
+      const result = await MusicService.getAllArtists();
+      expect(result).toEqual(expect.objectContaining(expected));
+    });
+
+    it("should call firebase function with proper arguments", async () => {
+      await MusicService.getAllArtists();
+      expect(database.ref).toHaveBeenCalledWith("artists");
+      expect(database.once).toHaveBeenCalledWith("value");
+    });
   });
 });

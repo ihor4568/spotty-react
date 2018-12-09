@@ -15,6 +15,7 @@ import {
 
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
+import DotsMenuItem from "./DotsMenuItem";
 
 import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
@@ -22,6 +23,7 @@ import { pauseSong } from "../../store/actionCreators/player";
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 
 import { withStyles } from "@material-ui/core/styles";
+import LegalDialog from "./LegalDialog";
 
 const styles = {
   root: {
@@ -67,7 +69,29 @@ class TableLayout extends Component {
 
   state = {
     order: "asc",
-    orderBy: "number"
+    orderBy: "number",
+    dialog: {
+      isOpen: false,
+      song: null
+    }
+  };
+
+  handleDialogOpen = song => {
+    this.setState({
+      dialog: {
+        isOpen: true,
+        song
+      }
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      dialog: {
+        isOpen: false,
+        song: null
+      }
+    });
   };
 
   componentDidMount() {
@@ -147,7 +171,7 @@ class TableLayout extends Component {
 
   render() {
     const { classes, songs } = this.props;
-    const { order, orderBy } = this.state;
+    const { order, orderBy, dialog } = this.state;
     return (
       <>
         <Paper className={classes.root}>
@@ -278,13 +302,29 @@ class TableLayout extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu />
+                        <DotsMenu>
+                          <DotsMenuItem
+                            onClick={this.handleDialogOpen.bind(this, data)}
+                          >
+                            Legal info
+                          </DotsMenuItem>
+                          <DotsMenuItem onClick={() => {}}>
+                            Remove from my songs
+                          </DotsMenuItem>
+                          <DotsMenuItem onClick={() => {}}>Share</DotsMenuItem>
+                        </DotsMenu>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            <LegalDialog
+              isOpen={dialog.isOpen}
+              onClose={this.handleDialogClose}
+              licenseInfo={dialog.song ? dialog.song.licenseInfo : ""}
+              licenseURL={dialog.song ? dialog.song.licenseURL : ""}
+            />
           </div>
         </Paper>
       </>

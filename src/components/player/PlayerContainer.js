@@ -11,6 +11,7 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
+import LegalDialog from "../shared/LegalDialog";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -24,7 +25,11 @@ export class PlayerContainer extends Component {
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
-    isMuted: false
+    isMuted: false,
+    dialog: {
+      isOpen: false,
+      song: null
+    }
   };
 
   static propTypes = {
@@ -137,8 +142,26 @@ export class PlayerContainer extends Component {
     }
   };
 
+  handleDialogOpen = song => {
+    this.setState({
+      dialog: {
+        isOpen: true,
+        song
+      }
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      dialog: {
+        isOpen: false,
+        song: null
+      }
+    });
+  };
+
   render() {
-    const { playingProgress, volumeValue, isMuted } = this.state;
+    const { playingProgress, volumeValue, isMuted, dialog } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
 
@@ -157,6 +180,13 @@ export class PlayerContainer extends Component {
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
           player={this.props.player}
+          onDialogOpen={this.handleDialogOpen.bind(this, song)}
+        />
+        <LegalDialog
+          isOpen={dialog.isOpen}
+          onClose={this.handleDialogClose}
+          licenseInfo={dialog.song ? dialog.song.licenseInfo : ""}
+          licenseURL={dialog.song ? dialog.song.licenseURL : ""}
         />
       </>
     );

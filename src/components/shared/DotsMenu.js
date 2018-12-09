@@ -1,13 +1,19 @@
 import React, { Component } from "react";
 
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
-import LegalDialog from "./LegalDialog";
+import { IconButton, Menu } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import PropTypes from "prop-types";
 
 export default class DotsMenu extends Component {
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]).isRequired
+  };
+
   state = {
-    anchorEl: null,
-    isOpen: false
+    anchorEl: null
   };
 
   handleClick = event => {
@@ -18,16 +24,19 @@ export default class DotsMenu extends Component {
     this.setState({ anchorEl: null });
   };
 
-  handleClickOpen = () => {
-    this.setState({ isOpen: true });
-  };
-
-  handleClickClose = () => {
-    this.setState({ isOpen: false });
+  handleItemClick = handler => {
+    this.handleClose();
+    handler();
   };
 
   render() {
     const { anchorEl } = this.state;
+
+    const children = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        onClick: this.handleItemClick.bind(this, child.props.onClick)
+      });
+    });
 
     return (
       <div>
@@ -35,13 +44,7 @@ export default class DotsMenu extends Component {
           <MoreVertIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleClose}>
-          <LegalDialog
-            isOpen={this.state.isOpen}
-            onClose={this.handleClickClose}
-          />
-          <MenuItem onClick={this.handleClickOpen}>Legal info</MenuItem>
-          <MenuItem onClick={this.handleClose}>Remove from my songs</MenuItem>
-          <MenuItem onClick={this.handleClose}>Share</MenuItem>
+          {children}
         </Menu>
       </div>
     );

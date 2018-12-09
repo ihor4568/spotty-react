@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import ProfileMenu from "./ProfileMenu";
 import { fade } from "@material-ui/core/styles/colorManipulator";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, withTheme } from "@material-ui/core/styles";
 import {
   AppBar,
   Toolbar,
@@ -10,12 +10,20 @@ import {
   Typography,
   InputBase
 } from "@material-ui/core";
-import { AccountCircle, Menu, Search } from "@material-ui/icons";
+import {
+  AccountCircle,
+  Menu,
+  Search,
+  Brightness1Outlined,
+  Brightness1
+} from "@material-ui/icons";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { changeThemeType } from "../../store/actionCreators/themes";
 
 const styles = theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.props.appBar.appBarBackgroundColor,
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
@@ -100,15 +108,41 @@ class AppBarComponent extends Component {
     classes: PropTypes.object.isRequired,
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
-    enabled: PropTypes.bool
+    enabled: PropTypes.bool,
+    changeThemeType: PropTypes.func,
+    theme: PropTypes.object,
+    palette: PropTypes.object,
+    isLoggedIn: PropTypes.bool.isRequired
   };
 
   static defaultProps = {
     enabled: true
   };
 
+  isCurrentThemeLight = () => {
+    return this.props.theme.palette.type === "light";
+  };
+
+  handleChangeTheme = () => {
+    const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
+
+    this.props.changeThemeType(nextThemeType);
+  };
+
   render() {
     const { classes, enabled } = this.props;
+
+    const themeSwitcher = (
+      <IconButton
+        color="inherit"
+        aria-label="Toggle light/dark theme"
+        data-ga-event-category="AppBar"
+        data-ga-event-action="dark"
+        onClick={this.handleChangeTheme}
+      >
+        {this.isCurrentThemeLight() ? <Brightness1Outlined /> : <Brightness1 />}
+      </IconButton>
+    );
 
     return (
       <AppBar
@@ -154,6 +188,7 @@ class AppBarComponent extends Component {
               />
             </div>
           )}
+          {this.props.isLoggedIn && themeSwitcher}
           {enabled ? (
             <ProfileMenu />
           ) : (
@@ -172,4 +207,17 @@ class AppBarComponent extends Component {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(AppBarComponent);
+function mapStateToProps(state) {
+  return {
+    isLoggedIn: state.auth.isLoggedIn
+  };
+}
+
+const mapDispatchToProps = {
+  changeThemeType: changeThemeType
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTheme()(withStyles(styles)(AppBarComponent)));

@@ -61,4 +61,32 @@ describe("Music Service", () => {
       expect(database.once).toHaveBeenCalledWith("value");
     });
   });
+
+  describe("getArtistSongs", () => {
+    it("should return an array with proper data", async () => {
+      const expected = [expectedResult];
+      const result = await MusicService.getArtistSongs(randomId);
+      expect(result).toEqual(expect.arrayContaining(expected));
+    });
+
+    it("should call firebase function with proper arguments", async () => {
+      await MusicService.getArtistSongs(randomId);
+      expect(database.ref).toHaveBeenCalledWith(`artists/${randomId}`);
+      expect(database.once).toHaveBeenCalledWith("value");
+    });
+  });
+
+  describe("getAlbumSongs", () => {
+    it("should return an array with proper data", async () => {
+      const expected = [expectedResult];
+      const result = await MusicService.getAlbumSongs(randomId);
+      expect(result).toEqual(expect.arrayContaining(expected));
+    });
+
+    it("should call firebase function with proper arguments", async () => {
+      await MusicService.getAlbumSongs(randomId);
+      expect(database.ref).toHaveBeenCalledWith(`albums/${randomId}`);
+      expect(database.once).toHaveBeenCalledWith("value");
+    });
+  });
 });

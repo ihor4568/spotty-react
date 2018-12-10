@@ -1,7 +1,7 @@
 import * as actionTypes from "../actionTypes";
 import { FirebaseService } from "../../services/FirebaseService";
 
-export function startUpload() {
+export function disableSignUpButton() {
   return {
     type: actionTypes.DISABLE_SIGNUP_BUTTON
   };

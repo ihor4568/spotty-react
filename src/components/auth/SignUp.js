@@ -14,7 +14,7 @@ import { FirebaseService } from "../../services/FirebaseService";
 import Error from "./Error";
 import { connect } from "react-redux";
 import {
-  startUpload,
+  disableSignUpButton,
   uploadAvatarToStorage
 } from "../../store/actionCreators/avatar";
 
@@ -53,7 +53,7 @@ class SignUp extends Component {
     onError: PropTypes.func.isRequired,
     errorText: PropTypes.string,
     avatar: PropTypes.object,
-    startUpload: PropTypes.func,
+    disableSignUpButton: PropTypes.func,
     uploadAvatarToStorage: PropTypes.func
   };
 
@@ -178,7 +178,7 @@ class SignUp extends Component {
               name="avatar"
               filename={email.replace(/[^A-Za-zА_]/g, "") + "-avatar"}
               storageRef={FirebaseService.storage().ref("images/avatars")}
-              onUploadStart={this.props.startUpload}
+              onUploadStart={this.props.disableSignUpButton}
               onUploadSuccess={this.props.uploadAvatarToStorage}
             />
             <PhotoCamera />
@@ -216,7 +216,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = {
-  startUpload,
+  disableSignUpButton,
   uploadAvatarToStorage
 };
 

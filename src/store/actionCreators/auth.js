@@ -20,11 +20,11 @@ export function signIn({ email, password }) {
   };
 }
 
-export function signUp({ email, password, name }) {
+export function signUp({ email, password, name, avatarURL }) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.FETCH_USER_AND_THEME_START });
-      await AuthService.signUp(email, password, name);
+      await AuthService.signUp(email, password, name, avatarURL);
       const user = await AuthService.check();
       const themeType = await ThemeService.getTheme(user.uid);
       dispatch({

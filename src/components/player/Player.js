@@ -110,6 +110,8 @@ const styles = theme => ({
 const Player = ({
   classes,
   onPlay,
+  onPreviousClick,
+  onNextClick,
   onChangeProgress,
   progress,
   song,
@@ -152,7 +154,11 @@ const Player = ({
       </div>
       <div className={classes.controlsContainer}>
         <div className={classes.controls}>
-          <Button className={classes.prevNextButton} variant="contained">
+          <Button
+            className={classes.prevNextButton}
+            onClick={onPreviousClick}
+            variant="contained"
+          >
             {<SkipPrevious fontSize={"large"} />}
           </Button>
           <Button
@@ -169,7 +175,11 @@ const Player = ({
               <PlayArrow className={classes.playButtonStateIcon} />
             )}
           </Button>
-          <Button className={classes.prevNextButton} variant="contained">
+          <Button
+            className={classes.prevNextButton}
+            onClick={onNextClick}
+            variant="contained"
+          >
             {<SkipNext fontSize={"large"} />}
           </Button>
         </div>
@@ -202,6 +212,8 @@ const Player = ({
 Player.propTypes = {
   classes: PropTypes.object,
   onPlay: PropTypes.func.isRequired,
+  onPreviousClick: PropTypes.func.isRequired,
+  onNextClick: PropTypes.func.isRequired,
   onChangeProgress: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,

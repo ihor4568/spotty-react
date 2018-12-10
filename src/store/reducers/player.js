@@ -1,24 +1,39 @@
-import { PLAY_SONG } from "../actionTypes";
-import { PAUSE_SONG } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
 export const INITIAL_STATE = {
   isPlaying: false,
-  song: {}
+  song: {},
+  id: null
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case PLAY_SONG:
+    case actionTypes.PLAY_SONG:
       return {
         ...state,
         song: action.song,
         isPlaying: true
       };
-    case PAUSE_SONG:
+    case actionTypes.PAUSE_SONG:
       return {
         ...state,
-        song: action.song,
+        song: action.songs[action.id],
         isPlaying: false
+        // id: action.id
+      };
+    case actionTypes.PREVIOUS_SONG:
+      return {
+        ...state,
+        song: action.songs[action.id],
+        isPlaying: true
+        // id: action.id - 1
+      };
+    case actionTypes.NEXT_SONG:
+      return {
+        ...state,
+        song: action.songs[action.id],
+        isPlaying: true
+        // id: action.id + 1
       };
     default:
       return state;

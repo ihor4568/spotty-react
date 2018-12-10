@@ -17,9 +17,12 @@ import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 
 import { connect } from "react-redux";
-import { playSong } from "../../store/actionCreators/player";
-import { pauseSong } from "../../store/actionCreators/player";
-import { loadArtistsSongs } from "../../store/actionCreators/songs";
+import {
+  playSong,
+  pauseSong
+  // previousSong
+  // nextSong
+} from "../../store/actionCreators/player";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -61,18 +64,15 @@ class TableLayout extends Component {
     classes: PropTypes.object.isRequired,
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired,
-    loadArtistsSongs: PropTypes.func
+    pauseSong: PropTypes.func.isRequired
+    // previousSong: PropTypes.func.isRequired
+    // nextSong: PropTypes.func.isRequired
   };
 
   state = {
     order: "asc",
     orderBy: "number"
   };
-
-  componentDidMount() {
-    this.props.loadArtistsSongs("artist2");
-  }
 
   createNewSongsArray = arr => {
     return arr.map((item, i) => {
@@ -126,19 +126,37 @@ class TableLayout extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
-  handlePlayPauseButton = data => {
-    if (this.props.player.isPlaying && data.id === this.props.player.song.id) {
-      this.props.pauseSong(data);
+  handlePlayPauseButton = song => {
+    // console.log("song.id", song.id);
+    // console.log("song", song.number);
+    // console.log("songs", this.props.songs.length);
+    // console.log("MySong!!!", song);
+    // console.log("MySong!!!song", this.props.player.song.id);
+    if (this.props.player.isPlaying && song.id === this.props.player.song.id) {
+      this.props.pauseSong(this.props.songs, song.number - 1);
     } else {
-      this.props.playSong(data);
+      this.props.playSong(this.props.songs, song.number - 1);
     }
+
+    // if (this.props.player.control === "next") {
+    //   if (song.number === this.props.songs.length) {
+    //     this.props.playSong(this.props.songs[0]);
+    //   } else {
+    //     this.props.playSong(this.props.songs[song.number]);
+    //   }
+    // }
+
+    // this.props.player.control === "previous" &&
+    //   (song.number === 1
+    //     ? this.props.playSong(this.props.songs[this.props.songs.length - 1])
+    //     : this.props.playSong(this.props.songs[song.number - 2]));
   };
 
-  getButtonIcon = data => {
+  getButtonIcon = song => {
     const { classes } = this.props;
-    const { isPlaying, song } = this.props.player;
+    const { isPlaying } = this.props.player;
 
-    if (isPlaying && data.id === song.id) {
+    if (isPlaying && song.id === this.props.player.song.id) {
       return <Pause className={classes.icon} />;
     } else {
       return <PlayArrow className={classes.icon} />;
@@ -229,7 +247,7 @@ class TableLayout extends Component {
                 {this.stableSort(
                   this.createNewSongsArray(songs),
                   this.getSorting(order, orderBy)
-                ).map((data, i) => {
+                ).map((song, i) => {
                   return (
                     <TableRow hover key={i}>
                       <TableCell
@@ -241,39 +259,39 @@ class TableLayout extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            this.handlePlayPauseButton(data);
+                            this.handlePlayPauseButton(song);
                           }}
                         >
-                          {this.getButtonIcon(data)}
+                          {this.getButtonIcon(song)}
                         </Button>
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        {data.number}
+                        {song.number}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
                         <img
-                          src={data.image}
+                          src={song.image}
                           alt="album"
                           className={classes.image}
                         />
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.name}
+                        {song.name}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        {data.duration}
+                        {song.duration}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.artists}
+                        {song.artists}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.album}
+                        {song.album}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
@@ -301,8 +319,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = {
   playSong,
-  pauseSong,
-  loadArtistsSongs
+  pauseSong
+  // previousSong
+  // nextSong
 };
 
 export default connect(

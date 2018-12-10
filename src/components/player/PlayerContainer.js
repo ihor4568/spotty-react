@@ -10,7 +10,11 @@ import PropTypes from "prop-types";
 import Player from "./Player";
 
 import { connect } from "react-redux";
-import { pauseSong, playSong } from "../../store/actionCreators/player";
+import {
+  pauseSong,
+  playSong
+  // previousSong,nextSong
+} from "../../store/actionCreators/player";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -32,6 +36,8 @@ export class PlayerContainer extends Component {
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired
+    // previousSong: PropTypes.func.isRequired,
+    // nextSong: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -60,11 +66,33 @@ export class PlayerContainer extends Component {
 
   handleChangePlayingState = () => {
     if (this.props.player.isPlaying) {
-      this.props.pauseSong(this.props.player.song);
+      this.props.pauseSong(this.props.player.songs, this.props.player.id);
     } else {
-      this.props.playSong(this.props.player.song);
+      this.props.playSong(this.props.player.songs, this.props.player.id);
     }
     this.setPlayingState();
+  };
+
+  handlePreviousSong = () => {
+    this.props.pauseSong(this.props.player.songs, this.props.player.id);
+    this.setPlayingState();
+    // this.props.previousSong(this.props.player.songs, this.props.player.id);
+    if (this.props.player.id === 1) {
+      this.props.playSong(this.props.player.songs, this.props.songs.length - 1);
+    } else {
+      this.props.playSong(this.props.player.songs, this.props.player.id - 2);
+    }
+  };
+
+  handleNextSong = () => {
+    this.props.pauseSong(this.props.player.songs, this.props.player.id);
+    this.setPlayingState();
+    // this.props.nextSong(this.props.player.song, this.props.player.id);
+    if (this.props.player.id === this.props.songs.length) {
+      this.props.playSong(this.props.player.songs, 0);
+    } else {
+      this.props.playSong(this.props.player.songs, this.props.player.id);
+    }
   };
 
   handleChangeProgress = (event, value) => {
@@ -147,6 +175,8 @@ export class PlayerContainer extends Component {
         <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
           onPlay={this.handleChangePlayingState}
+          onPreviousClick={this.handlePreviousSong}
+          onNextClick={this.handleNextSong}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}
@@ -173,6 +203,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   playSong,
   pauseSong
+  // previousSong,nextSong
 };
 
 export default connect(

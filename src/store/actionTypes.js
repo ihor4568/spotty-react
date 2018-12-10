@@ -26,3 +26,5 @@ export const FETCH_ALBUM_SONGS_FAIL = "FETCH_ALBUM_SONGS_FAIL";
 
 export const PAUSE_SONG = "PAUSE_SONG";
 export const PLAY_SONG = "PLAY_SONG";
+export const PREVIOUS_SONG = "PREVIOUS_SONG";
+export const NEXT_SONG = "NEXT_SONG";

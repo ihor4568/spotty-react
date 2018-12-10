@@ -1,15 +1,19 @@
 import React, { Component } from "react";
+
 import Title from "../shared/Title";
 import TableLayout from "../shared/TableLayout";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loadCachedUserSongs } from "../../store/actionCreators/user";
 
 class MySongs extends Component {
   static propTypes = {
-    userSongs: PropTypes.array.isRequired,
-    auth: PropTypes.object.isRequired,
-    loadCachedUserSongs: PropTypes.func.isRequired
+    userSongs: PropTypes.array,
+    songs: PropTypes.array,
+    auth: PropTypes.object,
+    loadCachedUserSongs: PropTypes.func.isRequired,
+    loadSongs: PropTypes.func
   };
 
   componentDidMount() {
@@ -20,18 +24,16 @@ class MySongs extends Component {
     return (
       <>
         <Title name="My Songs" />
-        <TableLayout songs={this.props.userSongs} />
+        <TableLayout songs={this.props.songs} />
       </>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-    userSongs: state.userSongs
-  };
-}
+const mapStateToProps = ({ auth, userSongs }) => ({
+  auth,
+  songs: userSongs
+});
 
 const mapDispatchToProps = {
   loadCachedUserSongs

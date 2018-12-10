@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 
 import artistsReducer from "./reducers/artists";
@@ -8,6 +8,10 @@ import authReducer from "./reducers/auth";
 import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
 import playerReducer from "./reducers/player";
+
+const logger = createLogger({
+  collapsed: true
+});
 
 const rootReducer = combineReducers({
   albums: albumsReducer,

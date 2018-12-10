@@ -1,11 +1,7 @@
-/* eslint-disable no-undef,import/named */
-
 import faker from "faker";
 
 import {
   data as expectedResult,
-  // eslint-disable-next-line
-  snapshot,
   FirebaseService
 } from "../services/FirebaseService";
 

@@ -1,5 +1,3 @@
-/* eslint-disable no-undef,import/named */
-
 export const data = {
   name: "noname",
   songs: ["song"]

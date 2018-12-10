@@ -17,26 +17,10 @@ export function setUserTheme(themeType) {
       await ThemeService.setTheme(userId, themeType);
       dispatch({
         type: actionTypes.SET_USER_THEME_SUCCESS,
-        payload: themeType
+        theme: themeType
       });
     } catch (error) {
       dispatch({ type: actionTypes.SET_USER_THEME_FAIL });
-    }
-  };
-}
-
-export function fetchUserTheme() {
-  return async (dispatch, getState) => {
-    try {
-      const userId = getUserId(getState);
-      dispatch({ type: actionTypes.FETCH_USER_THEME_START });
-      const themeType = await ThemeService.getTheme(userId);
-      dispatch({
-        type: actionTypes.FETCH_USER_THEME_SUCCESS,
-        payload: themeType
-      });
-    } catch (error) {
-      dispatch({ type: actionTypes.FETCH_USER_THEME_FAIL, error });
     }
   };
 }

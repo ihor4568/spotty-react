@@ -15,8 +15,7 @@ import NotFound from "./notFound/NotFound";
 import Auth from "./auth/Auth";
 
 import { connect } from "react-redux";
-import { fetchUser } from "../store/actionCreators/auth";
-import { fetchUserTheme } from "../store/actionCreators/themes";
+import { fetchUserAndTheme } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
 
@@ -29,19 +28,12 @@ const styles = () => ({
 export class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    fetchUser: PropTypes.func.isRequired,
-    fetchUserTheme: PropTypes.func.isRequired,
+    fetchUserAndTheme: PropTypes.func.isRequired,
     user: PropTypes.object
   };
 
   componentDidMount() {
-    this.props.fetchUser();
-  }
-
-  componentDidUpdate(prevProps): void {
-    if (this.props.user && prevProps.user !== this.props.user) {
-      this.props.fetchUserTheme();
-    }
+    this.props.fetchUserAndTheme();
   }
 
   render() {
@@ -76,8 +68,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  fetchUser,
-  fetchUserTheme
+  fetchUserAndTheme
 };
 
 export const ThemedApp = withStyles(styles)(App);

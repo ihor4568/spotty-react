@@ -5,9 +5,18 @@ import {
   InputLabel,
   FormControl,
   Button,
-  withStyles
+  withStyles,
+  Avatar
 } from "@material-ui/core";
+import { AccountCircle, PhotoCamera } from "@material-ui/icons";
+import FileUploader from "react-firebase-file-uploader";
+import { FirebaseService } from "../../services/FirebaseService";
 import Error from "./Error";
+import { connect } from "react-redux";
+import {
+  disableSignUpButton,
+  uploadAvatarToStorage
+} from "../../store/actionCreators/avatar";
 
 const styles = theme => ({
   button: {
@@ -23,6 +32,17 @@ const styles = theme => ({
     "&:after": {
       borderBottomColor: theme.palette.primary.main
     }
+  },
+  avatarContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: "1rem"
+  },
+  avatarImage: {
+    maxWidth: "3rem",
+    maxHeight: "3rem",
+    borderRadius: "50%"
   }
 });
 
@@ -31,7 +51,10 @@ class SignUp extends Component {
     classes: PropTypes.object,
     onSubmit: PropTypes.func.isRequired,
     onError: PropTypes.func.isRequired,
-    errorText: PropTypes.string
+    errorText: PropTypes.string,
+    avatar: PropTypes.object,
+    disableSignUpButton: PropTypes.func,
+    uploadAvatarToStorage: PropTypes.func
   };
 
   state = {
@@ -50,7 +73,10 @@ class SignUp extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.password === this.state.confirmPassword) {
-      this.props.onSubmit(this.state);
+      this.props.onSubmit({
+        ...this.state,
+        avatarURL: this.props.avatar.avatarURL
+      });
     } else {
       this.props.onError("Passwords do not match");
     }
@@ -143,8 +169,33 @@ class SignUp extends Component {
             }}
           />
         </FormControl>
+        <div className={classes.avatarContainer}>
+          <Button variant="contained" component="label">
+            Add Your photo
+            <FileUploader
+              hidden
+              accept="image/*"
+              name="avatar"
+              filename={email.replace(/[^A-Za-zА_]/g, "") + "-avatar"}
+              storageRef={FirebaseService.storage().ref("images/avatars")}
+              onUploadStart={this.props.disableSignUpButton}
+              onUploadSuccess={this.props.uploadAvatarToStorage}
+            />
+            <PhotoCamera />
+          </Button>
+          {this.props.avatar.avatarURL ? (
+            <Avatar
+              src={this.props.avatar.avatarURL}
+              className={classes.avatarImage}
+              alt="user-avatar"
+            />
+          ) : (
+            <AccountCircle />
+          )}
+        </div>
         <Button
           type="submit"
+          disabled={!this.props.avatar.canSubmit}
           fullWidth
           variant="contained"
           color="primary"
@@ -158,4 +209,18 @@ class SignUp extends Component {
   }
 }
 
-export default withStyles(styles)(SignUp);
+function mapStateToProps(state) {
+  return {
+    avatar: state.avatar
+  };
+}
+
+const mapDispatchToProps = {
+  disableSignUpButton,
+  uploadAvatarToStorage
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(SignUp));

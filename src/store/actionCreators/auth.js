@@ -14,11 +14,11 @@ export function signIn({ email, password }) {
   };
 }
 
-export function signUp({ email, password, name }) {
+export function signUp({ email, password, name, avatarURL }) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.USER_FETCH_START });
-      await AuthService.signUp(email, password, name);
+      await AuthService.signUp(email, password, name, avatarURL);
       const user = await AuthService.check();
       dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user });
     } catch (e) {

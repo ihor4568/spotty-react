@@ -70,6 +70,23 @@ class TableLayout extends Component {
     orderBy: "number"
   };
 
+  getItems(data) {
+    return [
+      {
+        name: "Legal info",
+        handler: () => {}
+      },
+      { name: "Remove from my songs", handler: () => {} },
+      { name: "Share", handler: this.handleShare.bind(this, data.id) }
+    ];
+  }
+
+  handleShare = songId => {
+    if (songId) {
+      window.open(`/songs/${songId}`);
+    }
+  };
+
   createNewSongsArray = arr => {
     return arr.map((item, i) => {
       return {
@@ -279,7 +296,7 @@ class TableLayout extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu />
+                        <DotsMenu items={this.getItems(data)} />
                       </TableCell>
                     </TableRow>
                   );

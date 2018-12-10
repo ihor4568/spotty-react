@@ -12,6 +12,11 @@ exports[`App component should render correctly 1`] = `
           exact={true}
           path="/login"
         />
+        <public-route
+          component="share-view"
+          exact={true}
+          path="/songs/:id"
+        />
         <router-redirect
           exact={true}
           from="/"

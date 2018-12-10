@@ -119,6 +119,7 @@ const Player = ({
   onMute,
   onChangeProgressStart,
   onChangeProgressEnd,
+  items,
   player
 }) => (
   <div
@@ -193,7 +194,7 @@ const Player = ({
         <StarsRating />
       </div>
       <div className={classes.threeDotMenu}>
-        <DotsMenu />
+        <DotsMenu items={items} />
       </div>
     </div>
   </div>
@@ -211,6 +212,7 @@ Player.propTypes = {
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired,
+  items: PropTypes.array.isRequired,
   player: PropTypes.object.isRequired
 };
 

@@ -38,7 +38,6 @@ class ArtistTable extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     artists: PropTypes.array.isRequired,
-    songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     loadArtistsSongs: PropTypes.func,
     loadCachedArtists: PropTypes.func
@@ -74,7 +73,7 @@ class ArtistTable extends Component {
                     {artist.artistName}
                   </Typography>
                 </div>
-                <TableLayout songs={this.props.songs} />
+                <TableLayout />
               </div>
             )
         )}
@@ -83,12 +82,9 @@ class ArtistTable extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    artists: state.artists,
-    songs: state.songs
-  };
-}
+const mapStateToProps = ({ artists }) => ({
+  artists
+});
 
 const mapDispatchToProps = {
   loadArtistsSongs,

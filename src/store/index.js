@@ -10,6 +10,7 @@ import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
 import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
+import searchReducer from "./reducers/search";
 
 const rootReducer = combineReducers({
   avatar: avatarReducer,
@@ -19,7 +20,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   sharedSong: sharedSongReducer,
   theme: themeReducer,
-  songs: songsReducer
+  songs: songsReducer,
+  search: searchReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

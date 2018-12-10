@@ -81,10 +81,6 @@ class TableLayout extends Component {
     ];
   }
 
-  componentDidMount() {
-    this.props.loadArtistsSongs("artist2");
-  }
-
   handleShare = songId => {
     if (songId) {
       window.open(`/songs/${songId}`);
@@ -165,6 +161,11 @@ class TableLayout extends Component {
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy } = this.state;
+
+    if (songs.length === 0) {
+      return null;
+    }
+
     return (
       <>
         <Paper className={classes.root}>
@@ -309,12 +310,14 @@ class TableLayout extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    songs: state.songs,
-    player: state.player
-  };
-}
+const mapStateToProps = ({ player, songs, search }) => ({
+  player,
+  songs: songs.filter(song => {
+    const songName = song.name.toLowerCase();
+
+    return songName.indexOf(search.toLowerCase()) !== -1;
+  })
+});
 
 const mapDispatchToProps = {
   playSong,

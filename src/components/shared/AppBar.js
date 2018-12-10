@@ -17,9 +17,11 @@ import {
   Brightness1Outlined,
   Brightness1
 } from "@material-ui/icons";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setUserTheme } from "../../store/actionCreators/themes";
+import { addSearchQuery } from "../../store/actionCreators/search";
 
 const styles = theme => ({
   appBar: {
@@ -112,7 +114,9 @@ class AppBarComponent extends Component {
     setUserTheme: PropTypes.func,
     theme: PropTypes.object,
     palette: PropTypes.object,
-    isLoggedIn: PropTypes.bool.isRequired
+    isLoggedIn: PropTypes.bool.isRequired,
+    addSearchQuery: PropTypes.func,
+    searchQuery: PropTypes.string
   };
 
   static defaultProps = {
@@ -129,8 +133,12 @@ class AppBarComponent extends Component {
     this.props.setUserTheme(nextThemeType);
   };
 
+  handleSearchChange = e => {
+    this.props.addSearchQuery(e.target.value);
+  };
+
   render() {
-    const { classes, enabled } = this.props;
+    const { classes, enabled, searchQuery } = this.props;
 
     const themeSwitcher = (
       <IconButton
@@ -181,6 +189,8 @@ class AppBarComponent extends Component {
               </div>
               <InputBase
                 placeholder="Search…"
+                value={searchQuery}
+                onChange={this.handleSearchChange}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput
@@ -207,14 +217,14 @@ class AppBarComponent extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    isLoggedIn: state.auth.isLoggedIn
-  };
-}
+const mapStateToProps = ({ auth, search }) => ({
+  isLoggedIn: auth.isLoggedIn,
+  searchQuery: search
+});
 
 const mapDispatchToProps = {
-  setUserTheme: setUserTheme
+  setUserTheme,
+  addSearchQuery
 };
 
 export default connect(

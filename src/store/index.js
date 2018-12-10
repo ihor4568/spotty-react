@@ -9,9 +9,11 @@ import sharedSongReducer from "./reducers/shareView";
 import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
 import userSongsReducer from "./reducers/user";
+import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
 
 const rootReducer = combineReducers({
+  avatar: avatarReducer,
   albums: albumsReducer,
   artists: artistsReducer,
   player: playerReducer,

@@ -97,11 +97,13 @@ class Artists extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    artists: state.artists
-  };
-}
+const mapStateToProps = ({ artists, search }) => ({
+  artists: artists.filter(artist => {
+    const artistName = artist.artistName.toLowerCase();
+
+    return artistName.indexOf(search.toLowerCase()) !== -1;
+  })
+});
 
 const mapDispatchToProps = {
   loadCachedArtists

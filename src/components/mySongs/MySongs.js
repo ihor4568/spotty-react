@@ -1,14 +1,15 @@
 import React, { Component } from "react";
+
 import Title from "../shared/Title";
 import TableLayout from "../shared/TableLayout";
+
 import PropTypes from "prop-types";
 import { loadSongs } from "../../store/actionCreators/songs";
 import { connect } from "react-redux";
 
 class MySongs extends Component {
   static propTypes = {
-    loadSongs: PropTypes.func,
-    songs: PropTypes.array.isRequired
+    loadSongs: PropTypes.func
   };
 
   componentDidMount() {
@@ -19,16 +20,10 @@ class MySongs extends Component {
     return (
       <>
         <Title name="My Songs" />
-        <TableLayout songs={this.props.songs} />
+        <TableLayout />
       </>
     );
   }
-}
-
-function mapStateToProps(state) {
-  return {
-    songs: state.songs
-  };
 }
 
 const mapDispatchToProps = {
@@ -36,6 +31,6 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(MySongs);

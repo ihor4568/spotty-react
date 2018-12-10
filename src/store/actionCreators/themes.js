@@ -1,20 +1,13 @@
 import * as actionTypes from "../actionTypes";
 import { ThemeService } from "../../services/ThemeService";
-
-const getUserId = getState => {
-  const {
-    auth: { user }
-  } = getState();
-
-  return user ? user.uid : null;
-};
+import { AuthService } from "../../services/AuthService";
 
 export function setUserTheme(themeType) {
-  return async (dispatch, getState) => {
+  return async dispatch => {
     try {
-      const userId = getUserId(getState);
       dispatch({ type: actionTypes.SET_USER_THEME_START });
-      await ThemeService.setTheme(userId, themeType);
+      const user = await AuthService.check();
+      await ThemeService.setTheme(user.uid, themeType);
       dispatch({
         type: actionTypes.SET_USER_THEME_SUCCESS,
         theme: themeType

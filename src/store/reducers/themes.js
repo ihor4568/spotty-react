@@ -16,12 +16,12 @@ export default function themeReducer(state = initialState, action) {
         ...state,
         type: action.theme
       };
-    case actionTypes.SET_DEFAULT_THEME:
+    case actionTypes.FETCH_USER_AND_THEME_FAIL:
       return {
         ...state,
         type: "light"
       };
-    case actionTypes.FETCH_USER_AND_THEME_FAIL:
+    case actionTypes.SET_DEFAULT_THEME:
       return {
         ...state,
         type: "light"

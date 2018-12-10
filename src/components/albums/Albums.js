@@ -15,6 +15,8 @@ import Title from "../shared/Title";
 import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
 
+import Loader from "../shared/Loader";
+
 const styles = {
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
@@ -54,6 +56,7 @@ class Albums extends Component {
 
     return (
       <>
+        <Loader />
         <Title name="Albums" />
         <Grid container spacing={32} className={classes.container}>
           {this.props.albums.map((album, i) => (

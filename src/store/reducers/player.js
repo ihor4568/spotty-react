@@ -2,8 +2,8 @@ import * as actionTypes from "../actionTypes";
 
 export const INITIAL_STATE = {
   isPlaying: false,
-  song: {},
-  id: null
+  song: {}
+  // id: null
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {

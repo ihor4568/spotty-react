@@ -74,25 +74,25 @@ export class PlayerContainer extends Component {
   };
 
   handlePreviousSong = () => {
-    this.props.pauseSong(this.props.player.songs, this.props.player.id);
-    this.setPlayingState();
-    // this.props.previousSong(this.props.player.songs, this.props.player.id);
-    if (this.props.player.id === 1) {
-      this.props.playSong(this.props.player.songs, this.props.songs.length - 1);
-    } else {
-      this.props.playSong(this.props.player.songs, this.props.player.id - 2);
-    }
+    // this.props.pauseSong(this.props.player.songs, this.props.player.id);
+    // this.setPlayingState();
+    // // this.props.previousSong(this.props.player.songs, this.props.player.id);
+    // if (this.props.player.id === 1) {
+    //   this.props.playSong(this.props.player.songs, this.props.songs.length - 1);
+    // } else {
+    //   this.props.playSong(this.props.player.songs, this.props.player.id - 2);
+    // }
   };
 
   handleNextSong = () => {
-    this.props.pauseSong(this.props.player.songs, this.props.player.id);
-    this.setPlayingState();
-    // this.props.nextSong(this.props.player.song, this.props.player.id);
-    if (this.props.player.id === this.props.songs.length) {
-      this.props.playSong(this.props.player.songs, 0);
-    } else {
-      this.props.playSong(this.props.player.songs, this.props.player.id);
-    }
+    // this.props.pauseSong(this.props.player.songs, this.props.player.id);
+    // this.setPlayingState();
+    // // this.props.nextSong(this.props.player.song, this.props.player.id);
+    // if (this.props.player.id === this.props.songs.length) {
+    //   this.props.playSong(this.props.player.songs, 0);
+    // } else {
+    //   this.props.playSong(this.props.player.songs, this.props.player.id);
+    // }
   };
 
   handleChangeProgress = (event, value) => {

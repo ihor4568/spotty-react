@@ -21,8 +21,7 @@ jest.mock("../../services/FirebaseService");
 
 describe("App component", () => {
   const props = {
-    fetchUser: jest.fn(),
-    fetchUserTheme: jest.fn()
+    fetchUserAndTheme: jest.fn()
   };
 
   it("should render correctly", () => {
@@ -32,6 +31,6 @@ describe("App component", () => {
   });
 
   it("should load initial data after mount", () => {
-    expect(props.fetchUser).toHaveBeenCalled();
+    expect(props.fetchUserAndTheme).toHaveBeenCalled();
   });
 });

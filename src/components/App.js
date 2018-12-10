@@ -29,8 +29,7 @@ const styles = () => ({
 export class App extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
-    fetchUserAndTheme: PropTypes.func.isRequired,
-    user: PropTypes.object
+    fetchUserAndTheme: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -63,18 +62,12 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.auth.user
-  };
-};
-
 const mapDispatchToProps = {
   fetchUserAndTheme
 };
 
 export const ThemedApp = withStyles(styles)(App);
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(ThemedApp);

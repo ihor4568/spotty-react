@@ -12,7 +12,7 @@ export function signIn({ email, password }) {
       dispatch({
         type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
         user: userInfo.user,
-        theme: themeType
+        themeType
       });
     } catch (e) {
       dispatch(authError(e.message));
@@ -30,7 +30,7 @@ export function signUp({ email, password, name, avatarURL }) {
       dispatch({
         type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
         user,
-        theme: themeType
+        themeType
       });
     } catch (e) {
       dispatch(authError(e.message));
@@ -59,7 +59,7 @@ export function fetchUserAndTheme() {
       dispatch({
         type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
         user,
-        theme: themeType
+        themeType
       });
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_USER_AND_THEME_FAIL });

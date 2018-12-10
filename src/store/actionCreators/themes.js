@@ -10,7 +10,7 @@ export function setUserTheme(themeType) {
       await ThemeService.setTheme(user.uid, themeType);
       dispatch({
         type: actionTypes.SET_USER_THEME_SUCCESS,
-        theme: themeType
+        themeType
       });
     } catch (error) {
       dispatch({ type: actionTypes.SET_USER_THEME_FAIL });

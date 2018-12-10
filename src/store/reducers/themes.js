@@ -1,7 +1,7 @@
 import * as actionTypes from "../actionTypes";
 
 const initialState = {
-  type: "light"
+  themeType: "light"
 };
 
 export default function themeReducer(state = initialState, action) {
@@ -9,22 +9,22 @@ export default function themeReducer(state = initialState, action) {
     case actionTypes.SET_USER_THEME_SUCCESS:
       return {
         ...state,
-        type: action.theme
+        themeType: action.themeType
       };
     case actionTypes.FETCH_USER_AND_THEME_SUCCESS:
       return {
         ...state,
-        type: action.theme
+        themeType: action.themeType
       };
     case actionTypes.FETCH_USER_AND_THEME_FAIL:
       return {
         ...state,
-        type: "light"
+        themeType: "light"
       };
     case actionTypes.SET_DEFAULT_THEME:
       return {
         ...state,
-        type: "light"
+        themeType: "light"
       };
     default:
       return state;

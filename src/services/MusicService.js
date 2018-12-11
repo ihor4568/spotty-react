@@ -41,12 +41,7 @@ export class MusicService {
       .once("value")
       .then(album =>
         Promise.all(
-          album.val().songs.map(songId =>
-            database
-              .ref(`songs/${songId}`)
-              .once("value")
-              .then(song => song.val())
-          )
+          album.val().songs.map(songId => MusicService.getSong(songId))
         )
       );
   }
@@ -57,7 +52,7 @@ export class MusicService {
       .once("value")
       .then(data => data.val() || [])
       .then(songs =>
-        Promise.all(songs.map(songId => MusicService.getSongById(songId)))
+        Promise.all(songs.map(songId => MusicService.getSong(songId)))
       );
   }
 
@@ -85,12 +80,5 @@ export class MusicService {
         const filteredSongs = songs.filter(song => song !== songId);
         return database.ref(`users/${userId}/songs`).set(filteredSongs);
       });
-  }
-
-  static getSongById(songId) {
-    return database
-      .ref(`songs/${songId}`)
-      .once("value")
-      .then(song => song.val());
   }
 }

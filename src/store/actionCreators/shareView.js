@@ -5,7 +5,7 @@ export function getSong(id) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.GET_SONG_START });
-      const song = await MusicService.getSong(id);
+      const song = await MusicService.getSongById(id);
       dispatch(addSong(song));
     } catch (e) {
       dispatch({ type: actionTypes.GET_SONG_FAIL });

@@ -10,13 +10,6 @@ export class MusicService {
       .then(albums => albums.val());
   }
 
-  static getSong(songId) {
-    return database
-      .ref(`songs/${songId}`)
-      .once("value")
-      .then(song => song.val());
-  }
-
   static getAllArtists() {
     return database
       .ref("artists")

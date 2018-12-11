@@ -11,7 +11,10 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
-import { addUserSong, removeUserSong } from "../../store/actionCreators/user";
+import {
+  addUserSong,
+  removeUserSong
+} from "../../store/actionCreators/userSongs";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -29,13 +32,13 @@ export class PlayerContainer extends Component {
   };
 
   static propTypes = {
-    userSongs: PropTypes.array.isRequired,
-    auth: PropTypes.object.isRequired,
-    player: PropTypes.object.isRequired,
-    playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired,
-    addUserSong: PropTypes.func.isRequired,
-    removeUserSong: PropTypes.func.isRequired
+    userSongs: PropTypes.array,
+    auth: PropTypes.object,
+    player: PropTypes.object,
+    playSong: PropTypes.func,
+    pauseSong: PropTypes.func,
+    addUserSong: PropTypes.func,
+    removeUserSong: PropTypes.func
   };
 
   getItems() {

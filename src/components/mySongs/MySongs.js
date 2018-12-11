@@ -5,15 +5,15 @@ import TableLayout from "../shared/TableLayout";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loadCachedUserSongs } from "../../store/actionCreators/user";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 
 class MySongs extends Component {
   static propTypes = {
     userSongs: PropTypes.array,
     songs: PropTypes.array,
     auth: PropTypes.object,
-    loadCachedUserSongs: PropTypes.func.isRequired,
-    loadSongs: PropTypes.func
+    loadSongs: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func
   };
 
   componentDidMount() {

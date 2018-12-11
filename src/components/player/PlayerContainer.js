@@ -34,6 +34,22 @@ export class PlayerContainer extends Component {
     pauseSong: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.items = [
+      { name: "Legal info", handler: () => {} },
+      { name: "Remove from my songs", handler: () => {} },
+      { name: "Share", handler: this.handleShare }
+    ];
+  }
+
+  handleShare = () => {
+    if (this.props.player.song.id) {
+      window.open(`/songs/${this.props.player.song.id}`);
+    }
+  };
+
   componentDidMount() {
     this.addListeners();
   }
@@ -173,6 +189,7 @@ export class PlayerContainer extends Component {
           ref={element => (this.audio = element)}
         />
         <Player
+          items={this.items}
           onPlay={this.handleChangePlayingState}
           onPreviousClick={this.handlePreviousSong}
           onNextClick={this.handleNextSong}

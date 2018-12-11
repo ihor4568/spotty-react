@@ -130,7 +130,7 @@ export class PlayerContainer extends Component {
       this.setState({
         playingProgress: 0
       });
-      this.props.pauseSong(this.props.player.song);
+      this.handleNextSong();
     }
   };
 

@@ -322,7 +322,11 @@ class TableLayout extends Component {
                           <DotsMenuItem onClick={() => {}}>
                             Remove from my songs
                           </DotsMenuItem>
-                          <DotsMenuItem onClick={() => {}}>Share</DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleShare.bind(this, data.id)}
+                          >
+                            Share
+                          </DotsMenuItem>
                         </DotsMenu>
                       </TableCell>
                     </TableRow>

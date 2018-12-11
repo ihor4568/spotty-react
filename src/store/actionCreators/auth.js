@@ -1,26 +1,37 @@
 import * as actionTypes from "../actionTypes";
 
 import { AuthService } from "../../services/AuthService";
+import { ThemeService } from "../../services/ThemeService";
 
 export function signIn({ email, password }) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCH_START });
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_START });
       const userInfo = await AuthService.signIn(email, password);
-      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user: userInfo.user });
+      const themeType = await ThemeService.getTheme(userInfo.user.uid);
+      dispatch({
+        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+        user: userInfo.user,
+        themeType
+      });
     } catch (e) {
       dispatch(authError(e.message));
     }
   };
 }
 
-export function signUp({ email, password, name }) {
+export function signUp({ email, password, name, avatarURL }) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCH_START });
-      await AuthService.signUp(email, password, name);
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_START });
+      await AuthService.signUp(email, password, name, avatarURL);
       const user = await AuthService.check();
-      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user });
+      const themeType = await ThemeService.getTheme(user.uid);
+      dispatch({
+        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+        user,
+        themeType
+      });
     } catch (e) {
       dispatch(authError(e.message));
     }
@@ -30,23 +41,28 @@ export function signUp({ email, password, name }) {
 export function signOut() {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCH_START });
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_START });
       await AuthService.signOut();
       dispatch({ type: actionTypes.SIGN_OUT });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCH_FAIL });
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_FAIL });
     }
   };
 }
 
-export function fetchUser() {
+export function fetchUserAndTheme() {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.USER_FETCH_START });
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_START });
       const user = await AuthService.check();
-      dispatch({ type: actionTypes.USER_FETCH_SUCCESS, user });
+      const themeType = await ThemeService.getTheme(user.uid);
+      dispatch({
+        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+        user,
+        themeType
+      });
     } catch (e) {
-      dispatch({ type: actionTypes.USER_FETCH_FAIL });
+      dispatch({ type: actionTypes.FETCH_USER_AND_THEME_FAIL });
     }
   };
 }

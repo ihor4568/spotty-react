@@ -1,8 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import { IconButton, Menu } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import PropTypes from "prop-types";
 
 export default class DotsMenu extends Component {
   static propTypes = {

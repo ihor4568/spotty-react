@@ -16,6 +16,7 @@ import {
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 import DotsMenuItem from "./DotsMenuItem";
+import LegalDialog from "./LegalDialog";
 
 import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
@@ -23,7 +24,6 @@ import { pauseSong } from "../../store/actionCreators/player";
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 
 import { withStyles } from "@material-ui/core/styles";
-import LegalDialog from "./LegalDialog";
 
 const styles = {
   root: {
@@ -37,6 +37,7 @@ const styles = {
     marginRight: `1rem`
   },
   button: {
+    color: "inherit",
     backgroundColor: `inherit`,
     borderRadius: `.2rem`,
     boxShadow: `none`,
@@ -97,6 +98,12 @@ class TableLayout extends Component {
   componentDidMount() {
     this.props.loadArtistsSongs("artist2");
   }
+
+  handleShare = songId => {
+    if (songId) {
+      window.open(`/songs/${songId}`);
+    }
+  };
 
   createNewSongsArray = arr => {
     return arr.map((item, i) => {
@@ -172,6 +179,10 @@ class TableLayout extends Component {
   render() {
     const { classes, songs } = this.props;
     const { order, orderBy, dialog } = this.state;
+
+    if (songs.length === 0) {
+      return null;
+    }
     return (
       <>
         <Paper className={classes.root}>
@@ -332,12 +343,14 @@ class TableLayout extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    songs: state.songs,
-    player: state.player
-  };
-}
+const mapStateToProps = ({ player, songs, search }) => ({
+  player,
+  songs: songs.filter(song => {
+    const songName = song.name.toLowerCase();
+
+    return songName.indexOf(search.toLowerCase()) !== -1;
+  })
+});
 
 const mapDispatchToProps = {
   playSong,

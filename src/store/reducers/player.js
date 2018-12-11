@@ -3,7 +3,7 @@ import * as actionTypes from "../actionTypes";
 export const INITIAL_STATE = {
   isPlaying: false,
   song: {},
-  id: null
+  number: null
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {
@@ -13,14 +13,14 @@ export default function playerReducer(state = INITIAL_STATE, action) {
         ...state,
         song: action.song,
         isPlaying: true,
-        id: action.id
+        number: action.number
       };
     case actionTypes.PAUSE_SONG:
       return {
         ...state,
         song: action.song,
         isPlaying: false,
-        id: action.id
+        number: action.number
       };
     default:
       return state;

@@ -76,37 +76,39 @@ export class PlayerContainer extends Component {
 
   handleChangePlayingState = () => {
     const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, id } = this.props.player;
+    const { isPlaying, number } = this.props.player;
 
-    isPlaying ? pauseSong(songs[id], id) : playSong(songs[id], id);
-
-    this.setPlayingState();
+    if (isPlaying) {
+      pauseSong(songs[number], number);
+    } else {
+      playSong(songs[number], number);
+    }
   };
 
   handlePreviousSong = () => {
     const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, id } = this.props.player;
+    const { isPlaying, number } = this.props.player;
 
-    isPlaying && pauseSong(songs[id], id);
+    if (isPlaying) {
+      pauseSong(songs[number], number);
+    }
 
-    id === 0
+    number === 0
       ? playSong(songs[songs.length - 1], songs.length - 1)
-      : playSong(songs[id - 1], id - 1);
-
-    this.setPlayingState();
+      : playSong(songs[number - 1], number - 1);
   };
 
   handleNextSong = () => {
     const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, id } = this.props.player;
+    const { isPlaying, number } = this.props.player;
 
-    isPlaying && pauseSong(songs[id], id);
+    if (isPlaying) {
+      pauseSong(songs[number], number);
+    }
 
-    id + 1 === songs.length
+    number + 1 === songs.length
       ? playSong(songs[0], 0)
-      : playSong(songs[id + 1], id + 1);
-
-    this.setPlayingState();
+      : playSong(songs[number + 1], number + 1);
   };
 
   handleChangeProgress = (event, value) => {

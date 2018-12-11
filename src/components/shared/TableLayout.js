@@ -17,12 +17,7 @@ import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
 
 import { connect } from "react-redux";
-import {
-  playSong,
-  pauseSong
-  // previousSong
-  // nextSong
-} from "../../store/actionCreators/player";
+import { playSong, pauseSong } from "../../store/actionCreators/player";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -65,8 +60,6 @@ class TableLayout extends Component {
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired
-    // previousSong: PropTypes.func.isRequired
-    // nextSong: PropTypes.func.isRequired
   };
 
   state = {
@@ -126,31 +119,17 @@ class TableLayout extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
-  handlePlayPauseButton = song => {
+  handlePlayPauseButton = (song, tableSong) => {
     if (this.props.player.isPlaying && song.id === this.props.player.song.id) {
-      this.props.pauseSong(this.props.songs, song.number - 1);
+      this.props.pauseSong(song, tableSong.number - 1);
     } else {
-      this.props.playSong(this.props.songs, song.number - 1);
+      this.props.playSong(song, tableSong.number - 1);
     }
-
-    // if (this.props.player.control === "next") {
-    //   if (song.number === this.props.songs.length) {
-    //     this.props.playSong(this.props.songs[0]);
-    //   } else {
-    //     this.props.playSong(this.props.songs[song.number]);
-    //   }
-    // }
-
-    // this.props.player.control === "previous" &&
-    //   (song.number === 1
-    //     ? this.props.playSong(this.props.songs[this.props.songs.length - 1])
-    //     : this.props.playSong(this.props.songs[song.number - 2]));
   };
 
   getButtonIcon = song => {
     const { classes } = this.props;
     const { isPlaying } = this.props.player;
-
     if (isPlaying && song.id === this.props.player.song.id) {
       return <Pause className={classes.icon} />;
     } else {
@@ -254,7 +233,7 @@ class TableLayout extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            this.handlePlayPauseButton(song);
+                            this.handlePlayPauseButton(songs[i], song);
                           }}
                         >
                           {this.getButtonIcon(song)}
@@ -315,8 +294,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   playSong,
   pauseSong
-  // previousSong
-  // nextSong
 };
 
 export default connect(

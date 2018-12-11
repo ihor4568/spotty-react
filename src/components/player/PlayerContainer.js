@@ -10,11 +10,7 @@ import PropTypes from "prop-types";
 import Player from "./Player";
 
 import { connect } from "react-redux";
-import {
-  pauseSong,
-  playSong
-  // previousSong,nextSong
-} from "../../store/actionCreators/player";
+import { pauseSong, playSong } from "../../store/actionCreators/player";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -36,8 +32,6 @@ export class PlayerContainer extends Component {
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired
-    // previousSong: PropTypes.func.isRequired,
-    // nextSong: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -65,34 +59,38 @@ export class PlayerContainer extends Component {
   };
 
   handleChangePlayingState = () => {
-    if (this.props.player.isPlaying) {
-      this.props.pauseSong(this.props.player.songs, this.props.player.id);
-    } else {
-      this.props.playSong(this.props.player.songs, this.props.player.id);
-    }
+    const { songs, pauseSong, playSong } = this.props;
+    const { isPlaying, id } = this.props.player;
+
+    isPlaying ? pauseSong(songs[id], id) : playSong(songs[id], id);
+
     this.setPlayingState();
   };
 
   handlePreviousSong = () => {
-    // this.props.pauseSong(this.props.player.songs, this.props.player.id);
-    // this.setPlayingState();
-    // // this.props.previousSong(this.props.player.songs, this.props.player.id);
-    // if (this.props.player.id === 1) {
-    //   this.props.playSong(this.props.player.songs, this.props.songs.length - 1);
-    // } else {
-    //   this.props.playSong(this.props.player.songs, this.props.player.id - 2);
-    // }
+    const { songs, pauseSong, playSong } = this.props;
+    const { isPlaying, id } = this.props.player;
+
+    isPlaying && pauseSong(songs[id], id);
+
+    id === 0
+      ? playSong(songs[songs.length - 1], songs.length - 1)
+      : playSong(songs[id - 1], id - 1);
+
+    this.setPlayingState();
   };
 
   handleNextSong = () => {
-    // this.props.pauseSong(this.props.player.songs, this.props.player.id);
-    // this.setPlayingState();
-    // // this.props.nextSong(this.props.player.song, this.props.player.id);
-    // if (this.props.player.id === this.props.songs.length) {
-    //   this.props.playSong(this.props.player.songs, 0);
-    // } else {
-    //   this.props.playSong(this.props.player.songs, this.props.player.id);
-    // }
+    const { songs, pauseSong, playSong } = this.props;
+    const { isPlaying, id } = this.props.player;
+
+    isPlaying && pauseSong(songs[id], id);
+
+    id + 1 === songs.length
+      ? playSong(songs[0], 0)
+      : playSong(songs[id + 1], id + 1);
+
+    this.setPlayingState();
   };
 
   handleChangeProgress = (event, value) => {
@@ -116,7 +114,6 @@ export class PlayerContainer extends Component {
       this.audio.pause();
       return;
     }
-
     this.audio.play();
   };
 
@@ -169,10 +166,12 @@ export class PlayerContainer extends Component {
     const { playingProgress, volumeValue, isMuted } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
-
     return (
       <>
-        <audio src={song.songURL} ref={element => (this.audio = element)} />
+        <audio
+          src={song && song.songURL}
+          ref={element => (this.audio = element)}
+        />
         <Player
           onPlay={this.handleChangePlayingState}
           onPreviousClick={this.handlePreviousSong}
@@ -203,7 +202,6 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   playSong,
   pauseSong
-  // previousSong,nextSong
 };
 
 export default connect(

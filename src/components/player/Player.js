@@ -140,14 +140,19 @@ const Player = ({
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
-            <img className={classes.image} src={song.image} alt="album title" />
+            <img
+              className={classes.image}
+              src={song.album && song.album.coverURL}
+              alt="album title"
+            />
           </div>
           <div className={classes.audioInfoText}>
             <Typography variant="h6" className={classes.songInfo}>
               {song.name}
             </Typography>
             <Typography component="h2" className={classes.albumArtistInfo}>
-              {song.album} - {song.artists}
+              {song.album && song.album.name} -{" "}
+              {song.artistsNames && song.artistsNames.join(", ")}
             </Typography>
           </div>
         </div>

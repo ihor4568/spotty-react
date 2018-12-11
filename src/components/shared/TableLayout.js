@@ -21,8 +21,8 @@ import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
 import {
   loadCachedUserSongs,
-  addUserSongs,
-  removeUserSongs
+  addUserSong,
+  removeUserSong
 } from "../../store/actionCreators/user";
 
 import { withStyles } from "@material-ui/core/styles";
@@ -69,8 +69,8 @@ class TableLayout extends Component {
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
     loadCachedUserSongs: PropTypes.func.isRequired,
-    addUserSongs: PropTypes.func.isRequired,
-    removeUserSongs: PropTypes.func.isRequired
+    addUserSong: PropTypes.func.isRequired,
+    removeUserSong: PropTypes.func.isRequired
   };
 
   state = {
@@ -79,14 +79,15 @@ class TableLayout extends Component {
   };
 
   getItems(data) {
+    let checkSongId = this.checkSongId(data.id);
     return [
       {
         name: "Legal info",
         handler: () => {}
       },
       {
-        name: this.handleCheck(data.id),
-        handler: this.handleOperation.bind(this, data.id)
+        name: this.getMenuItemTitle(data.id, checkSongId),
+        handler: this.handleOperation.bind(this, data.id, checkSongId)
       },
       { name: "Share", handler: this.handleShare.bind(this, data.id) }
     ];
@@ -96,26 +97,22 @@ class TableLayout extends Component {
     this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
-  handleCheck = songId => {
-    if (
-      this.props.userSongs.some(elem => {
-        return elem.id === songId;
-      })
-    ) {
+  checkSongId(songId) {
+    return this.props.userSongs.some(elem => elem.id === songId);
+  }
+
+  getMenuItemTitle = (songId, checkSongId) => {
+    if (checkSongId) {
       return "Remove from my songs";
     }
     return "Add to my songs";
   };
 
-  handleOperation = songId => {
-    if (
-      this.props.userSongs.some(elem => {
-        return songId === elem.id;
-      })
-    ) {
-      this.props.removeUserSongs(this.props.auth.user.uid, songId);
+  handleOperation = (songId, checkSongId) => {
+    if (checkSongId) {
+      this.props.removeUserSong(this.props.auth.user.uid, songId);
     } else {
-      this.props.addUserSongs(this.props.auth.user.uid, songId);
+      this.props.addUserSong(this.props.auth.user.uid, songId);
     }
   };
 
@@ -348,13 +345,6 @@ class TableLayout extends Component {
   }
 }
 
-// function mapStateToProps(state) {
-//   return {
-//     player: state.player,
-//     auth: state.auth,
-//     userSongs: state.userSongs
-//   };
-// }
 const mapStateToProps = ({ player, userSongs, auth, search }, { songs }) => ({
   player,
   userSongs,
@@ -369,8 +359,8 @@ const mapDispatchToProps = {
   playSong,
   pauseSong,
   loadCachedUserSongs,
-  addUserSongs,
-  removeUserSongs
+  addUserSong,
+  removeUserSong
 };
 
 export default connect(

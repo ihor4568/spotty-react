@@ -26,34 +26,34 @@ export function loadCachedUserSongs(userId) {
   };
 }
 
-export function addUserSongs(userId, songId) {
+export function addUserSong(userId, songId) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.ADD_USER_SONGS_START });
+      dispatch({ type: actionTypes.ADD_USER_SONG_START });
       await MusicService.setUserSong(userId, songId);
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
-        type: actionTypes.ADD_USER_SONGS_SUCCESS,
+        type: actionTypes.ADD_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
       });
     } catch (e) {
-      dispatch({ type: actionTypes.ADD_USER_SONGS_FAIL });
+      dispatch({ type: actionTypes.ADD_USER_SONG_FAIL });
     }
   };
 }
 
-export function removeUserSongs(userId, songId) {
+export function removeUserSong(userId, songId) {
   return async dispatch => {
     try {
-      dispatch({ type: actionTypes.REMOVE_USER_SONGS_START });
+      dispatch({ type: actionTypes.REMOVE_USER_SONG_START });
       await MusicService.removeUserSong(userId, songId);
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
-        type: actionTypes.REMOVE_USER_SONGS_SUCCESS,
+        type: actionTypes.REMOVE_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
       });
     } catch (e) {
-      dispatch({ type: actionTypes.REMOVE_USER_SONGS_FAIL });
+      dispatch({ type: actionTypes.REMOVE_USER_SONG_FAIL });
     }
   };
 }

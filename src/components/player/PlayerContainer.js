@@ -11,7 +11,7 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
-import { addUserSongs, removeUserSongs } from "../../store/actionCreators/user";
+import { addUserSong, removeUserSong } from "../../store/actionCreators/user";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -34,47 +34,48 @@ export class PlayerContainer extends Component {
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
-    addUserSongs: PropTypes.func.isRequired,
-    removeUserSongs: PropTypes.func.isRequired
+    addUserSong: PropTypes.func.isRequired,
+    removeUserSong: PropTypes.func.isRequired
   };
 
-  getItems = () => {
+  getItems() {
+    let checkSongId = this.checkSongId(this.props.player.song.id);
     return [
       {
         name: "Legal info",
         handler: () => {}
       },
       {
-        name: this.handleCheck(this.props.player.song.id),
-        handler: this.handleOperation.bind(this, this.props.player.song.id)
+        name: this.getMenuItemTitle(this.props.player.song.id, checkSongId),
+        handler: this.handleOperation.bind(
+          this,
+          this.props.player.song.id,
+          checkSongId
+        )
       },
       {
         name: "Share",
         handler: this.handleShare.bind(this, this.props.player.song.id)
       }
     ];
-  };
+  }
 
-  handleCheck = songId => {
-    if (
-      this.props.userSongs.some(elem => {
-        return elem.id === songId;
-      })
-    ) {
+  checkSongId(songId) {
+    return this.props.userSongs.some(elem => elem.id === songId);
+  }
+
+  getMenuItemTitle = (songId, checkSongId) => {
+    if (checkSongId) {
       return "Remove from my songs";
     }
     return "Add to my songs";
   };
 
-  handleOperation = songId => {
-    if (
-      this.props.userSongs.some(elem => {
-        return songId === elem.id;
-      })
-    ) {
-      this.props.removeUserSongs(this.props.auth.user.uid, songId);
+  handleOperation = (songId, checkSongId) => {
+    if (checkSongId) {
+      this.props.removeUserSong(this.props.auth.user.uid, songId);
     } else {
-      this.props.addUserSongs(this.props.auth.user.uid, songId);
+      this.props.addUserSong(this.props.auth.user.uid, songId);
     }
   };
 
@@ -194,7 +195,7 @@ export class PlayerContainer extends Component {
       <>
         <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
-          items={this.getItems.call(this)}
+          items={this.getItems()}
           onPlay={this.handleChangePlayingState}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
@@ -223,8 +224,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = {
   playSong,
   pauseSong,
-  addUserSongs,
-  removeUserSongs
+  addUserSong,
+  removeUserSong
 };
 
 export default connect(

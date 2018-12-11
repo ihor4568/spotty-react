@@ -13,7 +13,7 @@ exports[`App component should render correctly 1`] = `
           path="/login"
         />
         <public-route
-          component={[Function]}
+          component="share-view"
           exact={true}
           path="/songs/:id"
         />

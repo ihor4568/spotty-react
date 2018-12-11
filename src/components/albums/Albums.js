@@ -44,7 +44,8 @@ class Albums extends Component {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
     loadCachedAlbums: PropTypes.func,
-    match: PropTypes.object
+    match: PropTypes.object,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -52,11 +53,14 @@ class Albums extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
 
     return (
       <>
-        <Loader />
         <Title name="Albums" />
         <Grid container spacing={32} className={classes.container}>
           {this.props.albums.map((album, i) => (
@@ -94,7 +98,8 @@ class Albums extends Component {
 
 function mapStateToProps(state) {
   return {
-    albums: state.albums
+    albums: state.albums,
+    loader: state.loader
   };
 }
 

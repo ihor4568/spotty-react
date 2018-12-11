@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 
 import { connect } from "react-redux";
+import Loader from "../shared/Loader";
 
 const styles = {
   artistCard: {
@@ -55,7 +56,8 @@ class Artists extends Component {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     artists: PropTypes.array.isRequired,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -63,7 +65,11 @@ class Artists extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         <Title name="Artists" />
@@ -99,7 +105,8 @@ class Artists extends Component {
 
 function mapStateToProps(state) {
   return {
-    artists: state.artists
+    artists: state.artists,
+    loader: state.loader
   };
 }
 

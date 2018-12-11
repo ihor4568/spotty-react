@@ -7,6 +7,8 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
+import Loader from "../shared/Loader";
+
 const styles = {
   title: {
     textAlign: "center",
@@ -14,6 +16,9 @@ const styles = {
   },
   link: {
     textDecoration: "none"
+  },
+  loader: {
+    color: "red"
   }
 };
 
@@ -23,6 +28,7 @@ function AboutCard({ classes, person }) {
       <Card>
         <CardActionArea>
           <CardContent>
+            <Loader className={classes.loader} />
             <CardMedia
               component="img"
               image={"https://github.com/" + person + ".png?size=400"}

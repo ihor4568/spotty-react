@@ -6,7 +6,7 @@ import { Card, CardMedia, Typography } from "@material-ui/core";
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
 import TableLayout from "../shared/TableLayout";
-
+import Loader from "../shared/Loader";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -38,10 +38,11 @@ class ArtistTable extends Component {
   static propTypes = {
     match: PropTypes.object.isRequired,
     artists: PropTypes.array.isRequired,
-    songs: PropTypes.array.isRequired,
+    songs: PropTypes.array,
     classes: PropTypes.object.isRequired,
     loadArtistsSongs: PropTypes.func,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -50,7 +51,12 @@ class ArtistTable extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         {this.props.artists.map(
@@ -83,12 +89,11 @@ class ArtistTable extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    artists: state.artists,
-    songs: state.songs
-  };
-}
+const mapStateToProps = ({ artists, songs, loader }) => ({
+  artists,
+  songs,
+  loader
+});
 
 const mapDispatchToProps = {
   loadArtistsSongs,

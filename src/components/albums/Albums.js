@@ -14,7 +14,6 @@ import {
 import Title from "../shared/Title";
 import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
-
 import Loader from "../shared/Loader";
 
 const styles = {
@@ -96,12 +95,15 @@ class Albums extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    albums: state.albums,
-    loader: state.loader
-  };
-}
+const mapStateToProps = ({ albums, search, loader }) => ({
+  albums: albums.filter(album => {
+    const albumName = album.albumName.toLowerCase();
+
+    return albumName.indexOf(search.toLowerCase()) !== -1;
+  }),
+
+  loader
+});
 
 const mapDispatchToProps = {
   loadCachedAlbums

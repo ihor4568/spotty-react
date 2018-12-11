@@ -1,8 +1,25 @@
-import { THEME_CHANGE_PALETTE_TYPE } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
+import { ThemeService } from "../../services/ThemeService";
+import { AuthService } from "../../services/AuthService";
 
-export function changeThemeType(payload) {
+export function setUserTheme(themeType) {
+  return async dispatch => {
+    try {
+      dispatch({ type: actionTypes.SET_USER_THEME_START });
+      const user = await AuthService.check();
+      await ThemeService.setTheme(user.uid, themeType);
+      dispatch({
+        type: actionTypes.SET_USER_THEME_SUCCESS,
+        themeType
+      });
+    } catch (error) {
+      dispatch({ type: actionTypes.SET_USER_THEME_FAIL });
+    }
+  };
+}
+
+export function setDefaultTheme() {
   return {
-    type: THEME_CHANGE_PALETTE_TYPE,
-    payload
+    type: actionTypes.SET_DEFAULT_THEME
   };
 }

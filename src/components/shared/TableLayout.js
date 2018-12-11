@@ -39,6 +39,7 @@ const styles = {
     marginRight: `1rem`
   },
   button: {
+    color: "inherit",
     backgroundColor: `inherit`,
     borderRadius: `.2rem`,
     boxShadow: `none`,

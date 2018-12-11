@@ -21,7 +21,7 @@ ThemeProvider.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  type: state.theme.type
+  type: state.theme.themeType
 });
 
 export default connect(mapStateToProps)(ThemeProvider);

@@ -8,8 +8,10 @@ import authReducer from "./reducers/auth";
 import sharedSongReducer from "./reducers/shareView";
 import themeReducer from "./reducers/themes";
 import songsReducer from "./reducers/songs";
+import userSongsReducer from "./reducers/user";
 import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
+import searchReducer from "./reducers/search";
 
 const logger = createLogger({
   collapsed: true
@@ -23,7 +25,9 @@ const rootReducer = combineReducers({
   auth: authReducer,
   sharedSong: sharedSongReducer,
   theme: themeReducer,
-  songs: songsReducer
+  songs: songsReducer,
+  userSongs: userSongsReducer,
+  search: searchReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

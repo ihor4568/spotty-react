@@ -20,10 +20,9 @@ import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
 import {
-  loadCachedUserSongs,
   addUserSong,
   removeUserSong
-} from "../../store/actionCreators/user";
+} from "../../store/actionCreators/userSongs";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -69,7 +68,6 @@ class TableLayout extends Component {
     auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
-    loadCachedUserSongs: PropTypes.func.isRequired,
     addUserSong: PropTypes.func.isRequired,
     removeUserSong: PropTypes.func.isRequired
   };
@@ -92,10 +90,6 @@ class TableLayout extends Component {
       },
       { name: "Share", handler: this.handleShare.bind(this, data.id) }
     ];
-  }
-
-  componentDidMount() {
-    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   checkSongId(songId) {
@@ -359,7 +353,6 @@ const mapStateToProps = ({ player, userSongs, auth, search }, { songs }) => ({
 const mapDispatchToProps = {
   playSong,
   pauseSong,
-  loadCachedUserSongs,
   addUserSong,
   removeUserSong
 };

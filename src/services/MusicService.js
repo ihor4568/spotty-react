@@ -30,12 +30,7 @@ export class MusicService {
       .once("value")
       .then(artist =>
         Promise.all(
-          artist.val().songs.map(songId =>
-            database
-              .ref(`songs/${songId}`)
-              .once("value")
-              .then(song => song.val())
-          )
+          artist.val().songs.map(songId => MusicService.getSong(songId))
         )
       );
   }

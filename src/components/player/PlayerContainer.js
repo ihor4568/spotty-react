@@ -46,28 +46,6 @@ export class PlayerContainer extends Component {
     removeUserSong: PropTypes.func
   };
 
-  getItems() {
-    let checkSongId = this.checkSongId(this.props.player.song.id);
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      {
-        name: this.getMenuItemTitle(this.props.player.song.id, checkSongId),
-        handler: this.handleOperation.bind(
-          this,
-          this.props.player.song.id,
-          checkSongId
-        )
-      },
-      {
-        name: "Share",
-        handler: this.handleShare.bind(this, this.props.player.song.id)
-      }
-    ];
-  }
-
   checkSongId(songId) {
     return this.props.userSongs.some(elem => elem.id === songId);
   }
@@ -216,12 +194,12 @@ export class PlayerContainer extends Component {
     const { playingProgress, volumeValue, isMuted, dialog } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
+    const songId = this.props.player.song.id;
 
     return (
       <>
         <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
-          items={this.getItems()}
           onPlay={this.handleChangePlayingState}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
@@ -234,6 +212,16 @@ export class PlayerContainer extends Component {
           onChangeProgressEnd={this.handleChangeProgressEnd}
           player={this.props.player}
           onDialogOpen={this.handleDialogOpen.bind(this, song)}
+          addRemoveTitle={this.getMenuItemTitle(
+            songId,
+            this.checkSongId(songId)
+          )}
+          onShare={this.handleShare.bind(this, songId)}
+          onAddRemoveSong={this.handleOperation.bind(
+            this,
+            songId,
+            this.checkSongId(songId)
+          )}
         />
         <LegalDialog
           isOpen={dialog.isOpen}

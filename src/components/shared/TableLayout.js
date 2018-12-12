@@ -101,21 +101,6 @@ class TableLayout extends Component {
     });
   };
 
-  getItems(data) {
-    let checkSongId = this.checkSongId(data.id);
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      {
-        name: this.getMenuItemTitle(data.id, checkSongId),
-        handler: this.handleOperation.bind(this, data.id, checkSongId)
-      },
-      { name: "Share", handler: this.handleShare.bind(this, data.id) }
-    ];
-  }
-
   checkSongId(songId) {
     return this.props.userSongs.some(elem => elem.id === songId);
   }
@@ -356,8 +341,17 @@ class TableLayout extends Component {
                           >
                             Legal info
                           </DotsMenuItem>
-                          <DotsMenuItem onClick={() => {}}>
-                            Remove from my songs
+                          <DotsMenuItem
+                            onClick={this.handleOperation.bind(
+                              this,
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
+                          >
+                            {this.getMenuItemTitle(
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
                           </DotsMenuItem>
                           <DotsMenuItem
                             onClick={this.handleShare.bind(this, data.id)}

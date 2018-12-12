@@ -121,7 +121,10 @@ const Player = ({
   onChangeProgressStart,
   onChangeProgressEnd,
   player,
-  onDialogOpen
+  onDialogOpen,
+  onShare,
+  onAddRemoveSong,
+  addRemoveTitle
 }) => (
   <div
     className={
@@ -197,8 +200,10 @@ const Player = ({
       <div className={classes.threeDotMenu}>
         <DotsMenu>
           <DotsMenuItem onClick={onDialogOpen}>Legal info</DotsMenuItem>
-          <DotsMenuItem onClick={() => {}}>Add to my songs</DotsMenuItem>
-          <DotsMenuItem onClick={() => {}}>Share</DotsMenuItem>
+          <DotsMenuItem onClick={onAddRemoveSong}>
+            {addRemoveTitle}
+          </DotsMenuItem>
+          <DotsMenuItem onClick={onShare}>Share</DotsMenuItem>
         </DotsMenu>
       </div>
     </div>
@@ -218,7 +223,10 @@ Player.propTypes = {
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired,
   player: PropTypes.object.isRequired,
-  onDialogOpen: PropTypes.func.isRequired
+  onDialogOpen: PropTypes.func.isRequired,
+  onShare: PropTypes.func.isRequired,
+  onAddRemoveSong: PropTypes.func.isRequired,
+  addRemoveTitle: PropTypes.func.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

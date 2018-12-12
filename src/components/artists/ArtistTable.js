@@ -15,8 +15,8 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   container: {
     display: `flex`,
-    margin: `1rem 0 2.5rem`
-    // alignItems: `center`
+    margin: `1rem 0 2.5rem`,
+    alignItems: `center`
   },
   artistCard: {
     boxShadow: `none`,

@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Title from "../shared/Title";
-import { loadCachedArtists } from "../../store/actionCreators/artists";
-
 import {
   Grid,
   Card,
@@ -12,8 +9,11 @@ import {
   CardMedia,
   Typography
 } from "@material-ui/core";
-
 import { connect } from "react-redux";
+
+import Title from "../shared/Title";
+import { loadCachedArtists } from "../../store/actionCreators/artists";
+import Loader from "../shared/Loader";
 
 const styles = {
   artistCard: {
@@ -55,7 +55,8 @@ class Artists extends Component {
     classes: PropTypes.object.isRequired,
     match: PropTypes.object.isRequired,
     artists: PropTypes.array.isRequired,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -63,7 +64,11 @@ class Artists extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         <Title name="Artists" />
@@ -97,12 +102,14 @@ class Artists extends Component {
   }
 }
 
-const mapStateToProps = ({ artists, search }) => ({
+const mapStateToProps = ({ artists, search, loader }) => ({
   artists: artists.filter(artist => {
     const artistName = artist.artistName.toLowerCase();
 
     return artistName.indexOf(search.toLowerCase()) !== -1;
-  })
+  }),
+
+  loader
 });
 
 const mapDispatchToProps = {

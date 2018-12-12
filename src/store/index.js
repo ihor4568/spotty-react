@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from "redux";
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
 import thunk from "redux-thunk";
 
 import artistsReducer from "./reducers/artists";
@@ -12,6 +12,11 @@ import userSongsReducer from "./reducers/userSongs";
 import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
 import searchReducer from "./reducers/search";
+import loaderReducer from "./reducers/loader";
+
+const logger = createLogger({
+  collapsed: true
+});
 
 const rootReducer = combineReducers({
   avatar: avatarReducer,
@@ -23,7 +28,8 @@ const rootReducer = combineReducers({
   theme: themeReducer,
   songs: songsReducer,
   userSongs: userSongsReducer,
-  search: searchReducer
+  search: searchReducer,
+  loader: loaderReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

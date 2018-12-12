@@ -15,20 +15,21 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   container: {
     display: `flex`,
-    alignItems: `center`
+    margin: `1rem 0 2.5rem`
+    // alignItems: `center`
   },
   artistCard: {
     boxShadow: `none`,
     backgroundColor: `inherit`
   },
   artistImage: {
-    width: 220,
+    width: 300,
     boxSizing: `border-box`,
     borderRadius: `50%`,
     boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`
   },
   artistName: {
-    padding: `1rem`,
+    paddingLeft: `1rem`,
     display: `inline-block`,
     overflow: `hidden`,
     whiteSpace: `nowrap`,
@@ -78,7 +79,7 @@ class ArtistTable extends Component {
                     />
                   </Card>
                   <Typography
-                    variant="h6"
+                    variant="h4"
                     component="h2"
                     className={classes.artistName}
                   >

@@ -5,8 +5,10 @@ import { Card, CardMedia, Typography } from "@material-ui/core";
 
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
-import TableLayout from "../shared/TableLayout";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 
+import TableLayout from "../shared/TableLayout";
+import Loader from "../shared/Loader";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -36,21 +38,30 @@ const styles = {
 
 class ArtistTable extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired,
-    songs: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
+    artists: PropTypes.array,
+    songs: PropTypes.array,
+    auth: PropTypes.object,
+    classes: PropTypes.object,
     loadArtistsSongs: PropTypes.func,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
     this.props.loadArtistsSongs(this.props.match.params.id);
     this.props.loadCachedArtists();
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         {this.props.artists.map(
@@ -83,16 +94,17 @@ class ArtistTable extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    artists: state.artists,
-    songs: state.songs
-  };
-}
+const mapStateToProps = ({ artists, songs, auth, loader }) => ({
+  artists,
+  songs,
+  auth,
+  loader
+});
 
 const mapDispatchToProps = {
   loadArtistsSongs,
-  loadCachedArtists
+  loadCachedArtists,
+  loadCachedUserSongs
 };
 
 export default connect(

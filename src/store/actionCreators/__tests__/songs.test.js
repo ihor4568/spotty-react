@@ -1,45 +1,47 @@
-import * as actionCreators from "../artists";
+import * as actionCreators from "../songs";
 import * as actionTypes from "../../actionTypes";
 
 import { MusicService } from "../../../services/MusicService";
 
 jest.mock("../../../services/FirebaseService");
 
-describe("artists action creators", () => {
-  describe("addArtists", () => {
+describe("songs action creators", () => {
+  describe("getArtistSongs", () => {
     it("should return correct action", () => {
       const payload = { prop: 10 };
       const expected = {
-        type: actionTypes.ADD_ARTISTS_SUCCESS,
+        type: actionTypes.FETCH_ARTISTS_SONGS_SUCCESS,
         payload
       };
-      expect(actionCreators.addArtists(payload)).toEqual(expected);
+      expect(actionCreators.getArtistSongs(payload)).toEqual(expected);
     });
   });
 
-  describe("loadArtists", () => {
+  describe("loadArtistsSongs", () => {
     let promise;
-    const sampleAritsts = {
-      artist1: {
+    const sampleSongs = {
+      song1: {
         id: "4th34th",
         name: "artist1"
       }
     };
 
     beforeEach(() => {
-      promise = Promise.resolve(sampleAritsts);
+      promise = Promise.resolve(sampleSongs);
       jest
-        .spyOn(MusicService, "getAllArtists")
+        .spyOn(MusicService, "getArtistSongs")
         .mockImplementation(() => promise);
     });
 
     it("should dispatch correct action", async () => {
       const dispatchMock = jest.fn();
-      actionCreators.loadArtists()(dispatchMock);
+      actionCreators.loadArtistsSongs()(dispatchMock);
 
       await promise;
 
-      const expected = actionCreators.addArtists(Object.values(sampleAritsts));
+      const expected = actionCreators.getArtistSongs(
+        Object.values(sampleSongs)
+      );
 
       expect(dispatchMock).toHaveBeenCalledWith(expected);
     });

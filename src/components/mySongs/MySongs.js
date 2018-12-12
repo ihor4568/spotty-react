@@ -4,33 +4,42 @@ import Title from "../shared/Title";
 import TableLayout from "../shared/TableLayout";
 
 import PropTypes from "prop-types";
-import { loadSongs } from "../../store/actionCreators/songs";
 import { connect } from "react-redux";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 
 class MySongs extends Component {
   static propTypes = {
-    loadSongs: PropTypes.func
+    userSongs: PropTypes.array,
+    songs: PropTypes.array,
+    auth: PropTypes.object,
+    loadSongs: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func
   };
 
   componentDidMount() {
-    this.props.loadSongs("album1");
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
     return (
       <>
         <Title name="My Songs" />
-        <TableLayout />
+        <TableLayout songs={this.props.songs} />
       </>
     );
   }
 }
 
+const mapStateToProps = ({ auth, userSongs }) => ({
+  auth,
+  songs: userSongs
+});
+
 const mapDispatchToProps = {
-  loadSongs
+  loadCachedUserSongs
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(MySongs);

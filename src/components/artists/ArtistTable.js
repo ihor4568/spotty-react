@@ -5,6 +5,8 @@ import { Card, CardMedia, Typography } from "@material-ui/core";
 
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
+
 import TableLayout from "../shared/TableLayout";
 
 import { connect } from "react-redux";
@@ -36,16 +38,20 @@ const styles = {
 
 class ArtistTable extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired,
-    classes: PropTypes.object.isRequired,
+    match: PropTypes.object,
+    artists: PropTypes.array,
+    songs: PropTypes.array,
+    auth: PropTypes.object,
+    classes: PropTypes.object,
     loadArtistsSongs: PropTypes.func,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func
   };
 
   componentDidMount() {
     this.props.loadArtistsSongs(this.props.match.params.id);
     this.props.loadCachedArtists();
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
@@ -73,7 +79,7 @@ class ArtistTable extends Component {
                     {artist.artistName}
                   </Typography>
                 </div>
-                <TableLayout />
+                <TableLayout songs={this.props.songs} />
               </div>
             )
         )}
@@ -82,13 +88,16 @@ class ArtistTable extends Component {
   }
 }
 
-const mapStateToProps = ({ artists }) => ({
-  artists
+const mapStateToProps = ({ artists, songs, auth }) => ({
+  artists,
+  songs,
+  auth
 });
 
 const mapDispatchToProps = {
   loadArtistsSongs,
-  loadCachedArtists
+  loadCachedArtists,
+  loadCachedUserSongs
 };
 
 export default connect(

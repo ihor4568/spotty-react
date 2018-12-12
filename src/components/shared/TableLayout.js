@@ -77,27 +77,18 @@ class TableLayout extends Component {
   state = {
     order: "asc",
     orderBy: "number",
-    dialog: {
-      isOpen: false,
-      song: null
-    }
+    songToDialog: null
   };
 
   handleDialogOpen = song => {
     this.setState({
-      dialog: {
-        isOpen: true,
-        song
-      }
+      songToDialog: song
     });
   };
 
   handleDialogClose = () => {
     this.setState({
-      dialog: {
-        isOpen: false,
-        song: null
-      }
+      songToDialog: null
     });
   };
 
@@ -199,7 +190,7 @@ class TableLayout extends Component {
 
   render() {
     const { classes, songs } = this.props;
-    const { order, orderBy, dialog } = this.state;
+    const { order, orderBy, songToDialog } = this.state;
 
     if (songs.length === 0) {
       return null;
@@ -366,10 +357,10 @@ class TableLayout extends Component {
               </TableBody>
             </Table>
             <LegalDialog
-              isOpen={dialog.isOpen}
+              isOpen={!!songToDialog}
               onClose={this.handleDialogClose}
-              licenseInfo={dialog.song ? dialog.song.licenseInfo : ""}
-              licenseURL={dialog.song ? dialog.song.licenseURL : ""}
+              licenseInfo={songToDialog ? songToDialog.licenseInfo : ""}
+              licenseURL={songToDialog ? songToDialog.licenseURL : ""}
             />
           </div>
         </Paper>

@@ -30,10 +30,7 @@ export class PlayerContainer extends Component {
     playingProgress: 0,
     volumeValue: 0.5,
     isMuted: false,
-    dialog: {
-      isOpen: false,
-      song: null
-    }
+    isDialogOpen: false
   };
 
   static propTypes = {
@@ -172,26 +169,20 @@ export class PlayerContainer extends Component {
     }
   };
 
-  handleDialogOpen = song => {
+  handleDialogOpen = () => {
     this.setState({
-      dialog: {
-        isOpen: true,
-        song
-      }
+      isDialogOpen: true
     });
   };
 
   handleDialogClose = () => {
     this.setState({
-      dialog: {
-        isOpen: false,
-        song: null
-      }
+      isDialogOpen: false
     });
   };
 
   render() {
-    const { playingProgress, volumeValue, isMuted, dialog } = this.state;
+    const { playingProgress, volumeValue, isMuted, isDialogOpen } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
     const songId = this.props.player.song.id;
@@ -224,10 +215,10 @@ export class PlayerContainer extends Component {
           )}
         />
         <LegalDialog
-          isOpen={dialog.isOpen}
+          isOpen={isDialogOpen}
           onClose={this.handleDialogClose}
-          licenseInfo={dialog.song ? dialog.song.licenseInfo : ""}
-          licenseURL={dialog.song ? dialog.song.licenseURL : ""}
+          licenseInfo={song.licenseInfo ? song.licenseInfo : ""}
+          licenseURL={song.licenseURL ? song.licenseURL : ""}
         />
       </>
     );

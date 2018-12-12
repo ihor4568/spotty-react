@@ -226,7 +226,7 @@ Player.propTypes = {
   onDialogOpen: PropTypes.func.isRequired,
   onShare: PropTypes.func.isRequired,
   onAddRemoveSong: PropTypes.func.isRequired,
-  addRemoveTitle: PropTypes.func.isRequired
+  addRemoveTitle: PropTypes.string.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

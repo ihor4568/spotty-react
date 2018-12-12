@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
 import Loader from "../shared/Loader";
 
-const styles = {
+const styles = theme => ({
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
@@ -35,8 +35,11 @@ const styles = {
       color: `inherit`,
       boxShadow: `none`
     }
+  },
+  media: {
+    minHeight: theme.props.cardMedia.albumCardHeight
   }
-};
+});
 
 class Albums extends Component {
   static propTypes = {
@@ -68,6 +71,7 @@ class Albums extends Component {
                 <Link to={`${match.url}/${album.id}`} className={classes.link}>
                   <CardActionArea>
                     <CardMedia
+                      className={classes.media}
                       component="img"
                       image={album.albumCoverURL}
                       title={album.albumName}
@@ -112,4 +116,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Albums));
+)(withStyles(styles, { withTheme: true })(Albums));

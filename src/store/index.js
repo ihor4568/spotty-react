@@ -12,6 +12,7 @@ import userSongsReducer from "./reducers/userSongs";
 import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
 import searchReducer from "./reducers/search";
+import ratingReducer from "./reducers/rating";
 
 const rootReducer = combineReducers({
   avatar: avatarReducer,
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   theme: themeReducer,
   songs: songsReducer,
   userSongs: userSongsReducer,
-  search: searchReducer
+  search: searchReducer,
+  rating: ratingReducer
 });
 
 export default createStore(rootReducer, applyMiddleware(thunk, logger));

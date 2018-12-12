@@ -7,6 +7,7 @@ import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, CardMedia, Typography } from "@material-ui/core";
+import Loader from "../shared/Loader";
 
 const styles = {
   container: {
@@ -39,7 +40,8 @@ class AlbumTable extends Component {
     classes: PropTypes.object.isRequired,
     loadSongs: PropTypes.func,
     loadCachedAlbums: PropTypes.func,
-    loadCachedUserSongs: PropTypes.func
+    loadCachedUserSongs: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -49,7 +51,12 @@ class AlbumTable extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         {this.props.albums.map(
@@ -92,10 +99,11 @@ class AlbumTable extends Component {
   }
 }
 
-const mapStateToProps = ({ albums, songs, auth }) => ({
+const mapStateToProps = ({ albums, songs, auth, loader }) => ({
   albums,
   songs,
-  auth
+  auth,
+  loader
 });
 
 const mapDispatchToProps = {

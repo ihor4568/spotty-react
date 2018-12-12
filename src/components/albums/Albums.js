@@ -14,6 +14,7 @@ import {
 import Title from "../shared/Title";
 import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
+import Loader from "../shared/Loader";
 
 const styles = {
   albumDescription: {
@@ -42,7 +43,8 @@ class Albums extends Component {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
     loadCachedAlbums: PropTypes.func,
-    match: PropTypes.object
+    match: PropTypes.object,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -50,7 +52,11 @@ class Albums extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
 
     return (
       <>
@@ -89,12 +95,14 @@ class Albums extends Component {
   }
 }
 
-const mapStateToProps = ({ albums, search }) => ({
+const mapStateToProps = ({ albums, search, loader }) => ({
   albums: albums.filter(album => {
     const albumName = album.albumName.toLowerCase();
 
     return albumName.indexOf(search.toLowerCase()) !== -1;
-  })
+  }),
+
+  loader
 });
 
 const mapDispatchToProps = {

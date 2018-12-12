@@ -20,8 +20,7 @@ import {
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
-import { changeThemeType } from "../../store/actionCreators/themes";
+import { setUserTheme } from "../../store/actionCreators/themes";
 import { addSearchQuery } from "../../store/actionCreators/search";
 
 const styles = theme => ({
@@ -112,7 +111,7 @@ class AppBarComponent extends Component {
     open: PropTypes.bool,
     onDrawerOpen: PropTypes.func,
     enabled: PropTypes.bool,
-    changeThemeType: PropTypes.func,
+    setUserTheme: PropTypes.func,
     theme: PropTypes.object,
     palette: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired,
@@ -131,7 +130,7 @@ class AppBarComponent extends Component {
   handleChangeTheme = () => {
     const nextThemeType = this.isCurrentThemeLight() ? "dark" : "light";
 
-    this.props.changeThemeType(nextThemeType);
+    this.props.setUserTheme(nextThemeType);
   };
 
   handleSearchChange = e => {
@@ -224,7 +223,7 @@ const mapStateToProps = ({ auth, search }) => ({
 });
 
 const mapDispatchToProps = {
-  changeThemeType,
+  setUserTheme,
   addSearchQuery
 };
 

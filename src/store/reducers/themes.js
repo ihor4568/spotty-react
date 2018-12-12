@@ -1,14 +1,30 @@
-import { THEME_CHANGE_PALETTE_TYPE } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
 const initialState = {
-  type: "light"
+  themeType: "light"
 };
 
-export default function changeTheme(state = initialState, action) {
+export default function themeReducer(state = initialState, action) {
   switch (action.type) {
-    case THEME_CHANGE_PALETTE_TYPE:
+    case actionTypes.SET_USER_THEME_SUCCESS:
       return {
-        type: action.payload
+        ...state,
+        themeType: action.themeType
+      };
+    case actionTypes.FETCH_USER_AND_THEME_SUCCESS:
+      return {
+        ...state,
+        themeType: action.themeType
+      };
+    case actionTypes.FETCH_USER_AND_THEME_FAIL:
+      return {
+        ...state,
+        themeType: "light"
+      };
+    case actionTypes.SET_DEFAULT_THEME:
+      return {
+        ...state,
+        themeType: "light"
       };
     default:
       return state;

@@ -11,6 +11,7 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
+import { addUserSong, removeUserSong } from "../../store/actionCreators/user";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -24,30 +25,66 @@ export class PlayerContainer extends Component {
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
-    isMuted: false
+    isMuted: false,
+    currentSongsList: {}
+    // number: null
   };
 
   static propTypes = {
+    userSongs: PropTypes.array.isRequired,
+    auth: PropTypes.object.isRequired,
     songs: PropTypes.array.isRequired,
     player: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired
+    pauseSong: PropTypes.func.isRequired,
+    addUserSong: PropTypes.func.isRequired,
+    removeUserSong: PropTypes.func.isRequired
   };
 
-  constructor(props) {
-    super(props);
-
-    this.items = [
-      { name: "Legal info", handler: () => {} },
-      { name: "Remove from my songs", handler: () => {} },
-      { name: "Share", handler: this.handleShare }
+  getItems() {
+    // console.log(this.props.player);
+    let checkSongId = this.checkSongId(this.props.player.song.id);
+    return [
+      {
+        name: "Legal info",
+        handler: () => {}
+      },
+      {
+        name: this.getMenuItemTitle(this.props.player.song.id, checkSongId),
+        handler: this.handleOperation.bind(
+          this,
+          this.props.player.song.id,
+          checkSongId
+        )
+      },
+      {
+        name: "Share",
+        handler: this.handleShare.bind(this, this.props.player.song.id)
+      }
     ];
   }
 
-  handleShare = () => {
-    if (this.props.player.song.id) {
-      window.open(`/songs/${this.props.player.song.id}`);
+  checkSongId(songId) {
+    return this.props.userSongs.some(elem => elem.id === songId);
+  }
+
+  getMenuItemTitle = (songId, checkSongId) => {
+    if (checkSongId) {
+      return "Remove from my songs";
     }
+    return "Add to my songs";
+  };
+
+  handleOperation = (songId, checkSongId) => {
+    if (checkSongId) {
+      this.props.removeUserSong(this.props.auth.user.uid, songId);
+    } else {
+      this.props.addUserSong(this.props.auth.user.uid, songId);
+    }
+  };
+
+  handleShare = songId => {
+    window.open(`/songs/${songId}`);
   };
 
   componentDidMount() {
@@ -77,11 +114,14 @@ export class PlayerContainer extends Component {
   handleChangePlayingState = () => {
     const { songs, pauseSong, playSong } = this.props;
     const { isPlaying, number } = this.props.player;
+    // console.log(currentSongsList);
 
     if (isPlaying) {
       pauseSong(songs[number], number);
     } else {
       playSong(songs[number], number);
+      this.setState({ currentSongsList: songs });
+      // this.setState({ number: number });
     }
   };
 
@@ -90,7 +130,7 @@ export class PlayerContainer extends Component {
     const { isPlaying, number } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(songs[number], number);
+      pauseSong(this.state.currentSongsList[number], number);
     }
 
     number === 0
@@ -191,7 +231,7 @@ export class PlayerContainer extends Component {
           ref={element => (this.audio = element)}
         />
         <Player
-          items={this.items}
+          items={this.getItems()}
           onPlay={this.handleChangePlayingState}
           onPreviousClick={this.handlePreviousSong}
           onNextClick={this.handleNextSong}
@@ -214,13 +254,17 @@ export class PlayerContainer extends Component {
 function mapStateToProps(state) {
   return {
     songs: state.songs,
-    player: state.player
+    player: state.player,
+    userSongs: state.userSongs,
+    auth: state.auth
   };
 }
 
 const mapDispatchToProps = {
   playSong,
-  pauseSong
+  pauseSong,
+  addUserSong,
+  removeUserSong
 };
 
 export default connect(

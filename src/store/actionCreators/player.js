@@ -11,7 +11,7 @@ export function playSong(song, number) {
 export function pauseSong(song, number) {
   return {
     type: actionTypes.PAUSE_SONG,
-    song,
+    song: song,
     number
   };
 }

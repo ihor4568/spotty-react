@@ -3,8 +3,6 @@ import * as actionTypes from "../../actionTypes";
 
 import { MusicService } from "../../../services/MusicService";
 
-jest.mock("../../../services/FirebaseService");
-
 describe("artists action creators", () => {
   describe("addArtists", () => {
     it("should return correct action", () => {
@@ -18,30 +16,80 @@ describe("artists action creators", () => {
   });
 
   describe("loadArtists", () => {
-    let promise;
-    const sampleAritsts = {
-      artist1: {
-        id: "4th34th",
-        name: "artist1"
-      }
-    };
+    describe("success", () => {
+      let promise;
+      const sampleArtists = {
+        artis1: {
+          id: "4th34th",
+          name: "artist1"
+        }
+      };
 
-    beforeEach(() => {
-      promise = Promise.resolve(sampleAritsts);
-      jest
-        .spyOn(MusicService, "getAllArtists")
-        .mockImplementation(() => promise);
+      beforeEach(() => {
+        promise = Promise.resolve(sampleArtists);
+        jest
+          .spyOn(MusicService, "getAllArtists")
+          .mockImplementation(() => promise);
+      });
+
+      it("should dispatch success action", async () => {
+        const dispatchMock = jest.fn();
+        actionCreators.loadArtists()(dispatchMock);
+
+        await promise;
+
+        const expected = actionCreators.addArtists(
+          Object.values(sampleArtists)
+        );
+
+        expect(dispatchMock).toHaveBeenCalledWith(expected);
+      });
     });
 
-    it("should dispatch correct action", async () => {
-      const dispatchMock = jest.fn();
-      actionCreators.loadArtists()(dispatchMock);
+    describe("failure", () => {
+      let promise;
+      const sampleError = "this is error";
 
-      await promise;
+      beforeEach(() => {
+        promise = Promise.reject(sampleError);
+        jest
+          .spyOn(MusicService, "getAllArtists")
+          .mockImplementation(() => promise);
+      });
 
-      const expected = actionCreators.addArtists(Object.values(sampleAritsts));
+      it("should dispatch fail action", async () => {
+        const dispatchMock = jest.fn();
+        actionCreators.loadArtists()(dispatchMock);
 
-      expect(dispatchMock).toHaveBeenCalledWith(expected);
+        await promise;
+
+        const expected = actionCreators.addArtistsFail();
+
+        expect(dispatchMock).toHaveBeenCalledWith(expected);
+      });
     });
   });
 });
+
+// it("tests error with async/await", async () => {
+//   expect.assertions(1);
+//   try {
+//     await user.getUserName(1);
+//   } catch (e) {
+//     expect(e).toEqual({
+//       error: "User with 1 not found."
+//     });
+//   }
+// });
+
+// it("works with async/await", async () => {
+//   expect.assertions(1);
+//   const data = await user.getUserName(4);
+//   expect(data).toEqual("Mark");
+// });
+
+// // async/await can also be used with `.resolves`.
+// it("works with async/await and resolves", async () => {
+//   expect.assertions(1);
+//   await expect(user.getUserName(5)).resolves.toEqual("Paul");
+// });

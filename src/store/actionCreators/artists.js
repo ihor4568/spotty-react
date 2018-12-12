@@ -9,7 +9,7 @@ export function loadArtists() {
       const artists = await MusicService.getAllArtists();
       dispatch(addArtists(Object.values(artists)));
     } catch (e) {
-      dispatch({ type: actionTypes.ADD_ARTISTS_FAIL });
+      dispatch(addArtistsFail());
     }
   };
 }
@@ -27,5 +27,11 @@ export function addArtists(payload) {
   return {
     type: actionTypes.ADD_ARTISTS_SUCCESS,
     payload
+  };
+}
+
+export function addArtistsFail() {
+  return {
+    type: actionTypes.ADD_ARTISTS_FAIL
   };
 }

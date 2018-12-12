@@ -5,7 +5,7 @@ import TableLayout from "../shared/TableLayout";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loadCachedUserSongs } from "../../store/actionCreators/user";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 import Loader from "../shared/Loader";
 
 class MySongs extends Component {
@@ -13,8 +13,8 @@ class MySongs extends Component {
     userSongs: PropTypes.array,
     songs: PropTypes.array,
     auth: PropTypes.object,
-    loadCachedUserSongs: PropTypes.func.isRequired,
     loadSongs: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func,
     loader: PropTypes.bool.isRequired
   };
 

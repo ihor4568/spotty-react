@@ -15,7 +15,7 @@ import Title from "../shared/Title";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
 import Loader from "../shared/Loader";
 
-const styles = {
+const styles = theme => ({
   artistCard: {
     boxShadow: `none`,
     backgroundColor: `inherit`
@@ -28,7 +28,8 @@ const styles = {
   artistImage: {
     boxSizing: `border-box`,
     borderRadius: `50%`,
-    boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`
+    boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`,
+    height: theme.props.cardMedia.artistCardHeight
   },
   artistName: {
     margin: `1rem 0 0 50%`,
@@ -49,7 +50,7 @@ const styles = {
       boxShadow: `none`
     }
   }
-};
+});
 class Artists extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -119,4 +120,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Artists));
+)(withStyles(styles, { withTheme: true })(Artists));

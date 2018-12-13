@@ -24,6 +24,11 @@ export const lightTheme = createMuiTheme({
     appBar: {
       appBarHeight: "4rem",
       appBarBackgroundColor: "#1e88e5"
+    },
+    cardMedia: {
+      albumCardHeight: "20rem",
+      artistCardHeight: "18.875rem",
+      aboutCardHeight: "17.375rem"
     }
   }
 });
@@ -51,6 +56,11 @@ export const darkTheme = createMuiTheme({
     appBar: {
       appBarHeight: "4rem",
       appBarBackgroundColor: "#424242"
+    },
+    cardMedia: {
+      albumCardHeight: "20rem",
+      artistCardHeight: "18.875rem",
+      aboutCardHeight: "17.375rem"
     }
   }
 });

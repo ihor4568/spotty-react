@@ -16,6 +16,9 @@ export const lightTheme = createMuiTheme({
     drawer: {
       drawerWidth: 200
     },
+    icons: {
+      iconColor: "#0000008a"
+    },
     mediaPlayer: {
       mediaPlayerHeight: "6.8rem",
       mediaPlayerBackgroundColor: "#fefefe",
@@ -52,6 +55,9 @@ export const darkTheme = createMuiTheme({
       mediaPlayerHeight: "6.8rem",
       mediaPlayerBackgroundColor: "#424242",
       mediaPlayerPlayButtonBackground: "#838383"
+    },
+    icons: {
+      iconColor: "#fff"
     },
     appBar: {
       appBarHeight: "4rem",

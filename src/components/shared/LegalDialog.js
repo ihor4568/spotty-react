@@ -7,20 +7,21 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
 
-const LEGAL_DIALOG_INFO = {
-  licenseInfo:
-    "Back To The Sea by Adam & Alma is licensed under a Attribution-NonCommercial-NoDerivatives (aka Music Sharing) 3.0 International License.",
-  licenseURL: "https://creativecommons.org/licenses/by-nc-nd/3.0/"
-};
-
 class LegalDialog extends Component {
+  static propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired,
+    licenseInfo: PropTypes.string.isRequired,
+    licenseURL: PropTypes.string.isRequired
+  };
+
   handleReadMore = () => {
-    window.open(LEGAL_DIALOG_INFO.licenseURL);
+    window.open(this.props.licenseURL);
     this.props.onClose();
   };
 
   render() {
-    const { isOpen } = this.props;
+    const { isOpen, licenseInfo } = this.props;
 
     return (
       <Dialog
@@ -31,7 +32,7 @@ class LegalDialog extends Component {
       >
         <DialogTitle>License information</DialogTitle>
         <DialogContent>
-          <DialogContentText>{LEGAL_DIALOG_INFO.licenseInfo}</DialogContentText>
+          <DialogContentText>{licenseInfo}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={this.handleReadMore} color="primary">
@@ -45,10 +46,5 @@ class LegalDialog extends Component {
     );
   }
 }
-
-LegalDialog.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
-};
 
 export default LegalDialog;

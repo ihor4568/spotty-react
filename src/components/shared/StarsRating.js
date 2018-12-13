@@ -30,11 +30,11 @@ class StarsRating extends Component {
     setNewRatingForSong: PropTypes.func,
     songId: PropTypes.string,
     userUid: PropTypes.string,
-    rating: PropTypes.oneOfType([PropTypes.array, PropTypes.object])
+    rating: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+    maxRating: PropTypes.number
   };
 
   state = {
-    maxRating: 5,
     rating: this.getSongRating,
     tempRating: null
   };
@@ -68,13 +68,13 @@ class StarsRating extends Component {
   rate = rating => {
     this.setState({
       ...this.state,
-      rating,
+      rating: rating + 1,
       tempRating: null
     });
     this.props.setNewRatingForSong(
       this.props.userUid,
       this.props.songId,
-      rating
+      rating + 1
     );
   };
 
@@ -84,25 +84,25 @@ class StarsRating extends Component {
         ...this.state,
         rating: this.getSongRating()
       }));
-    } else {
-      return false;
     }
   }
 
-  render() {
-    const { classes } = this.props;
-    const { maxRating, tempRating } = this.state;
-    const stars = [];
+  createStarsMaxCount = count => {
+    return new Array(count).fill(0).map((_, i) => i);
+  };
 
-    for (let i = 1; i < maxRating + 1; i++) {
+  createStars = count => {
+    const { classes } = this.props;
+
+    return this.createStarsMaxCount(count).map((item, i) => {
       let starClass = classes.starsRating;
       if (
-        (tempRating >= i && tempRating !== null) ||
-        (this.state.rating >= i && this.state.rating !== null)
+        (this.state.tempRating >= i && this.state.tempRating !== null) ||
+        (this.state.rating >= i + 1 && this.state.rating !== null)
       ) {
         starClass = `${classes.starsRating} ${classes.active}`;
       }
-      stars.push(
+      return (
         <Star
           key={i}
           className={starClass}
@@ -111,9 +111,17 @@ class StarsRating extends Component {
           onClick={() => this.rate(i)}
         />
       );
-    }
+    });
+  };
 
-    return <div className={classes.starsRatingContainer}>{stars}</div>;
+  render() {
+    const { classes, maxRating } = this.props;
+
+    return (
+      <div className={classes.starsRatingContainer}>
+        {this.createStars(maxRating)}
+      </div>
+    );
   }
 }
 

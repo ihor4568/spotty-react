@@ -11,6 +11,11 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
+import LegalDialog from "../shared/LegalDialog";
+import {
+  addUserSong,
+  removeUserSong
+} from "../../store/actionCreators/userSongs";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -24,30 +29,41 @@ export class PlayerContainer extends Component {
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
-    isMuted: false
+    isMuted: false,
+    isDialogOpen: false
   };
 
   static propTypes = {
-    songs: PropTypes.array.isRequired,
-    player: PropTypes.object.isRequired,
-    playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired
+    userSongs: PropTypes.array,
+    auth: PropTypes.object,
+    player: PropTypes.object,
+    playSong: PropTypes.func,
+    pauseSong: PropTypes.func,
+    addUserSong: PropTypes.func,
+    removeUserSong: PropTypes.func
   };
 
-  constructor(props) {
-    super(props);
-
-    this.items = [
-      { name: "Legal info", handler: () => {} },
-      { name: "Remove from my songs", handler: () => {} },
-      { name: "Share", handler: this.handleShare }
-    ];
+  checkSongId(songId) {
+    return this.props.userSongs.some(elem => elem.id === songId);
   }
 
-  handleShare = () => {
-    if (this.props.player.song.id) {
-      window.open(`/songs/${this.props.player.song.id}`);
+  getMenuItemTitle = (songId, checkSongId) => {
+    if (checkSongId) {
+      return "Remove from my songs";
     }
+    return "Add to my songs";
+  };
+
+  handleOperation = (songId, checkSongId) => {
+    if (checkSongId) {
+      this.props.removeUserSong(this.props.auth.user.uid, songId);
+    } else {
+      this.props.addUserSong(this.props.auth.user.uid, songId);
+    }
+  };
+
+  handleShare = songId => {
+    window.open(`/songs/${songId}`);
   };
 
   componentDidMount() {
@@ -153,16 +169,28 @@ export class PlayerContainer extends Component {
     }
   };
 
+  handleDialogOpen = () => {
+    this.setState({
+      isDialogOpen: true
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      isDialogOpen: false
+    });
+  };
+
   render() {
-    const { playingProgress, volumeValue, isMuted } = this.state;
+    const { playingProgress, volumeValue, isMuted, isDialogOpen } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
+    const songId = this.props.player.song.id;
 
     return (
       <>
         <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
-          items={this.items}
           onPlay={this.handleChangePlayingState}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
@@ -174,6 +202,23 @@ export class PlayerContainer extends Component {
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
           player={this.props.player}
+          onDialogOpen={this.handleDialogOpen.bind(this, song)}
+          addRemoveTitle={this.getMenuItemTitle(
+            songId,
+            this.checkSongId(songId)
+          )}
+          onShare={this.handleShare.bind(this, songId)}
+          onAddRemoveSong={this.handleOperation.bind(
+            this,
+            songId,
+            this.checkSongId(songId)
+          )}
+        />
+        <LegalDialog
+          isOpen={isDialogOpen}
+          onClose={this.handleDialogClose}
+          licenseInfo={song.licenseInfo ? song.licenseInfo : ""}
+          licenseURL={song.licenseURL ? song.licenseURL : ""}
         />
       </>
     );
@@ -182,14 +227,17 @@ export class PlayerContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    songs: state.songs,
-    player: state.player
+    player: state.player,
+    userSongs: state.userSongs,
+    auth: state.auth
   };
 }
 
 const mapDispatchToProps = {
   playSong,
-  pauseSong
+  pauseSong,
+  addUserSong,
+  removeUserSong
 };
 
 export default connect(

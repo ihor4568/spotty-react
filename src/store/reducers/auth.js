@@ -16,17 +16,26 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoaded: true,
         error: ""
       };
-    case actionTypes.FETCH_USER_AND_THEME_FAIL:
+    case actionTypes.SIGN_IN_SUCCESS:
+    case actionTypes.SIGN_UP_SUCCESS:
       return {
         ...state,
-        isLoggedIn: false,
-        isLoaded: true
+        isLoggedIn: true,
+        user: action.user,
+        isLoaded: true,
+        error: ""
       };
-    case actionTypes.SIGN_OUT:
+    case actionTypes.SIGN_OUT_SUCCESS:
       return {
         ...state,
         isLoggedIn: false,
         user: null,
+        isLoaded: true
+      };
+    case actionTypes.FETCH_USER_AND_THEME_FAIL:
+      return {
+        ...state,
+        isLoggedIn: false,
         isLoaded: true
       };
     case actionTypes.AUTH_ERROR:

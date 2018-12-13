@@ -16,6 +16,9 @@ export const lightTheme = createMuiTheme({
     drawer: {
       drawerWidth: 200
     },
+    icons: {
+      iconColor: "#0000008a"
+    },
     mediaPlayer: {
       mediaPlayerHeight: "6.8rem",
       mediaPlayerBackgroundColor: "#fefefe",
@@ -24,6 +27,11 @@ export const lightTheme = createMuiTheme({
     appBar: {
       appBarHeight: "4rem",
       appBarBackgroundColor: "#1e88e5"
+    },
+    cardMedia: {
+      albumCardHeight: "17.0625rem",
+      artistCardHeight: "15.875rem",
+      aboutCardHeight: "16.0625rem"
     }
   }
 });
@@ -48,9 +56,17 @@ export const darkTheme = createMuiTheme({
       mediaPlayerBackgroundColor: "#424242",
       mediaPlayerPlayButtonBackground: "#838383"
     },
+    icons: {
+      iconColor: "#fff"
+    },
     appBar: {
       appBarHeight: "4rem",
       appBarBackgroundColor: "#424242"
+    },
+    cardMedia: {
+      albumCardHeight: "17.0625rem",
+      artistCardHeight: "15.875rem",
+      aboutCardHeight: "16.0625rem"
     }
   }
 });

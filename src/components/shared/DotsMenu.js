@@ -1,23 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
-import LegalDialog from "./LegalDialog";
+import { IconButton, Menu } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 export default class DotsMenu extends Component {
-  state = {
-    anchorEl: null,
-    isOpen: false
+  static propTypes = {
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]).isRequired
   };
 
-  static propTypes = {
-    items: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string,
-        handler: PropTypes.func
-      })
-    )
+  state = {
+    anchorEl: null
   };
 
   handleClick = event => {
@@ -28,16 +24,19 @@ export default class DotsMenu extends Component {
     this.setState({ anchorEl: null });
   };
 
-  handleClickOpen = () => {
-    this.setState({ isOpen: true });
-  };
-
-  handleClickClose = () => {
-    this.setState({ isOpen: false });
+  handleItemClick = handler => {
+    this.handleClose();
+    handler();
   };
 
   render() {
     const { anchorEl } = this.state;
+
+    const children = React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        onClick: this.handleItemClick.bind(this, child.props.onClick)
+      });
+    });
 
     return (
       <div>
@@ -45,19 +44,7 @@ export default class DotsMenu extends Component {
           <MoreVertIcon />
         </IconButton>
         <Menu anchorEl={anchorEl} open={!!anchorEl} onClose={this.handleClose}>
-          <LegalDialog
-            isOpen={this.state.isOpen}
-            onClose={this.handleClickClose}
-          />
-          {this.props.items.map((item, index) => (
-            <MenuItem
-              key={index}
-              onClick={item.handler}
-              onMouseUp={this.handleClose}
-            >
-              {item.name}
-            </MenuItem>
-          ))}
+          {children}
         </Menu>
       </div>
     );

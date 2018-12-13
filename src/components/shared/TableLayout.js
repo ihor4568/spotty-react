@@ -15,11 +15,16 @@ import {
 
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
+import DotsMenuItem from "./DotsMenuItem";
+import LegalDialog from "./LegalDialog";
 
 import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
-import { loadArtistsSongs } from "../../store/actionCreators/songs";
+import {
+  addUserSong,
+  removeUserSong
+} from "../../store/actionCreators/userSongs";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -61,26 +66,50 @@ class TableLayout extends Component {
     songs: PropTypes.array.isRequired,
     classes: PropTypes.object.isRequired,
     player: PropTypes.object.isRequired,
+    userSongs: PropTypes.array.isRequired,
+    auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
-    loadArtistsSongs: PropTypes.func
+    addUserSong: PropTypes.func.isRequired,
+    removeUserSong: PropTypes.func.isRequired
   };
 
   state = {
     order: "asc",
-    orderBy: "number"
+    orderBy: "number",
+    songToDialog: null
   };
 
-  getItems(data) {
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      { name: "Remove from my songs", handler: () => {} },
-      { name: "Share", handler: this.handleShare.bind(this, data.id) }
-    ];
+  handleDialogOpen = song => {
+    this.setState({
+      songToDialog: song
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      songToDialog: null
+    });
+  };
+
+  checkSongId(songId) {
+    return this.props.userSongs.some(elem => elem.id === songId);
   }
+
+  getMenuItemTitle = (songId, checkSongId) => {
+    if (checkSongId) {
+      return "Remove from my songs";
+    }
+    return "Add to my songs";
+  };
+
+  handleOperation = (songId, checkSongId) => {
+    if (checkSongId) {
+      this.props.removeUserSong(this.props.auth.user.uid, songId);
+    } else {
+      this.props.addUserSong(this.props.auth.user.uid, songId);
+    }
+  };
 
   handleShare = songId => {
     if (songId) {
@@ -161,7 +190,7 @@ class TableLayout extends Component {
 
   render() {
     const { classes, songs } = this.props;
-    const { order, orderBy } = this.state;
+    const { order, orderBy, songToDialog } = this.state;
 
     if (songs.length === 0) {
       return null;
@@ -297,13 +326,42 @@ class TableLayout extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu items={this.getItems(data)} />
+                        <DotsMenu>
+                          <DotsMenuItem
+                            onClick={this.handleDialogOpen.bind(this, data)}
+                          >
+                            Legal info
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleOperation.bind(
+                              this,
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
+                          >
+                            {this.getMenuItemTitle(
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleShare.bind(this, data.id)}
+                          >
+                            Share
+                          </DotsMenuItem>
+                        </DotsMenu>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            <LegalDialog
+              isOpen={!!songToDialog}
+              onClose={this.handleDialogClose}
+              licenseInfo={songToDialog ? songToDialog.licenseInfo : ""}
+              licenseURL={songToDialog ? songToDialog.licenseURL : ""}
+            />
           </div>
         </Paper>
       </>
@@ -311,11 +369,12 @@ class TableLayout extends Component {
   }
 }
 
-const mapStateToProps = ({ player, songs, search }) => ({
+const mapStateToProps = ({ player, userSongs, auth, search }, { songs }) => ({
   player,
+  userSongs,
+  auth,
   songs: songs.filter(song => {
     const songName = song.name.toLowerCase();
-
     return songName.indexOf(search.toLowerCase()) !== -1;
   })
 });
@@ -323,7 +382,8 @@ const mapStateToProps = ({ player, songs, search }) => ({
 const mapDispatchToProps = {
   playSong,
   pauseSong,
-  loadArtistsSongs
+  addUserSong,
+  removeUserSong
 };
 
 export default connect(

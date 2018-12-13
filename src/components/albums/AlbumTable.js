@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import TableLayout from "../shared/TableLayout";
 import { loadSongs } from "../../store/actionCreators/songs";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 import { Card, CardMedia, Typography } from "@material-ui/core";
+import Loader from "../shared/Loader";
 
 const styles = {
   container: {
@@ -17,7 +19,7 @@ const styles = {
     fontSize: `1.2rem`
   },
   albumImage: {
-    width: 350,
+    width: 300,
     boxSizing: `border-box`
   },
   albumName: {
@@ -31,20 +33,30 @@ const styles = {
 
 class AlbumTable extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    albums: PropTypes.array.isRequired,
+    match: PropTypes.object,
+    albums: PropTypes.array,
+    songs: PropTypes.array,
+    auth: PropTypes.object,
     classes: PropTypes.object.isRequired,
     loadSongs: PropTypes.func,
-    loadCachedAlbums: PropTypes.func
+    loadCachedAlbums: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
     this.props.loadSongs(this.props.match.params.id);
     this.props.loadCachedAlbums();
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         {this.props.albums.map(
@@ -78,7 +90,7 @@ class AlbumTable extends Component {
                     </Typography>
                   </div>
                 </div>
-                <TableLayout />
+                <TableLayout songs={this.props.songs} />
               </div>
             )
         )}
@@ -87,13 +99,17 @@ class AlbumTable extends Component {
   }
 }
 
-const mapStateToProps = ({ albums }) => ({
-  albums
+const mapStateToProps = ({ albums, songs, auth, loader }) => ({
+  albums,
+  songs,
+  auth,
+  loader
 });
 
 const mapDispatchToProps = {
   loadSongs,
-  loadCachedAlbums
+  loadCachedAlbums,
+  loadCachedUserSongs
 };
 
 export default connect(

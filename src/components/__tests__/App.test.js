@@ -4,7 +4,6 @@ import renderer from "react-test-renderer";
 
 jest.mock("../shared/ThemeProvider", () => "theme-provider");
 jest.mock("../shareView/ShareView", () => "share-view");
-
 jest.mock("../mySongs/MySongs", () => "my-songs");
 jest.mock("../artists/Artists", () => "artists");
 jest.mock("../about/About", () => "about");

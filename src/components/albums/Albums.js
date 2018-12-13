@@ -14,8 +14,9 @@ import {
 import Title from "../shared/Title";
 import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
+import Loader from "../shared/Loader";
 
-const styles = {
+const styles = theme => ({
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
@@ -34,15 +35,19 @@ const styles = {
       color: `inherit`,
       boxShadow: `none`
     }
+  },
+  media: {
+    height: theme.props.cardMedia.albumCardHeight
   }
-};
+});
 
 class Albums extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     albums: PropTypes.array.isRequired,
     loadCachedAlbums: PropTypes.func,
-    match: PropTypes.object
+    match: PropTypes.object,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -50,7 +55,11 @@ class Albums extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
 
     return (
       <>
@@ -62,6 +71,7 @@ class Albums extends Component {
                 <Link to={`${match.url}/${album.id}`} className={classes.link}>
                   <CardActionArea>
                     <CardMedia
+                      className={classes.media}
                       component="img"
                       image={album.albumCoverURL}
                       title={album.albumName}
@@ -89,12 +99,14 @@ class Albums extends Component {
   }
 }
 
-const mapStateToProps = ({ albums, search }) => ({
+const mapStateToProps = ({ albums, search, loader }) => ({
   albums: albums.filter(album => {
     const albumName = album.albumName.toLowerCase();
 
     return albumName.indexOf(search.toLowerCase()) !== -1;
-  })
+  }),
+
+  loader
 });
 
 const mapDispatchToProps = {
@@ -104,4 +116,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles)(Albums));
+)(withStyles(styles, { withTheme: true })(Albums));

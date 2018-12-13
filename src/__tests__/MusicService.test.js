@@ -31,14 +31,14 @@ describe("Music Service", () => {
     });
   });
 
-  describe("getSong", () => {
+  describe("getSongById", () => {
     it("should return an object with proper data", async () => {
-      const result = await MusicService.getSong(randomId);
+      const result = await MusicService.getSongById(randomId);
       expect(result).toEqual(expectedResult);
     });
 
     it("should call firebase function with proper arguments", async () => {
-      await MusicService.getSong(randomId);
+      await MusicService.getSongById(randomId);
       expect(dbInstance.ref).toHaveBeenCalledWith(`songs/${randomId}`);
       expect(dbInstance.once).toHaveBeenCalledWith("value");
     });

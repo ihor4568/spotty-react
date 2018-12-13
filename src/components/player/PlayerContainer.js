@@ -11,7 +11,11 @@ import Player from "./Player";
 
 import { connect } from "react-redux";
 import { pauseSong, playSong } from "../../store/actionCreators/player";
-import { addUserSong, removeUserSong } from "../../store/actionCreators/user";
+import LegalDialog from "../shared/LegalDialog";
+import {
+  addUserSong,
+  removeUserSong
+} from "../../store/actionCreators/userSongs";
 
 const VOLUME_ICON_SET = {
   VolumeOff: <VolumeOff />,
@@ -25,40 +29,19 @@ export class PlayerContainer extends Component {
     songDuration: 0,
     playingProgress: 0,
     volumeValue: 0.5,
-    isMuted: false
+    isMuted: false,
+    isDialogOpen: false
   };
 
   static propTypes = {
-    userSongs: PropTypes.array.isRequired,
-    auth: PropTypes.object.isRequired,
-    player: PropTypes.object.isRequired,
-    playSong: PropTypes.func.isRequired,
-    pauseSong: PropTypes.func.isRequired,
-    addUserSong: PropTypes.func.isRequired,
-    removeUserSong: PropTypes.func.isRequired
+    userSongs: PropTypes.array,
+    auth: PropTypes.object,
+    player: PropTypes.object,
+    playSong: PropTypes.func,
+    pauseSong: PropTypes.func,
+    addUserSong: PropTypes.func,
+    removeUserSong: PropTypes.func
   };
-
-  getItems() {
-    let checkSongId = this.checkSongId(this.props.player.song.id);
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      {
-        name: this.getMenuItemTitle(this.props.player.song.id, checkSongId),
-        handler: this.handleOperation.bind(
-          this,
-          this.props.player.song.id,
-          checkSongId
-        )
-      },
-      {
-        name: "Share",
-        handler: this.handleShare.bind(this, this.props.player.song.id)
-      }
-    ];
-  }
 
   checkSongId(songId) {
     return this.props.userSongs.some(elem => elem.id === songId);
@@ -186,16 +169,28 @@ export class PlayerContainer extends Component {
     }
   };
 
+  handleDialogOpen = () => {
+    this.setState({
+      isDialogOpen: true
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      isDialogOpen: false
+    });
+  };
+
   render() {
-    const { playingProgress, volumeValue, isMuted } = this.state;
+    const { playingProgress, volumeValue, isMuted, isDialogOpen } = this.state;
     const { song } = this.props.player;
     const volume = isMuted ? 0 : volumeValue;
+    const songId = this.props.player.song.id;
 
     return (
       <>
         <audio src={song.songURL} ref={element => (this.audio = element)} />
         <Player
-          items={this.getItems()}
           onPlay={this.handleChangePlayingState}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
@@ -207,6 +202,23 @@ export class PlayerContainer extends Component {
           onChangeProgressStart={this.handleChangeProgressStart}
           onChangeProgressEnd={this.handleChangeProgressEnd}
           player={this.props.player}
+          onDialogOpen={this.handleDialogOpen.bind(this, song)}
+          addRemoveTitle={this.getMenuItemTitle(
+            songId,
+            this.checkSongId(songId)
+          )}
+          onShare={this.handleShare.bind(this, songId)}
+          onAddRemoveSong={this.handleOperation.bind(
+            this,
+            songId,
+            this.checkSongId(songId)
+          )}
+        />
+        <LegalDialog
+          isOpen={isDialogOpen}
+          onClose={this.handleDialogClose}
+          licenseInfo={song.licenseInfo ? song.licenseInfo : ""}
+          licenseURL={song.licenseURL ? song.licenseURL : ""}
         />
       </>
     );

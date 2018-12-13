@@ -15,15 +15,16 @@ import {
 
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
 import DotsMenu from "./DotsMenu";
+import DotsMenuItem from "./DotsMenuItem";
+import LegalDialog from "./LegalDialog";
 
 import { connect } from "react-redux";
 import { playSong } from "../../store/actionCreators/player";
 import { pauseSong } from "../../store/actionCreators/player";
 import {
-  loadCachedUserSongs,
   addUserSong,
   removeUserSong
-} from "../../store/actionCreators/user";
+} from "../../store/actionCreators/userSongs";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -69,34 +70,27 @@ class TableLayout extends Component {
     auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
-    loadCachedUserSongs: PropTypes.func.isRequired,
     addUserSong: PropTypes.func.isRequired,
     removeUserSong: PropTypes.func.isRequired
   };
 
   state = {
     order: "asc",
-    orderBy: "number"
+    orderBy: "number",
+    songToDialog: null
   };
 
-  getItems(data) {
-    let checkSongId = this.checkSongId(data.id);
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      {
-        name: this.getMenuItemTitle(data.id, checkSongId),
-        handler: this.handleOperation.bind(this, data.id, checkSongId)
-      },
-      { name: "Share", handler: this.handleShare.bind(this, data.id) }
-    ];
-  }
+  handleDialogOpen = song => {
+    this.setState({
+      songToDialog: song
+    });
+  };
 
-  componentDidMount() {
-    this.props.loadCachedUserSongs(this.props.auth.user.uid);
-  }
+  handleDialogClose = () => {
+    this.setState({
+      songToDialog: null
+    });
+  };
 
   checkSongId(songId) {
     return this.props.userSongs.some(elem => elem.id === songId);
@@ -196,7 +190,7 @@ class TableLayout extends Component {
 
   render() {
     const { classes, songs } = this.props;
-    const { order, orderBy } = this.state;
+    const { order, orderBy, songToDialog } = this.state;
 
     if (songs.length === 0) {
       return null;
@@ -332,13 +326,42 @@ class TableLayout extends Component {
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu items={this.getItems(data)} />
+                        <DotsMenu>
+                          <DotsMenuItem
+                            onClick={this.handleDialogOpen.bind(this, data)}
+                          >
+                            Legal info
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleOperation.bind(
+                              this,
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
+                          >
+                            {this.getMenuItemTitle(
+                              data.id,
+                              this.checkSongId(data.id)
+                            )}
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleShare.bind(this, data.id)}
+                          >
+                            Share
+                          </DotsMenuItem>
+                        </DotsMenu>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            <LegalDialog
+              isOpen={!!songToDialog}
+              onClose={this.handleDialogClose}
+              licenseInfo={songToDialog ? songToDialog.licenseInfo : ""}
+              licenseURL={songToDialog ? songToDialog.licenseURL : ""}
+            />
           </div>
         </Paper>
       </>
@@ -359,7 +382,6 @@ const mapStateToProps = ({ player, userSongs, auth, search }, { songs }) => ({
 const mapDispatchToProps = {
   playSong,
   pauseSong,
-  loadCachedUserSongs,
   addUserSong,
   removeUserSong
 };

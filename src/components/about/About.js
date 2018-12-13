@@ -6,7 +6,7 @@ import AboutCard from "./AboutCard";
 import Title from "../shared/Title";
 import PropTypes from "prop-types";
 
-const styles = () => ({
+const styles = theme => ({
   text: {
     fontSize: "1.2rem",
     paddingBottom: "0.5rem"
@@ -17,7 +17,7 @@ const styles = () => ({
   link: {
     textDecoration: "none",
     fontSize: "1.35rem",
-    color: "#3391ff"
+    color: theme.palette.primary.main
   },
   mentor: {
     padding: "2rem 0 1rem"
@@ -88,4 +88,4 @@ About.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(About);
+export default withStyles(styles, { withTheme: true })(About);

@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core";
 import PropTypes from "prop-types";
+import Typography from "@material-ui/core/Typography";
 
 const styles = theme => ({
   error: {
@@ -10,7 +11,9 @@ const styles = theme => ({
 });
 
 const Error = ({ text, classes }) => (
-  <div className={classes.error}>Error: {text}</div>
+  <Typography className={classes.error} component="p">
+    Error: {text}
+  </Typography>
 );
 
 Error.propTypes = {

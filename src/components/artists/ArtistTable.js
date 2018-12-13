@@ -5,14 +5,17 @@ import { Card, CardMedia, Typography } from "@material-ui/core";
 
 import { loadArtistsSongs } from "../../store/actionCreators/songs";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
-import TableLayout from "../shared/TableLayout";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 
+import TableLayout from "../shared/TableLayout";
+import Loader from "../shared/Loader";
 import { connect } from "react-redux";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
   container: {
     display: `flex`,
+    margin: `1rem 0 2.5rem`,
     alignItems: `center`
   },
   artistCard: {
@@ -20,13 +23,13 @@ const styles = {
     backgroundColor: `inherit`
   },
   artistImage: {
-    width: 220,
+    width: 300,
     boxSizing: `border-box`,
     borderRadius: `50%`,
     boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`
   },
   artistName: {
-    padding: `1rem`,
+    paddingLeft: `1rem`,
     display: `inline-block`,
     overflow: `hidden`,
     whiteSpace: `nowrap`,
@@ -36,21 +39,30 @@ const styles = {
 
 class ArtistTable extends Component {
   static propTypes = {
-    match: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired,
+    match: PropTypes.object,
+    artists: PropTypes.array,
     songs: PropTypes.array,
-    classes: PropTypes.object.isRequired,
+    auth: PropTypes.object,
+    classes: PropTypes.object,
     loadArtistsSongs: PropTypes.func,
-    loadCachedArtists: PropTypes.func
+    loadCachedArtists: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
     this.props.loadArtistsSongs(this.props.match.params.id);
     this.props.loadCachedArtists();
+    this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         {this.props.artists.map(
@@ -67,7 +79,7 @@ class ArtistTable extends Component {
                     />
                   </Card>
                   <Typography
-                    variant="h6"
+                    variant="h4"
                     component="h2"
                     className={classes.artistName}
                   >
@@ -83,14 +95,17 @@ class ArtistTable extends Component {
   }
 }
 
-const mapStateToProps = ({ artists, songs }) => ({
+const mapStateToProps = ({ artists, songs, auth, loader }) => ({
   artists,
-  songs
+  songs,
+  auth,
+  loader
 });
 
 const mapDispatchToProps = {
   loadArtistsSongs,
-  loadCachedArtists
+  loadCachedArtists,
+  loadCachedUserSongs
 };
 
 export default connect(

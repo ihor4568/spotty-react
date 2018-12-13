@@ -7,6 +7,7 @@ import StarsRating from "../shared/StarsRating";
 import DotsMenu from "../shared/DotsMenu";
 
 import PropTypes from "prop-types";
+import DotsMenuItem from "../shared/DotsMenuItem";
 
 const styles = theme => ({
   mediaPlayerAligner: {
@@ -121,8 +122,11 @@ const Player = ({
   onMute,
   onChangeProgressStart,
   onChangeProgressEnd,
-  items,
-  player
+  player,
+  onDialogOpen,
+  onShare,
+  onAddRemoveSong,
+  addRemoveTitle
 }) => (
   <div
     className={
@@ -209,7 +213,13 @@ const Player = ({
         <StarsRating />
       </div>
       <div className={classes.threeDotMenu}>
-        <DotsMenu items={items} />
+        <DotsMenu>
+          <DotsMenuItem onClick={onDialogOpen}>Legal info</DotsMenuItem>
+          <DotsMenuItem onClick={onAddRemoveSong}>
+            {addRemoveTitle}
+          </DotsMenuItem>
+          <DotsMenuItem onClick={onShare}>Share</DotsMenuItem>
+        </DotsMenu>
       </div>
     </div>
   </div>
@@ -229,8 +239,11 @@ Player.propTypes = {
   onMute: PropTypes.func.isRequired,
   onChangeProgressStart: PropTypes.func.isRequired,
   onChangeProgressEnd: PropTypes.func.isRequired,
-  items: PropTypes.array.isRequired,
-  player: PropTypes.object.isRequired
+  player: PropTypes.object.isRequired,
+  onDialogOpen: PropTypes.func.isRequired,
+  onShare: PropTypes.func.isRequired,
+  onAddRemoveSong: PropTypes.func.isRequired,
+  addRemoveTitle: PropTypes.string.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(Player);

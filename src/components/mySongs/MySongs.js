@@ -5,17 +5,17 @@ import TableLayout from "../shared/TableLayout";
 
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { loadCachedUserSongs } from "../../store/actionCreators/user";
-// import { updateSongs } from "../../store/actionCreators/songs";
+import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
+import Loader from "../shared/Loader";
 
 class MySongs extends Component {
   static propTypes = {
     userSongs: PropTypes.array,
     songs: PropTypes.array,
     auth: PropTypes.object,
-    loadCachedUserSongs: PropTypes.func.isRequired,
-    // updateSongs: PropTypes.func.isRequired,
-    loadSongs: PropTypes.func
+    loadSongs: PropTypes.func,
+    loadCachedUserSongs: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   // state = {
@@ -27,6 +27,12 @@ class MySongs extends Component {
   }
 
   render() {
+    const { loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
+
     return (
       <>
         <Title name={"My Songs"} />
@@ -36,9 +42,10 @@ class MySongs extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, userSongs }) => ({
+const mapStateToProps = ({ auth, userSongs, loader }) => ({
   auth,
-  songs: userSongs
+  songs: userSongs,
+  loader
 });
 
 const mapDispatchToProps = {

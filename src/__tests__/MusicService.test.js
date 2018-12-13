@@ -3,14 +3,13 @@ import faker from "faker";
 import {
   data as expectedResult,
   snapshot,
-  FirebaseService
+  dbInstance
 } from "../services/FirebaseService";
 
 import { MusicService } from "../services/MusicService";
 
 jest.mock("../services/FirebaseService");
 
-const database = FirebaseService.database();
 const randomId = faker.random.uuid();
 
 afterEach(() => {
@@ -27,8 +26,8 @@ describe("Music Service", () => {
 
     it("should call firebase function with proper arguments", async () => {
       await MusicService.getAllAlbums();
-      expect(database.ref).toHaveBeenCalledWith("albums");
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith("albums");
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -40,8 +39,8 @@ describe("Music Service", () => {
 
     it("should call firebase function with proper arguments", async () => {
       await MusicService.getSong(randomId);
-      expect(database.ref).toHaveBeenCalledWith(`songs/${randomId}`);
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`songs/${randomId}`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -54,8 +53,8 @@ describe("Music Service", () => {
 
     it("should call firebase function with proper arguments", async () => {
       await MusicService.getAllArtists();
-      expect(database.ref).toHaveBeenCalledWith("artists");
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith("artists");
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -68,8 +67,8 @@ describe("Music Service", () => {
 
     it("should call firebase function with proper arguments", async () => {
       await MusicService.getArtistSongs(randomId);
-      expect(database.ref).toHaveBeenCalledWith(`artists/${randomId}`);
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`artists/${randomId}`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -82,8 +81,8 @@ describe("Music Service", () => {
 
     it("should call firebase function with proper arguments", async () => {
       await MusicService.getAlbumSongs(randomId);
-      expect(database.ref).toHaveBeenCalledWith(`albums/${randomId}`);
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`albums/${randomId}`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -111,8 +110,8 @@ describe("Music Service", () => {
     it("should call firebase function with proper arguments", async () => {
       snapshot.val = () => returnValue;
       await MusicService.getUserSongs(randomId);
-      expect(database.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
   });
 
@@ -127,22 +126,22 @@ describe("Music Service", () => {
     it("should call firebase function with proper arguments", async () => {
       snapshot.val = () => returnValue;
       await MusicService.setUserSong(randomId, "song3");
-      expect(database.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
-      expect(database.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
     });
 
     it("should call firebase function with proper arguments if there is no given song as the argument yet", async () => {
       snapshot.val = () => returnValue;
       await MusicService.setUserSong(randomId, "song3");
-      expect(database.ref).toHaveBeenCalledWith(`users/${randomId}/songs/2`);
-      expect(database.set).toHaveBeenCalledWith("song3");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`users/${randomId}/songs/2`);
+      expect(dbInstance.set).toHaveBeenCalledWith("song3");
     });
 
     it("should call firebase function with proper arguments if once function's promise returns null", async () => {
       snapshot.val = () => null;
       await MusicService.setUserSong(randomId, "song1");
-      expect(database.ref).toHaveBeenCalledWith(`users/${randomId}/songs/0`);
-      expect(database.set).toHaveBeenCalledWith("song1");
+      expect(dbInstance.ref).toHaveBeenCalledWith(`users/${randomId}/songs/0`);
+      expect(dbInstance.set).toHaveBeenCalledWith("song1");
     });
   });
 
@@ -151,9 +150,9 @@ describe("Music Service", () => {
       const prev = snapshot.val;
       snapshot.val = () => ["song1", "song2"];
       await MusicService.removeUserSong(randomId, "song1");
-      expect(database.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
-      expect(database.once).toHaveBeenCalledWith("value");
-      expect(database.set).toHaveBeenCalledWith(["song2"]);
+      expect(dbInstance.ref).toHaveBeenCalledWith(`users/${randomId}/songs`);
+      expect(dbInstance.once).toHaveBeenCalledWith("value");
+      expect(dbInstance.set).toHaveBeenCalledWith(["song2"]);
       snapshot.val = prev;
     });
   });

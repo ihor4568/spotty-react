@@ -5,13 +5,13 @@ export const data = {
 
 export const snapshot = { val: () => data };
 
-const database = jest.fn();
-
-database.mockReturnValue({
+export const dbInstance = {
   ref: jest.fn().mockReturnThis(),
   once: jest.fn(() => Promise.resolve(snapshot)),
   set: jest.fn()
-});
+};
+
+const database = jest.fn(() => dbInstance);
 
 export const FirebaseService = {
   database,

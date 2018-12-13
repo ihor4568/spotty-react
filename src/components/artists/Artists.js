@@ -29,7 +29,7 @@ const styles = theme => ({
     boxSizing: `border-box`,
     borderRadius: `50%`,
     boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`,
-    height: theme.props.cardMedia.artistCardHeight
+    minHeight: theme.props.cardMedia.artistCardHeight
   },
   artistName: {
     margin: `1rem 0 0 50%`,

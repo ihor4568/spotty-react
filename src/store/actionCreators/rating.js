@@ -19,15 +19,20 @@ export function loadSongsRating(userId) {
 
 export function setNewRatingForSong(userId, songId, ratingValue) {
   return async dispatch => {
-    const newRating = MusicService.setNewSongRating(
-      userId,
-      songId,
-      ratingValue
-    );
-    dispatch({
-      type: actionTypes.SET_RATING_SONG,
-      payload: newRating
-    });
-    dispatch(loadSongsRating(userId));
+    try {
+      dispatch({ type: actionTypes.SET_RATING_SONG_START });
+      const newRating = MusicService.setNewSongRating(
+        userId,
+        songId,
+        ratingValue
+      );
+      dispatch({
+        type: actionTypes.SET_RATING_SONG_SUCCESS,
+        payload: newRating
+      });
+      dispatch(loadSongsRating(userId));
+    } catch (e) {
+      dispatch({ type: actionTypes.SET_RATING_SONG_FAIL });
+    }
   };
 }

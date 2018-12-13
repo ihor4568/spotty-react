@@ -78,8 +78,8 @@ class StarsRating extends Component {
     );
   };
 
-  componentWillUpdate(nextProps, nextState) {
-    if (nextProps !== this.props) {
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
       this.setState(() => ({
         ...this.state,
         rating: this.getSongRating()
@@ -91,10 +91,9 @@ class StarsRating extends Component {
     return new Array(count).fill(0).map((_, i) => i);
   };
 
-  createStars = count => {
+  getStartClassName = arr => {
     const { classes } = this.props;
-
-    return this.createStarsMaxCount(count).map((item, i) => {
+    return arr.map((item, i) => {
       let starClass = classes.starsRating;
       if (
         (this.state.tempRating >= i && this.state.tempRating !== null) ||
@@ -119,7 +118,7 @@ class StarsRating extends Component {
 
     return (
       <div className={classes.starsRatingContainer}>
-        {this.createStars(maxRating)}
+        {this.getStartClassName(this.createStarsMaxCount(maxRating))}
       </div>
     );
   }

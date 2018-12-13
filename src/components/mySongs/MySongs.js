@@ -18,10 +18,6 @@ class MySongs extends Component {
     loader: PropTypes.bool.isRequired
   };
 
-  // state = {
-  //   newSongsList: {}
-  // };
-
   componentDidMount() {
     this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }

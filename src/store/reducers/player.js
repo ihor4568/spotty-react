@@ -3,7 +3,8 @@ import * as actionTypes from "../actionTypes";
 export const INITIAL_STATE = {
   isPlaying: false,
   song: {},
-  number: null
+  number: null,
+  savedSongs: {}
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {
@@ -21,6 +22,11 @@ export default function playerReducer(state = INITIAL_STATE, action) {
         song: action.song,
         isPlaying: false,
         number: action.number
+      };
+    case actionTypes.SAVE_SONGS:
+      return {
+        ...state,
+        savedSongs: action.savedSongs
       };
     default:
       return state;

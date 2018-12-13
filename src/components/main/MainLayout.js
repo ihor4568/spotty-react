@@ -1,4 +1,4 @@
-import Header from "./Header";
+import Header from "../shared/Header";
 import Main from "./Main";
 import PlayerContainer from "../player/PlayerContainer";
 import React from "react";

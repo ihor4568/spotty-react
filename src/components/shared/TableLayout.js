@@ -14,12 +14,16 @@ import {
 } from "@material-ui/core";
 
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
-import DotsMenu from "./DotsMenu";
-import DotsMenuItem from "./DotsMenuItem";
+import DotsMenu from "./dotsMenu/DotsMenu";
+import DotsMenuItem from "./dotsMenu/DotsMenuItem";
 import LegalDialog from "./LegalDialog";
 
 import { connect } from "react-redux";
-import { playSong, pauseSong } from "../../store/actionCreators/player";
+import {
+  playSong,
+  pauseSong,
+  saveSongs
+} from "../../store/actionCreators/player";
 
 import {
   addUserSong,
@@ -70,6 +74,7 @@ class TableLayout extends Component {
     auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
+    saveSongs: PropTypes.func.isRequired,
     addUserSong: PropTypes.func.isRequired,
     removeUserSong: PropTypes.func.isRequired
   };
@@ -169,11 +174,22 @@ class TableLayout extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
-  handlePlayPauseButton = (song, tableSong) => {
-    if (this.props.player.isPlaying && song.id === this.props.player.song.id) {
-      this.props.pauseSong(song, tableSong.number - 1);
+  handlePlayPauseButton = song => {
+    const { isPlaying, savedSongs, number } = this.props.player;
+    const { pauseSong, saveSongs, playSong, songs } = this.props;
+    const i = song.number - 1;
+
+    if (isPlaying) {
+      if (songs[number].id === this.props.player.song.id) {
+        pauseSong(savedSongs[i], number);
+      } else {
+        pauseSong(savedSongs[i], number);
+        saveSongs(songs);
+        playSong(songs[i], i);
+      }
     } else {
-      this.props.playSong(song, tableSong.number - 1);
+      saveSongs(songs);
+      playSong(songs[i], i);
     }
   };
 
@@ -288,7 +304,7 @@ class TableLayout extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            this.handlePlayPauseButton(songs[i], song);
+                            this.handlePlayPauseButton(song);
                           }}
                         >
                           {this.getButtonIcon(song)}
@@ -382,7 +398,8 @@ const mapDispatchToProps = {
   playSong,
   pauseSong,
   addUserSong,
-  removeUserSong
+  removeUserSong,
+  saveSongs
 };
 
 export default connect(

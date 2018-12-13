@@ -32,22 +32,6 @@ export function loadArtistsSongs(artist) {
   };
 }
 
-// getState().songs = getState().userSongs;
-// console.log(getState().songs);
-// console.log(getState().userSongs);
-// songs.updateSongs(getState().userSongs);
-// console.log("1", getState().songs);
-// console.log("2", getState().userSongs);
-
-// export function updateSongs() {
-//   return (dispatch, getState) => {
-//     dispatch({
-//       type: actionTypes.FETCH_ARTISTS_SONGS_SUCCESS,
-//       payload: getState().userSongs
-//     });
-//   };
-// }
-
 export function getArtistSongs(payload) {
   return {
     type: actionTypes.FETCH_ARTISTS_SONGS_SUCCESS,

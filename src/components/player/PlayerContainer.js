@@ -36,7 +36,6 @@ export class PlayerContainer extends Component {
   static propTypes = {
     userSongs: PropTypes.array,
     auth: PropTypes.object,
-    songs: PropTypes.array.isRequired, //Do we need it?!?
     player: PropTypes.object,
     playSong: PropTypes.func,
     pauseSong: PropTypes.func,
@@ -92,43 +91,40 @@ export class PlayerContainer extends Component {
   };
 
   handleChangePlayingState = () => {
-    const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, number } = this.props.player;
-    // console.log(currentSongsList);
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(songs[number], number);
+      pauseSong(savedSongs[number], number);
     } else {
-      playSong(songs[number], number);
-      this.setState({ currentSongsList: songs });
-      // this.setState({ number: number });
+      playSong(savedSongs[number], number);
     }
   };
 
   handlePreviousSong = () => {
-    const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, number } = this.props.player;
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(this.state.currentSongsList[number], number);
+      pauseSong(savedSongs[number], number);
     }
 
     number === 0
-      ? playSong(songs[songs.length - 1], songs.length - 1)
-      : playSong(songs[number - 1], number - 1);
+      ? playSong(savedSongs[savedSongs.length - 1], savedSongs.length - 1)
+      : playSong(savedSongs[number - 1], number - 1);
   };
 
   handleNextSong = () => {
-    const { songs, pauseSong, playSong } = this.props;
-    const { isPlaying, number } = this.props.player;
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(songs[number], number);
+      pauseSong(savedSongs[number], number);
     }
 
-    number + 1 === songs.length
-      ? playSong(songs[0], 0)
-      : playSong(songs[number + 1], number + 1);
+    number + 1 === savedSongs.length
+      ? playSong(savedSongs[0], 0)
+      : playSong(savedSongs[number + 1], number + 1);
   };
 
   handleChangeProgress = (event, value) => {
@@ -263,7 +259,6 @@ export class PlayerContainer extends Component {
 
 function mapStateToProps(state) {
   return {
-    songs: state.songs,
     player: state.player,
     userSongs: state.userSongs,
     auth: state.auth

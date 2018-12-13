@@ -4,10 +4,10 @@ import { Button, Typography } from "@material-ui/core";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
 import StarsRating from "../shared/StarsRating";
-import DotsMenu from "../shared/DotsMenu";
+import DotsMenu from "../shared/dotsMenu/DotsMenu";
 
 import PropTypes from "prop-types";
-import DotsMenuItem from "../shared/DotsMenuItem";
+import DotsMenuItem from "../shared/dotsMenu/DotsMenuItem";
 
 const styles = theme => ({
   mediaPlayerAligner: {

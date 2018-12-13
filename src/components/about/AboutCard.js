@@ -16,7 +16,8 @@ const styles = theme => ({
     textDecoration: "none"
   },
   media: {
-    height: theme.props.cardMedia.aboutCardHeight
+    minHeight: theme.props.cardMedia.aboutCardHeight,
+    objectFit: "cover"
   }
 });
 

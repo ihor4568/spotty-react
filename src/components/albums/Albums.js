@@ -37,8 +37,15 @@ const styles = theme => ({
     }
   },
   media: {
-    minHeight: theme.props.cardMedia.albumCardHeight,
-    objectFit: "cover"
+    position: "absolute",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "auto"
+  },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
   }
 });
 
@@ -71,12 +78,14 @@ class Albums extends Component {
               <Card>
                 <Link to={`${match.url}/${album.id}`} className={classes.link}>
                   <CardActionArea>
-                    <CardMedia
-                      className={classes.media}
-                      component="img"
-                      image={album.albumCoverURL}
-                      title={album.albumName}
-                    />
+                    <div className={classes.imageWrapper}>
+                      <CardMedia
+                        className={classes.media}
+                        component="img"
+                        image={album.albumCoverURL}
+                        title={album.albumName}
+                      />
+                    </div>
                     <CardContent className={classes.albumDescription}>
                       <Typography
                         variant="h6"

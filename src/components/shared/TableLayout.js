@@ -180,7 +180,7 @@ class TableLayout extends Component {
     const i = song.number - 1;
 
     if (isPlaying) {
-      if (songs[number].id === this.props.player.song.id) {
+      if (song.id === this.props.player.song.id) {
         pauseSong(savedSongs[i], number);
       } else {
         pauseSong(savedSongs[i], number);

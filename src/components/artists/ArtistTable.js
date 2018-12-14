@@ -86,7 +86,10 @@ class ArtistTable extends Component {
                     {artist.artistName}
                   </Typography>
                 </div>
-                <TableLayout songs={this.props.songs} />
+                <TableLayout
+                  songs={this.props.songs}
+                  match={this.props.match.params.id}
+                />
               </div>
             )
         )}

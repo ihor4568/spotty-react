@@ -91,34 +91,31 @@ class StarsRating extends Component {
     return new Array(count).fill(0).map((_, i) => i);
   };
 
-  getStartClassName = arr => {
+  getStarClassName(i) {
     const { classes } = this.props;
-    return arr.map((item, i) => {
-      let starClass = classes.starsRating;
-      if (
-        (this.state.tempRating >= i && this.state.tempRating !== null) ||
-        (this.state.rating >= i + 1 && this.state.rating !== null)
-      ) {
-        starClass = `${classes.starsRating} ${classes.active}`;
-      }
-      return (
-        <Star
-          key={i}
-          className={starClass}
-          onMouseOver={() => this.handleMouseover(i)}
-          onMouseOut={this.handleMouseout}
-          onClick={() => this.rate(i)}
-        />
-      );
-    });
-  };
+    if (
+      (this.state.tempRating >= i && this.state.tempRating !== null) ||
+      (this.state.rating >= i + 1 && this.state.rating !== null)
+    ) {
+      return `${classes.starsRating} ${classes.active}`;
+    }
+    return classes.starsRating;
+  }
 
   render() {
     const { classes, maxRating } = this.props;
 
     return (
       <div className={classes.starsRatingContainer}>
-        {this.getStartClassName(this.createStarsMaxCount(maxRating))}
+        {this.createStarsMaxCount(maxRating).map((_, i) => (
+          <Star
+            key={i}
+            className={this.getStarClassName(i)}
+            onMouseOver={() => this.handleMouseover(i)}
+            onMouseOut={this.handleMouseout}
+            onClick={() => this.rate(i)}
+          />
+        ))}
       </div>
     );
   }

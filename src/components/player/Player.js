@@ -4,10 +4,10 @@ import { Button, Typography } from "@material-ui/core";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
 import Slider from "@material-ui/lab/Slider";
 import StarsRating from "../shared/StarsRating";
-import DotsMenu from "../shared/DotsMenu";
+import DotsMenu from "../shared/dotsMenu/DotsMenu";
 
 import PropTypes from "prop-types";
-import DotsMenuItem from "../shared/DotsMenuItem";
+import DotsMenuItem from "../shared/dotsMenu/DotsMenuItem";
 
 const styles = theme => ({
   mediaPlayerAligner: {
@@ -111,6 +111,8 @@ const styles = theme => ({
 const Player = ({
   classes,
   onPlay,
+  onPreviousClick,
+  onNextClick,
   onChangeProgress,
   progress,
   song,
@@ -143,21 +145,30 @@ const Player = ({
       <div className={classes.audioInfoContainer}>
         <div className={classes.audioInfo}>
           <div className={classes.imageContainer}>
-            <img className={classes.image} src={song.image} alt="album title" />
+            <img
+              className={classes.image}
+              src={song.album && song.album.coverURL}
+              alt="album title"
+            />
           </div>
           <div className={classes.audioInfoText}>
             <Typography variant="h6" className={classes.songInfo}>
               {song.name}
             </Typography>
             <Typography component="h2" className={classes.albumArtistInfo}>
-              {song.album} - {song.artists}
+              {song.album && song.album.name} -{" "}
+              {song.artistsNames && song.artistsNames.join(", ")}
             </Typography>
           </div>
         </div>
       </div>
       <div className={classes.controlsContainer}>
         <div className={classes.controls}>
-          <Button className={classes.prevNextButton} variant="contained">
+          <Button
+            className={classes.prevNextButton}
+            onClick={onPreviousClick}
+            variant="contained"
+          >
             {<SkipPrevious fontSize={"large"} />}
           </Button>
           <Button
@@ -174,7 +185,11 @@ const Player = ({
               <PlayArrow className={classes.playButtonStateIcon} />
             )}
           </Button>
-          <Button className={classes.prevNextButton} variant="contained">
+          <Button
+            className={classes.prevNextButton}
+            onClick={onNextClick}
+            variant="contained"
+          >
             {<SkipNext fontSize={"large"} />}
           </Button>
         </div>
@@ -195,7 +210,7 @@ const Player = ({
         </div>
       </div>
       <div>
-        <StarsRating />
+        <StarsRating maxRating={5} />
       </div>
       <div className={classes.threeDotMenu}>
         <DotsMenu>
@@ -213,6 +228,8 @@ const Player = ({
 Player.propTypes = {
   classes: PropTypes.object,
   onPlay: PropTypes.func.isRequired,
+  onPreviousClick: PropTypes.func.isRequired,
+  onNextClick: PropTypes.func.isRequired,
   onChangeProgress: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
   volume: PropTypes.number.isRequired,

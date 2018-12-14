@@ -37,7 +37,8 @@ const styles = theme => ({
     }
   },
   media: {
-    height: theme.props.cardMedia.albumCardHeight
+    minHeight: theme.props.cardMedia.albumCardHeight,
+    objectFit: "cover"
   }
 });
 

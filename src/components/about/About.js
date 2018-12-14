@@ -6,7 +6,7 @@ import AboutCard from "./AboutCard";
 import Title from "../shared/Title";
 import PropTypes from "prop-types";
 
-const styles = () => ({
+const styles = theme => ({
   text: {
     fontSize: "1.2rem",
     paddingBottom: "0.5rem"
@@ -16,7 +16,8 @@ const styles = () => ({
   },
   link: {
     textDecoration: "none",
-    fontSize: "1.35rem"
+    fontSize: "1.35rem",
+    color: theme.palette.primary.main
   },
   mentor: {
     padding: "2rem 0 1rem"
@@ -64,14 +65,9 @@ function About({ classes }) {
       </Grid>
       <Typography component="p" variant="h6" className={classes.mentor}>
         Mentor:{" "}
-        <a
-          className={classes.link}
-          href="https://www.linkedin.com/in/ihor-cheremskyi-035b5714b/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <span className={classes.link} href="#">
           Ihor Cheremskyi
-        </a>
+        </span>
       </Typography>
       <Typography component="p" variant="h6">
         Source code:{" "}
@@ -92,4 +88,4 @@ About.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(About);
+export default withStyles(styles, { withTheme: true })(About);

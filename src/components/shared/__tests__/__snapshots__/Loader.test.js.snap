@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader component should render correctly 1`] = `
+<div
+  className="Loader-progressContainer-2"
+>
+  <circular-progress
+    className="Loader-progress-1"
+    size={160}
+  />
+</div>
+`;

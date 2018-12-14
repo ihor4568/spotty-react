@@ -1,7 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import connect from "react-redux/es/connect/connect";
-import MainLayout from "../shared/MainLayout";
+import MainLayout from "../main/MainLayout";
 
 function PrivateRoute({ component: Component, ...rest }) {
   const { isLoaded, isLoggedIn } = rest;

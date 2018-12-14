@@ -1,16 +1,24 @@
-import { PLAY_SONG } from "../actionTypes";
-import { PAUSE_SONG } from "../actionTypes";
+import * as actionTypes from "../actionTypes";
 
-export function playSong(song) {
+export function playSong(song, number) {
   return {
-    type: PLAY_SONG,
-    song
+    type: actionTypes.PLAY_SONG,
+    song,
+    number
   };
 }
 
 export function pauseSong(song) {
   return {
-    type: PAUSE_SONG,
+    type: actionTypes.PAUSE_SONG,
     song
+  };
+}
+
+export function saveSongs(savedSongs, number) {
+  return {
+    type: actionTypes.SAVE_SONGS,
+    savedSongs,
+    number
   };
 }

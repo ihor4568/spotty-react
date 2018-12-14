@@ -36,16 +36,16 @@ const styles = {
       boxShadow: `none`
     }
   },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
+  },
   media: {
     position: "absolute",
     left: "0",
     top: "0",
     width: "100%",
     height: "auto"
-  },
-  imageWrapper: {
-    position: "relative",
-    paddingTop: "100%"
   }
 };
 

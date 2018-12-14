@@ -25,6 +25,10 @@ const styles = {
     overflow: `hidden`,
     padding: `0.5rem`
   },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
+  },
   artistImage: {
     boxSizing: `border-box`,
     borderRadius: `50%`,
@@ -57,10 +61,6 @@ const styles = {
   },
   container: {
     margin: "-17px"
-  },
-  imageWrapper: {
-    position: "relative",
-    paddingTop: "100%"
   }
 };
 class Artists extends Component {

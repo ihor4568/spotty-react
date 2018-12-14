@@ -3,7 +3,7 @@ import * as actionTypes from "../actionTypes";
 export const INITIAL_STATE = {
   isPlaying: false,
   song: {},
-  number: null,
+  number: undefined,
   savedSongs: {}
 };
 

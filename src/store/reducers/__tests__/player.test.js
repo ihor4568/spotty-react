@@ -11,7 +11,7 @@ describe("player reducer", () => {
     const obj = {
       isPlaying: true,
       song: {},
-      number: null,
+      number: undefined,
       savedSongs: {}
     };
     const { song } = obj;
@@ -24,7 +24,7 @@ describe("player reducer", () => {
     const obj = {
       isPlaying: false,
       song: {},
-      number: null,
+      number: undefined,
       savedSongs: {}
     };
     const { song } = obj;

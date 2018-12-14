@@ -91,12 +91,44 @@ export class PlayerContainer extends Component {
   };
 
   handleChangePlayingState = () => {
-    if (this.props.player.isPlaying) {
-      this.props.pauseSong(this.props.player.song);
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
+
+    if (isPlaying) {
+      pauseSong(savedSongs[number]);
     } else {
-      this.props.playSong(this.props.player.song);
+      playSong(savedSongs[number], number);
     }
-    this.setPlayingState();
+  };
+
+  handlePreviousSong = () => {
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
+
+    if (isPlaying) {
+      pauseSong(savedSongs[number]);
+    }
+
+    if (number === 0) {
+      playSong(savedSongs[savedSongs.length - 1], savedSongs.length - 1);
+    } else {
+      playSong(savedSongs[number - 1], number - 1);
+    }
+  };
+
+  handleNextSong = () => {
+    const { pauseSong, playSong } = this.props;
+    const { isPlaying, number, savedSongs } = this.props.player;
+
+    if (isPlaying) {
+      pauseSong(savedSongs[number]);
+    }
+
+    if (number + 1 === savedSongs.length) {
+      playSong(savedSongs[0], 0);
+    } else {
+      playSong(savedSongs[number + 1], number + 1);
+    }
   };
 
   handleChangeProgress = (event, value) => {
@@ -120,7 +152,6 @@ export class PlayerContainer extends Component {
       this.audio.pause();
       return;
     }
-
     this.audio.play();
   };
 
@@ -137,7 +168,7 @@ export class PlayerContainer extends Component {
       this.setState({
         playingProgress: 0
       });
-      this.props.pauseSong(this.props.player.song);
+      this.handleNextSong();
     }
   };
 
@@ -189,9 +220,14 @@ export class PlayerContainer extends Component {
 
     return (
       <>
-        <audio src={song.songURL} ref={element => (this.audio = element)} />
+        <audio
+          src={song && song.songURL}
+          ref={element => (this.audio = element)}
+        />
         <Player
           onPlay={this.handleChangePlayingState}
+          onPreviousClick={this.handlePreviousSong}
+          onNextClick={this.handleNextSong}
           onChangeProgress={this.handleChangeProgress}
           progress={playingProgress}
           song={song}

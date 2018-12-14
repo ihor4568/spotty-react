@@ -219,7 +219,7 @@ class AppBarComponent extends Component {
             </IconButton>
           )}
           {enabled && <ProfileMenu />}
-          {!enabled && (
+          {!enabled && !this.props.isLoggedIn && (
             <Button color="inherit" href="/" className={classes.button}>
               Log In
             </Button>

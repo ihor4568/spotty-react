@@ -175,15 +175,15 @@ class TableLayout extends Component {
   };
 
   handlePlayPauseButton = song => {
-    const { isPlaying, savedSongs, number } = this.props.player;
+    const { isPlaying, savedSongs } = this.props.player;
     const { pauseSong, saveSongs, playSong, songs } = this.props;
     const i = song.number - 1;
 
     if (isPlaying) {
       if (song.id === this.props.player.song.id) {
-        pauseSong(savedSongs[i], number);
+        pauseSong(savedSongs[i]);
       } else {
-        pauseSong(savedSongs[i], number);
+        pauseSong(savedSongs[i]);
         saveSongs(songs);
         playSong(songs[i], i);
       }

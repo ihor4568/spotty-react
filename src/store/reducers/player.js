@@ -20,8 +20,7 @@ export default function playerReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         song: action.song,
-        isPlaying: false,
-        number: action.number
+        isPlaying: false
       };
     case actionTypes.SAVE_SONGS:
       return {

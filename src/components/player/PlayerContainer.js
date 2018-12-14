@@ -95,7 +95,7 @@ export class PlayerContainer extends Component {
     const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(savedSongs[number], number);
+      pauseSong(savedSongs[number]);
     } else {
       playSong(savedSongs[number], number);
     }
@@ -106,12 +106,14 @@ export class PlayerContainer extends Component {
     const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(savedSongs[number], number);
+      pauseSong(savedSongs[number]);
     }
 
-    number === 0
-      ? playSong(savedSongs[savedSongs.length - 1], savedSongs.length - 1)
-      : playSong(savedSongs[number - 1], number - 1);
+    if (number === 0) {
+      playSong(savedSongs[savedSongs.length - 1], savedSongs.length - 1);
+    } else {
+      playSong(savedSongs[number - 1], number - 1);
+    }
   };
 
   handleNextSong = () => {
@@ -119,12 +121,14 @@ export class PlayerContainer extends Component {
     const { isPlaying, number, savedSongs } = this.props.player;
 
     if (isPlaying) {
-      pauseSong(savedSongs[number], number);
+      pauseSong(savedSongs[number]);
     }
 
-    number + 1 === savedSongs.length
-      ? playSong(savedSongs[0], 0)
-      : playSong(savedSongs[number + 1], number + 1);
+    if (number + 1 === savedSongs.length) {
+      playSong(savedSongs[0], 0);
+    } else {
+      playSong(savedSongs[number + 1], number + 1);
+    }
   };
 
   handleChangeProgress = (event, value) => {

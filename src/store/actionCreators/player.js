@@ -8,11 +8,10 @@ export function playSong(song, number) {
   };
 }
 
-export function pauseSong(song, number) {
+export function pauseSong(song) {
   return {
     type: actionTypes.PAUSE_SONG,
-    song,
-    number
+    song
   };
 }
 

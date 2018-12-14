@@ -36,6 +36,10 @@ export function addUserSong(userId, songId) {
         type: actionTypes.ADD_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
       });
+      dispatch({
+        type: actionTypes.SAVE_SONGS,
+        savedSongs: userSongs
+      });
     } catch (e) {
       dispatch({ type: actionTypes.ADD_USER_SONG_FAIL });
     }
@@ -51,6 +55,10 @@ export function removeUserSong(userId, songId) {
       dispatch({
         type: actionTypes.REMOVE_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
+      });
+      dispatch({
+        type: actionTypes.SAVE_SONGS,
+        savedSongs: userSongs
       });
     } catch (e) {
       dispatch({ type: actionTypes.REMOVE_USER_SONG_FAIL });

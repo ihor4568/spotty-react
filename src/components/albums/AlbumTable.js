@@ -90,10 +90,7 @@ class AlbumTable extends Component {
                     </Typography>
                   </div>
                 </div>
-                <TableLayout
-                  songs={this.props.songs}
-                  match={this.props.match.params.id}
-                />
+                <TableLayout songs={this.props.songs} />
               </div>
             )
         )}

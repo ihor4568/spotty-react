@@ -47,7 +47,7 @@ describe("auth reducer", () => {
     };
 
     const result = authReducer(INITIAL_STATE, {
-      type: actionTypes.SIGN_OUT
+      type: actionTypes.SIGN_OUT_SUCCESS
     });
 
     expect(result).toEqual(newState);

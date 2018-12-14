@@ -195,7 +195,7 @@ const Player = ({
         </div>
       </div>
       <div>
-        <StarsRating />
+        <StarsRating maxRating={5} />
       </div>
       <div className={classes.threeDotMenu}>
         <DotsMenu>

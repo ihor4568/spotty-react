@@ -12,6 +12,7 @@ import userSongsReducer from "./reducers/userSongs";
 import avatarReducer from "./reducers/avatar";
 import playerReducer from "./reducers/player";
 import searchReducer from "./reducers/search";
+import ratingReducer from "./reducers/rating";
 import loaderReducer from "./reducers/loader";
 
 const logger = createLogger({
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   songs: songsReducer,
   userSongs: userSongsReducer,
   search: searchReducer,
+  rating: ratingReducer,
   loader: loaderReducer
 });
 

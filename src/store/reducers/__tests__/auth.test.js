@@ -38,6 +38,40 @@ describe("auth reducer", () => {
     expect(result).toEqual(newState);
   });
 
+  it("should handle SIGN_IN_SUCCESS action", () => {
+    const newState = {
+      ...INITIAL_STATE,
+      isLoggedIn: true,
+      user: { id: 5 },
+      isLoaded: true,
+      error: ""
+    };
+
+    const result = authReducer(INITIAL_STATE, {
+      type: actionTypes.SIGN_IN_SUCCESS,
+      user: { id: 5 }
+    });
+
+    expect(result).toEqual(newState);
+  });
+
+  it("should handle SIGN_UP_SUCCESS action", () => {
+    const newState = {
+      ...INITIAL_STATE,
+      isLoggedIn: true,
+      user: { id: 5 },
+      isLoaded: true,
+      error: ""
+    };
+
+    const result = authReducer(INITIAL_STATE, {
+      type: actionTypes.SIGN_UP_SUCCESS,
+      user: { id: 5 }
+    });
+
+    expect(result).toEqual(newState);
+  });
+
   it("should handle SIGN_OUT action", () => {
     const newState = {
       ...INITIAL_STATE,

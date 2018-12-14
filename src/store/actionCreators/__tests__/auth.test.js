@@ -2,6 +2,8 @@ import * as actionCreators from "../auth";
 import * as actionTypes from "../../actionTypes";
 import { AuthService } from "../../../services/AuthService";
 
+jest.mock("../../../services/FirebaseService");
+
 describe("auth action creators", () => {
   describe("signOut action creator", () => {
     let dispatch;

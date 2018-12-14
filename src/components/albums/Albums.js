@@ -16,7 +16,7 @@ import { connect } from "react-redux";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
 import Loader from "../shared/Loader";
 
-const styles = theme => ({
+const styles = {
   albumDescription: {
     padding: `0.5rem 1rem 0.7rem`
   },
@@ -47,7 +47,7 @@ const styles = theme => ({
     position: "relative",
     paddingTop: "100%"
   }
-});
+};
 
 class Albums extends Component {
   static propTypes = {
@@ -126,4 +126,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(Albums));
+)(withStyles(styles)(Albums));

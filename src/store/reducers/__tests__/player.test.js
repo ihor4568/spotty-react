@@ -10,7 +10,9 @@ describe("player reducer", () => {
   it("should return Object in case of PLAY_SONG action", () => {
     const obj = {
       isPlaying: true,
-      song: {}
+      song: {},
+      number: null,
+      savedSongs: {}
     };
     const { song } = obj;
     const action = { type: actionTypes.PLAY_SONG, song };
@@ -21,7 +23,9 @@ describe("player reducer", () => {
   it("should return Object in case of PAUSE_SONG action", () => {
     const obj = {
       isPlaying: false,
-      song: {}
+      song: {},
+      number: null,
+      savedSongs: {}
     };
     const { song } = obj;
     const action = { type: actionTypes.PAUSE_SONG, song };

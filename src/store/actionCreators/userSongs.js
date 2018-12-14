@@ -1,5 +1,4 @@
 import * as actionTypes from "../actionTypes";
-
 import { MusicService } from "../../services/MusicService";
 
 export function loadUserSongs(userId) {
@@ -9,7 +8,8 @@ export function loadUserSongs(userId) {
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.FETCH_USER_SONGS_SUCCESS,
-        payload: Object.values(userSongs)
+        payload: Object.values(userSongs),
+        songs: userSongs
       });
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_USER_SONGS_FAIL });
@@ -36,6 +36,10 @@ export function addUserSong(userId, songId) {
         type: actionTypes.ADD_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
       });
+      dispatch({
+        type: actionTypes.SAVE_SONGS,
+        savedSongs: userSongs
+      });
     } catch (e) {
       dispatch({ type: actionTypes.ADD_USER_SONG_FAIL });
     }
@@ -51,6 +55,10 @@ export function removeUserSong(userId, songId) {
       dispatch({
         type: actionTypes.REMOVE_USER_SONG_SUCCESS,
         payload: Object.values(userSongs)
+      });
+      dispatch({
+        type: actionTypes.SAVE_SONGS,
+        savedSongs: userSongs
       });
     } catch (e) {
       dispatch({ type: actionTypes.REMOVE_USER_SONG_FAIL });

@@ -9,7 +9,9 @@ describe("auth action creators", () => {
 
     beforeEach(() => {
       dispatch = jest.fn();
-      signOut = jest.spyOn(AuthService, "signOut");
+      signOut = jest
+        .spyOn(AuthService, "signOut")
+        .mockImplementation(() => Promise.resolve());
     });
 
     it("should return correct start action", () => {
@@ -21,16 +23,12 @@ describe("auth action creators", () => {
     });
 
     it("should call signOut service", async () => {
-      signOut.mockImplementation(() => Promise.resolve());
-
       actionCreators.signOut()(dispatch);
 
       expect(signOut).toHaveBeenCalled();
     });
 
     it("should return correct success action", async () => {
-      signOut.mockImplementation(() => Promise.resolve());
-
       await actionCreators.signOut()(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -57,8 +55,12 @@ describe("auth action creators", () => {
 
     beforeEach(() => {
       dispatch = jest.fn();
-      signUp = jest.spyOn(AuthService, "signUp");
-      check = jest.spyOn(AuthService, "check");
+      signUp = jest
+        .spyOn(AuthService, "signUp")
+        .mockImplementation(() => Promise.resolve());
+      check = jest
+        .spyOn(AuthService, "check")
+        .mockImplementation(() => Promise.resolve({ id: 1 }));
       signUpParams = {
         email: "example@mail.com",
         password: "123456",
@@ -75,10 +77,8 @@ describe("auth action creators", () => {
       });
     });
 
-    it("should call signUp service", async () => {
+    it("should return signUp success action if signUp completes successfully", async () => {
       const { email, password, name, avatarURL } = signUpParams;
-      signUp.mockImplementation(() => Promise.resolve());
-      check.mockImplementation(() => Promise.resolve({ id: 1 }));
 
       await actionCreators.signUp(signUpParams)(dispatch);
 
@@ -94,6 +94,7 @@ describe("auth action creators", () => {
       signUp.mockImplementation(() =>
         Promise.reject({ message: "Sign up error" })
       );
+
       await actionCreators.signUp(signUpParams)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
@@ -103,10 +104,10 @@ describe("auth action creators", () => {
     });
 
     it("should return correct AUTH_ERROR action if check service fails", async () => {
-      signUp.mockImplementation(() => Promise.resolve());
       check.mockImplementation(() =>
         Promise.reject({ message: "Check user error" })
       );
+
       await actionCreators.signUp(signUpParams)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({

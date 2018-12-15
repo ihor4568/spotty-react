@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
+// import CustomRouter from "./shared/CustomRouter";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";

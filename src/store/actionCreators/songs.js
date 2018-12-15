@@ -9,6 +9,7 @@ export function loadSongs(albumId) {
       dispatch(addAlbumSongs(Object.values(songs)));
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALBUM_SONGS_FAIL });
+      this.history.push("/404");
     }
   };
 }
@@ -28,6 +29,7 @@ export function loadArtistsSongs(artist) {
       dispatch(getArtistSongs(Object.values(songs)));
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ARTISTS_SONGS_FAIL });
+      this.history.push("/404");
     }
   };
 }

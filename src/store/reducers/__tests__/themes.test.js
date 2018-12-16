@@ -12,35 +12,39 @@ describe("theme reducer", () => {
 
   describe(`SET_USER_THEME_SUCCESS action`, () => {
     it("should set correct theme type", () => {
-      const actionMock = {
-        type: actionTypes.SET_USER_THEME_SUCCESS,
+      const payload = {
         themeType: "test"
       };
-      const result = themeReducer(initialState, actionMock);
 
-      expect(result.themeType).toEqual(actionMock.themeType);
+      const { themeType } = payload;
+      const action = { type: actionTypes.SET_USER_THEME_SUCCESS, themeType };
+      const result = themeReducer(initialState, action);
+
+      expect(result).toEqual(payload);
     });
   });
 
   describe(`FETCH_USER_AND_THEME_SUCCESS action`, () => {
     it("should fetch theme type", () => {
-      const actionMock = {
-        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+      const payload = {
         themeType: "test"
       };
-      const result = themeReducer(initialState, actionMock);
 
-      expect(result.themeType).toEqual(actionMock.themeType);
+      const { themeType } = payload;
+      const action = {
+        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+        themeType
+      };
+      const result = themeReducer(initialState, action);
+
+      expect(result).toEqual(payload);
     });
   });
 
   describe(`SET_DEFAULT_THEME action`, () => {
     it("should set default theme type", () => {
-      const actionMock = {
-        type: actionTypes.SET_DEFAULT_THEME
-      };
-
-      const result = themeReducer(initialState, actionMock);
+      const action = { type: actionTypes.SET_DEFAULT_THEME };
+      const result = themeReducer(initialState, action);
 
       expect(result).toEqual(initialState);
     });

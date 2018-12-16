@@ -21,7 +21,7 @@ export default function themeReducer(state = initialState, action) {
     case actionTypes.SET_DEFAULT_THEME:
       return {
         ...state,
-        themeType: "light"
+        themeType: initialState.themeType
       };
     default:
       return state;

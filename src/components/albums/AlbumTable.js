@@ -19,7 +19,7 @@ const styles = {
     fontSize: `1.2rem`
   },
   albumImage: {
-    width: 350,
+    width: 300,
     boxSizing: `border-box`
   },
   albumName: {

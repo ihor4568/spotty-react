@@ -10,8 +10,10 @@ import {
   Typography,
   InputBase
 } from "@material-ui/core";
+
+import Button from "@material-ui/core/Button";
+
 import {
-  AccountCircle,
   Menu,
   Search,
   Brightness1Outlined,
@@ -22,6 +24,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setUserTheme } from "../../store/actionCreators/themes";
 import { addSearchQuery } from "../../store/actionCreators/search";
+import { setDefaultTheme } from "../../store/actionCreators/themes";
 
 const styles = theme => ({
   appBar: {
@@ -102,6 +105,12 @@ const styles = theme => ({
         width: 200
       }
     }
+  },
+  button: {
+    margin: theme.spacing.unit
+  },
+  input: {
+    display: "none"
   }
 });
 
@@ -116,7 +125,8 @@ class AppBarComponent extends Component {
     palette: PropTypes.object,
     isLoggedIn: PropTypes.bool.isRequired,
     addSearchQuery: PropTypes.func,
-    searchQuery: PropTypes.string
+    searchQuery: PropTypes.string,
+    setDefaultTheme: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -137,20 +147,15 @@ class AppBarComponent extends Component {
     this.props.addSearchQuery(e.target.value);
   };
 
+  shouldComponentUpdate(nextProps) {
+    if (!nextProps.enabled && this.props.isLoggedIn) {
+      this.props.setDefaultTheme();
+    }
+    return true;
+  }
+
   render() {
     const { classes, enabled, searchQuery } = this.props;
-
-    const themeSwitcher = (
-      <IconButton
-        color="inherit"
-        aria-label="Toggle light/dark theme"
-        data-ga-event-category="AppBar"
-        data-ga-event-action="dark"
-        onClick={this.handleChangeTheme}
-      >
-        {this.isCurrentThemeLight() ? <Brightness1Outlined /> : <Brightness1 />}
-      </IconButton>
-    );
 
     return (
       <AppBar
@@ -198,18 +203,26 @@ class AppBarComponent extends Component {
               />
             </div>
           )}
-          {this.props.isLoggedIn && themeSwitcher}
-          {enabled ? (
-            <ProfileMenu />
-          ) : (
+          {enabled && (
             <IconButton
-              aria-owns="material-appbar"
-              aria-haspopup="true"
               color="inherit"
-              disabled
+              aria-label="Toggle light/dark theme"
+              data-ga-event-category="AppBar"
+              data-ga-event-action="dark"
+              onClick={this.handleChangeTheme}
             >
-              <AccountCircle />
+              {this.isCurrentThemeLight() ? (
+                <Brightness1Outlined />
+              ) : (
+                <Brightness1 />
+              )}
             </IconButton>
+          )}
+          {enabled && <ProfileMenu />}
+          {!enabled && !this.props.isLoggedIn && (
+            <Button color="inherit" href="/" className={classes.button}>
+              Log In
+            </Button>
           )}
         </Toolbar>
       </AppBar>
@@ -224,7 +237,8 @@ const mapStateToProps = ({ auth, search }) => ({
 
 const mapDispatchToProps = {
   setUserTheme,
-  addSearchQuery
+  addSearchQuery,
+  setDefaultTheme
 };
 
 export default connect(

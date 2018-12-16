@@ -1,5 +1,5 @@
 import React from "react";
-import Main from "./Main";
+import Main from "../main/Main";
 import AppBar from "./AppBar";
 
 const PublicLayout = ({ children }) => (

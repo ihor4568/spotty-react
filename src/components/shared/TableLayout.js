@@ -14,11 +14,17 @@ import {
 } from "@material-ui/core";
 
 import { PlayArrow, Pause, TimerSharp } from "@material-ui/icons";
-import DotsMenu from "./DotsMenu";
+import DotsMenu from "./dotsMenu/DotsMenu";
+import DotsMenuItem from "./dotsMenu/DotsMenuItem";
+import LegalDialog from "./LegalDialog";
 
 import { connect } from "react-redux";
-import { playSong } from "../../store/actionCreators/player";
-import { pauseSong } from "../../store/actionCreators/player";
+import {
+  playSong,
+  pauseSong,
+  saveSongs
+} from "../../store/actionCreators/player";
+
 import {
   addUserSong,
   removeUserSong
@@ -68,29 +74,28 @@ class TableLayout extends Component {
     auth: PropTypes.object.isRequired,
     playSong: PropTypes.func.isRequired,
     pauseSong: PropTypes.func.isRequired,
+    saveSongs: PropTypes.func.isRequired,
     addUserSong: PropTypes.func.isRequired,
     removeUserSong: PropTypes.func.isRequired
   };
 
   state = {
     order: "asc",
-    orderBy: "number"
+    orderBy: "number",
+    songToDialog: null
   };
 
-  getItems(data) {
-    let checkSongId = this.checkSongId(data.id);
-    return [
-      {
-        name: "Legal info",
-        handler: () => {}
-      },
-      {
-        name: this.getMenuItemTitle(data.id, checkSongId),
-        handler: this.handleOperation.bind(this, data.id, checkSongId)
-      },
-      { name: "Share", handler: this.handleShare.bind(this, data.id) }
-    ];
-  }
+  handleDialogOpen = song => {
+    this.setState({
+      songToDialog: song
+    });
+  };
+
+  handleDialogClose = () => {
+    this.setState({
+      songToDialog: null
+    });
+  };
 
   checkSongId(songId) {
     return this.props.userSongs.some(elem => elem.id === songId);
@@ -169,19 +174,29 @@ class TableLayout extends Component {
       : (a, b) => -this.compareDesc(a, b, orderBy);
   };
 
-  handlePlayPauseButton = data => {
-    if (this.props.player.isPlaying && data.id === this.props.player.song.id) {
-      this.props.pauseSong(data);
+  handlePlayPauseButton = song => {
+    const { isPlaying, savedSongs } = this.props.player;
+    const { pauseSong, saveSongs, playSong, songs } = this.props;
+    const i = song.number - 1;
+
+    if (isPlaying) {
+      if (song.id === this.props.player.song.id) {
+        pauseSong(savedSongs[i]);
+      } else {
+        pauseSong(savedSongs[i]);
+        saveSongs(songs);
+        playSong(songs[i], i);
+      }
     } else {
-      this.props.playSong(data);
+      saveSongs(songs);
+      playSong(songs[i], i);
     }
   };
 
-  getButtonIcon = data => {
+  getButtonIcon = song => {
     const { classes } = this.props;
-    const { isPlaying, song } = this.props.player;
-
-    if (isPlaying && data.id === song.id) {
+    const { isPlaying } = this.props.player;
+    if (isPlaying && song.id === this.props.player.song.id) {
       return <Pause className={classes.icon} />;
     } else {
       return <PlayArrow className={classes.icon} />;
@@ -190,7 +205,7 @@ class TableLayout extends Component {
 
   render() {
     const { classes, songs } = this.props;
-    const { order, orderBy } = this.state;
+    const { order, orderBy, songToDialog } = this.state;
 
     if (songs.length === 0) {
       return null;
@@ -277,7 +292,7 @@ class TableLayout extends Component {
                 {this.stableSort(
                   this.createNewSongsArray(songs),
                   this.getSorting(order, orderBy)
-                ).map((data, i) => {
+                ).map((song, i) => {
                   return (
                     <TableRow hover key={i}>
                       <TableCell
@@ -289,50 +304,79 @@ class TableLayout extends Component {
                           aria-label="PlayArrow"
                           className={classes.button}
                           onClick={() => {
-                            this.handlePlayPauseButton(data);
+                            this.handlePlayPauseButton(song);
                           }}
                         >
-                          {this.getButtonIcon(data)}
+                          {this.getButtonIcon(song)}
                         </Button>
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        {data.number}
+                        {song.number}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
                         <img
-                          src={data.image}
+                          src={song.image}
                           alt="album"
                           className={classes.image}
                         />
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.name}
+                        {song.name}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        {data.duration}
+                        {song.duration}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.artists}
+                        {song.artists}
                       </TableCell>
                       <TableCell className={classes.tableCell}>
-                        {data.album}
+                        {song.album}
                       </TableCell>
                       <TableCell
                         className={`${classes.tableCell} ${classes.fixedWidth}`}
                       >
-                        <DotsMenu items={this.getItems(data)} />
+                        <DotsMenu>
+                          <DotsMenuItem
+                            onClick={this.handleDialogOpen.bind(this, song)}
+                          >
+                            Legal info
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleOperation.bind(
+                              this,
+                              song.id,
+                              this.checkSongId(song.id)
+                            )}
+                          >
+                            {this.getMenuItemTitle(
+                              song.id,
+                              this.checkSongId(song.id)
+                            )}
+                          </DotsMenuItem>
+                          <DotsMenuItem
+                            onClick={this.handleShare.bind(this, song.id)}
+                          >
+                            Share
+                          </DotsMenuItem>
+                        </DotsMenu>
                       </TableCell>
                     </TableRow>
                   );
                 })}
               </TableBody>
             </Table>
+            <LegalDialog
+              isOpen={!!songToDialog}
+              onClose={this.handleDialogClose}
+              licenseInfo={songToDialog ? songToDialog.licenseInfo : ""}
+              licenseURL={songToDialog ? songToDialog.licenseURL : ""}
+            />
           </div>
         </Paper>
       </>
@@ -354,7 +398,8 @@ const mapDispatchToProps = {
   playSong,
   pauseSong,
   addUserSong,
-  removeUserSong
+  removeUserSong,
+  saveSongs
 };
 
 export default connect(

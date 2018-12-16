@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Redirect } from "react-router-dom";
-// import CustomRouter from "./shared/CustomRouter";
+import { Router, Switch, Redirect } from "react-router-dom";
+import history from "./shared/history";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -42,7 +42,7 @@ export class App extends Component {
 
     return (
       <ThemeProvider>
-        <BrowserRouter>
+        <Router history={history}>
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />
@@ -57,7 +57,7 @@ export class App extends Component {
               <PrivateRoute component={NotFound} />
             </Switch>
           </div>
-        </BrowserRouter>
+        </Router>
       </ThemeProvider>
     );
   }

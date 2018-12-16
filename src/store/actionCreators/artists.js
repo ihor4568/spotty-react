@@ -14,15 +14,6 @@ export function loadArtists() {
   };
 }
 
-export function loadCachedArtists() {
-  return (dispatch, getState) => {
-    if (getState().artists.length) {
-      return;
-    }
-    dispatch(loadArtists());
-  };
-}
-
 export function addArtists(payload) {
   return {
     type: actionTypes.ADD_ARTISTS_SUCCESS,
@@ -33,5 +24,14 @@ export function addArtists(payload) {
 export function addArtistsFail() {
   return {
     type: actionTypes.ADD_ARTISTS_FAIL
+  };
+}
+
+export function loadCachedArtists() {
+  return (dispatch, getState) => {
+    if (getState().artists.length) {
+      return;
+    }
+    dispatch(loadArtists());
   };
 }

@@ -4,23 +4,12 @@ import * as actionTypes from "../../actionTypes";
 import { MusicService } from "../../../services/MusicService";
 
 describe("artists action creators", () => {
-  describe("addArtists", () => {
-    it("should return correct action", () => {
-      const payload = { prop: 10 };
-      const expected = {
-        type: actionTypes.ADD_ARTISTS_SUCCESS,
-        payload
-      };
-      expect(actionCreators.addArtists(payload)).toEqual(expected);
-    });
-  });
-
   describe("loadArtists", () => {
     describe("success", () => {
       let promise;
       const sampleArtists = {
         artis1: {
-          id: "4th34th",
+          id: "sdfgsdfgs",
           name: "artist1"
         }
       };
@@ -60,36 +49,57 @@ describe("artists action creators", () => {
       it("should dispatch fail action", async () => {
         const dispatchMock = jest.fn();
         actionCreators.loadArtists()(dispatchMock);
-
-        await promise;
-
-        const expected = actionCreators.addArtistsFail();
-
-        expect(dispatchMock).toHaveBeenCalledWith(expected);
+        try {
+          await promise;
+        } catch (e) {
+          const expected = actionCreators.addArtistsFail();
+          expect(dispatchMock).toHaveBeenCalledWith(expected);
+        }
       });
     });
   });
+
+  describe("addArtists", () => {
+    it("should return correct action", () => {
+      const payload = { prop: 10 };
+      const expected = {
+        type: actionTypes.ADD_ARTISTS_SUCCESS,
+        payload
+      };
+      expect(actionCreators.addArtists(payload)).toEqual(expected);
+    });
+  });
+
+  describe("addArtistsFail", () => {
+    it("should return fail action", () => {
+      const expected = {
+        type: actionTypes.ADD_ARTISTS_FAIL
+      };
+      expect(actionCreators.addArtistsFail()).toEqual(expected);
+    });
+  });
+
+  describe("loadCachedArtists", () => {
+    it("should dispatch loadArtist", () => {
+      const dispatchMock = jest.fn();
+      const getStateMock = () => {
+        return {
+          artists: []
+        };
+      };
+      actionCreators.loadCachedArtists()(dispatchMock, getStateMock);
+      expect(dispatchMock).toHaveBeenCalled();
+    });
+
+    it("should not dispatch loadArtist", () => {
+      const dispatchMock = jest.fn();
+      const getStateMock = () => {
+        return {
+          artists: [1]
+        };
+      };
+      actionCreators.loadCachedArtists()(dispatchMock, getStateMock);
+      expect(dispatchMock).not.toHaveBeenCalled();
+    });
+  });
 });
-
-// it("tests error with async/await", async () => {
-//   expect.assertions(1);
-//   try {
-//     await user.getUserName(1);
-//   } catch (e) {
-//     expect(e).toEqual({
-//       error: "User with 1 not found."
-//     });
-//   }
-// });
-
-// it("works with async/await", async () => {
-//   expect.assertions(1);
-//   const data = await user.getUserName(4);
-//   expect(data).toEqual("Mark");
-// });
-
-// // async/await can also be used with `.resolves`.
-// it("works with async/await and resolves", async () => {
-//   expect.assertions(1);
-//   await expect(user.getUserName(5)).resolves.toEqual("Paul");
-// });

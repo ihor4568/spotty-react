@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes";
 
-const initialState = {
+export const initialState = {
   themeType: "light"
 };
 

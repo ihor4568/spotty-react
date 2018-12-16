@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch, Redirect } from "react-router-dom";
-import history from "./shared/history";
+import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -42,7 +41,7 @@ export class App extends Component {
 
     return (
       <ThemeProvider>
-        <Router history={history}>
+        <Router>
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />

@@ -4,7 +4,8 @@ export const INITIAL_STATE = {
   isPlaying: false,
   song: {},
   number: undefined,
-  savedSongs: {}
+  savedSongs: {},
+  display: false
 };
 
 export default function playerReducer(state = INITIAL_STATE, action) {
@@ -26,6 +27,12 @@ export default function playerReducer(state = INITIAL_STATE, action) {
       return {
         ...state,
         savedSongs: action.savedSongs
+      };
+    case actionTypes.HIDE_PLAYER:
+      return {
+        ...state,
+        song: {},
+        isPlaying: false
       };
     default:
       return state;

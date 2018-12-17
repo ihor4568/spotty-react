@@ -23,4 +23,24 @@ describe("player action creator", () => {
       expect(actionCreators.pauseSong(song)).toEqual(expected);
     });
   });
+
+  describe("hidePlayer", () => {
+    it("should return correct action", () => {
+      const expected = {
+        type: actionTypes.HIDE_PLAYER
+      };
+      expect(actionCreators.hidePlayer()).toEqual(expected);
+    });
+  });
+
+  describe("saveSongs", () => {
+    it("should return correct action", () => {
+      const savedSongs = {};
+      const expected = {
+        type: actionTypes.SAVE_SONGS,
+        savedSongs
+      };
+      expect(actionCreators.saveSongs(savedSongs)).toEqual(expected);
+    });
+  });
 });

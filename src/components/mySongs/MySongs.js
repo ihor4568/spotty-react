@@ -38,7 +38,6 @@ class MySongs extends Component {
     userSongs: PropTypes.array,
     songs: PropTypes.array,
     auth: PropTypes.object,
-    loadSongs: PropTypes.func,
     loadCachedUserSongs: PropTypes.func,
     loader: PropTypes.bool.isRequired
   };

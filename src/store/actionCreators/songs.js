@@ -1,7 +1,7 @@
 import * as actionTypes from "../actionTypes";
 import { MusicService } from "../../services/MusicService";
 
-export function loadSongs(albumId) {
+export function loadAlbumSongs(albumId) {
   return async dispatch => {
     try {
       dispatch({ type: actionTypes.FETCH_ALBUM_SONGS_START });

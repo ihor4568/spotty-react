@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import TableLayout from "../shared/TableLayout";
-import { loadSongs } from "../../store/actionCreators/songs";
+import { loadAlbumSongs } from "../../store/actionCreators/songs";
 import { loadCachedAlbums } from "../../store/actionCreators/albums";
 import { loadCachedUserSongs } from "../../store/actionCreators/userSongs";
 import { connect } from "react-redux";
@@ -38,14 +38,14 @@ class AlbumTable extends Component {
     songs: PropTypes.array,
     auth: PropTypes.object,
     classes: PropTypes.object.isRequired,
-    loadSongs: PropTypes.func,
+    loadAlbumSongs: PropTypes.func,
     loadCachedAlbums: PropTypes.func,
     loadCachedUserSongs: PropTypes.func,
     loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
-    this.props.loadSongs(this.props.match.params.id);
+    this.props.loadAlbumSongs(this.props.match.params.id);
     this.props.loadCachedAlbums();
     this.props.loadCachedUserSongs(this.props.auth.user.uid);
   }
@@ -107,7 +107,7 @@ const mapStateToProps = ({ albums, songs, auth, loader }) => ({
 });
 
 const mapDispatchToProps = {
-  loadSongs,
+  loadAlbumSongs,
   loadCachedAlbums,
   loadCachedUserSongs
 };

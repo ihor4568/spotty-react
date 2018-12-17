@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import { Router, Switch, Redirect } from "react-router-dom";
 
 import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import { fetchUserAndTheme } from "../store/actionCreators/auth";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+import history from "../history";
 
 const styles = () => ({
   root: {
@@ -41,7 +42,7 @@ export class App extends Component {
 
     return (
       <ThemeProvider>
-        <Router>
+        <Router history={history}>
           <div className={classes.root}>
             <Switch>
               <PublicRoute exact path="/login" component={Auth} />

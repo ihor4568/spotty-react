@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes";
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   avatarURL: "",
   canSubmit: true
 };

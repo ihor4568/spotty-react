@@ -1,6 +1,6 @@
 import * as actionTypes from "../actionTypes";
 
-const INITIAL_STATE = null;
+export const INITIAL_STATE = null;
 
 export default function sharedSongReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

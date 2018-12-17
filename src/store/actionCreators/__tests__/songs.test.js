@@ -19,6 +19,8 @@ describe("songs action creators", () => {
 
   describe("loadArtistsSongs", () => {
     let promise;
+    const dispatchMock = jest.fn();
+    let loadArtistsSongs;
     const sampleSongs = {
       song1: {
         id: "4th34th",
@@ -28,13 +30,12 @@ describe("songs action creators", () => {
 
     beforeEach(() => {
       promise = Promise.resolve(sampleSongs);
-      jest
+      loadArtistsSongs = jest
         .spyOn(MusicService, "getArtistSongs")
         .mockImplementation(() => promise);
     });
 
     it("should dispatch correct action", async () => {
-      const dispatchMock = jest.fn();
       actionCreators.loadArtistsSongs()(dispatchMock);
 
       await promise;
@@ -44,6 +45,66 @@ describe("songs action creators", () => {
       );
 
       expect(dispatchMock).toHaveBeenCalledWith(expected);
+    });
+
+    it("should return fail action in case of error", async () => {
+      loadArtistsSongs.mockImplementation(() => Promise.reject());
+
+      await actionCreators.loadArtistsSongs()(dispatchMock);
+
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_ARTISTS_SONGS_FAIL
+      });
+    });
+  });
+
+  describe("addAlbumSongs", () => {
+    it("should return correct action", () => {
+      const payload = { prop: 10 };
+      const expected = {
+        type: actionTypes.FETCH_ALBUM_SONGS_SUCCESS,
+        payload
+      };
+      expect(actionCreators.addAlbumSongs(payload)).toEqual(expected);
+    });
+  });
+
+  describe("loadAlbumSongs", () => {
+    let promise;
+    let loadAlbumSongs;
+    const dispatchMock = jest.fn();
+    const sampleSongs = {
+      song1: {
+        id: "4th34th",
+        name: "artist1"
+      }
+    };
+
+    beforeEach(() => {
+      promise = Promise.resolve(sampleSongs);
+      loadAlbumSongs = jest
+        .spyOn(MusicService, "getAlbumSongs")
+        .mockImplementation(() => promise);
+    });
+
+    it("should dispatch correct action", async () => {
+      actionCreators.loadAlbumSongs()(dispatchMock);
+
+      await promise;
+
+      const expected = actionCreators.addAlbumSongs(Object.values(sampleSongs));
+
+      expect(dispatchMock).toHaveBeenCalledWith(expected);
+    });
+
+    it("should return fail action in case of error", async () => {
+      loadAlbumSongs.mockImplementation(() => Promise.reject());
+
+      await actionCreators.loadAlbumSongs()(dispatchMock);
+
+      expect(dispatchMock).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_ALBUM_SONGS_FAIL
+      });
     });
   });
 });

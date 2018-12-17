@@ -1,6 +1,6 @@
 import { ADD_SEARCH_QUERY } from "../actionTypes";
 
-const INITIAL_STATE = "";
+export const INITIAL_STATE = "";
 
 export default function searchReducer(state = INITIAL_STATE, action) {
   switch (action.type) {

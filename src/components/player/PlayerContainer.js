@@ -30,7 +30,8 @@ export class PlayerContainer extends Component {
     playingProgress: 0,
     volumeValue: 0.5,
     isMuted: false,
-    isDialogOpen: false
+    isDialogOpen: false,
+    isRewinding: false
   };
 
   static propTypes = {
@@ -133,14 +134,20 @@ export class PlayerContainer extends Component {
 
   handleChangeProgress = (event, value) => {
     this.setState({ playingProgress: value });
+
+    if (!this.state.isRewinding) {
+      this.audio.currentTime = (this.state.songDuration / 100) * value;
+    }
   };
 
   handleChangeProgressStart = () => {
+    this.setState({ isRewinding: true });
     this.removeListeners();
   };
 
   handleChangeProgressEnd = () => {
     this.addListeners();
+    this.setState({ isRewinding: false });
     this.audio.currentTime =
       (this.state.songDuration / 100) * this.state.playingProgress;
   };

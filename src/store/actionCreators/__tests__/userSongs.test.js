@@ -120,7 +120,7 @@ describe("userSongs action creators", () => {
       });
     });
 
-    it.only("should return addUserSong success action if addUserSong completes successfully", async () => {
+    it("should return addUserSong success action if addUserSong completes successfully", async () => {
       await actionCreators.addUserSong(userId, songId)(dispatch);
 
       expect(setUserSong).toHaveBeenCalledWith(userId, songId);

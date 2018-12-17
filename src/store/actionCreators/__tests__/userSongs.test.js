@@ -5,10 +5,9 @@ import { MusicService } from "../../../services/MusicService";
 jest.mock("../../../services/FirebaseService");
 
 describe("userSongs action creators", () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
-
   describe("loadUserSongs action creator", () => {
     let dispatch;
     let loadUserSongs;

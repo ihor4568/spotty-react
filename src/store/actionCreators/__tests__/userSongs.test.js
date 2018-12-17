@@ -4,11 +4,15 @@ import { MusicService } from "../../../services/MusicService";
 
 jest.mock("../../../services/FirebaseService");
 
-describe("auth action creators", () => {
+describe("userSongs action creators", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe("loadUserSongs action creator", () => {
     let dispatch;
     let loadUserSongs;
-    let loadUserSongsParam;
+    let userId;
     let userSongs;
 
     beforeEach(() => {
@@ -22,13 +26,11 @@ describe("auth action creators", () => {
       loadUserSongs = jest
         .spyOn(MusicService, "getUserSongs")
         .mockImplementation(() => Promise.resolve(userSongs));
-      loadUserSongsParam = {
-        userId: "user1"
-      };
+      userId = "user1";
     });
 
     it("should return correct start action", () => {
-      actionCreators.loadUserSongs(loadUserSongsParam)(dispatch);
+      actionCreators.loadUserSongs(userId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.FETCH_USER_SONGS_START
@@ -36,9 +38,7 @@ describe("auth action creators", () => {
     });
 
     it("should return loadUserSongs success action if loadUserSongs completes successfully", async () => {
-      const userId = loadUserSongsParam;
-
-      await actionCreators.loadUserSongs(loadUserSongsParam)(dispatch);
+      await actionCreators.loadUserSongs(userId)(dispatch);
 
       expect(loadUserSongs).toHaveBeenCalledWith(userId);
       expect(dispatch).toHaveBeenCalledWith({
@@ -53,7 +53,7 @@ describe("auth action creators", () => {
         Promise.reject({ message: "load user songs error" })
       );
 
-      await actionCreators.loadUserSongs(loadUserSongsParam)(dispatch);
+      await actionCreators.loadUserSongs(userId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.FETCH_USER_SONGS_FAIL
@@ -62,7 +62,7 @@ describe("auth action creators", () => {
   });
 
   describe("loadCachedUserSongs", () => {
-    let userId = { userId: "user1" };
+    let userId = "user1";
     it("should dispatch loadUserSongs", () => {
       const dispatchMock = jest.fn();
       const getStateMock = () => {
@@ -90,7 +90,8 @@ describe("auth action creators", () => {
     let dispatch;
     let setUserSong;
     let getUserSongs;
-    let addUserSongParams;
+    let userId;
+    let songId;
     let userSongs;
 
     beforeEach(() => {
@@ -107,28 +108,24 @@ describe("auth action creators", () => {
       getUserSongs = jest
         .spyOn(MusicService, "getUserSongs")
         .mockImplementation(() => Promise.resolve(userSongs));
-      addUserSongParams = {
-        userId: "user1",
-        songId: "song1"
-      };
+      userId = "user1";
+      songId = "song1";
     });
 
     it("should return correct start action", () => {
-      actionCreators.addUserSong(addUserSongParams)(dispatch);
+      actionCreators.addUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ADD_USER_SONG_START
       });
     });
 
-    it("should return addUserSong success action if addUserSong completes successfully", async () => {
-      await actionCreators.addUserSong(addUserSongParams)(dispatch);
+    it.only("should return addUserSong success action if addUserSong completes successfully", async () => {
+      await actionCreators.addUserSong(userId, songId)(dispatch);
 
-      expect(setUserSong).toHaveBeenCalledWith(
-        { songId: "song1", userId: "user1" },
-        undefined
-      );
-      expect(getUserSongs).toHaveBeenCalledWith({ userId: "user1" });
+      expect(setUserSong).toHaveBeenCalledWith(userId, songId);
+      expect(getUserSongs).toHaveBeenCalledWith(userId);
+
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ADD_USER_SONG_SUCCESS,
         payload: userSongs
@@ -144,7 +141,7 @@ describe("auth action creators", () => {
         Promise.reject({ message: "set user song error" })
       );
 
-      await actionCreators.addUserSong(addUserSongParams)(dispatch);
+      await actionCreators.addUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ADD_USER_SONG_FAIL
@@ -156,7 +153,7 @@ describe("auth action creators", () => {
         Promise.reject({ message: "get user songs error" })
       );
 
-      await actionCreators.addUserSong(addUserSongParams)(dispatch);
+      await actionCreators.addUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.ADD_USER_SONG_FAIL
@@ -168,7 +165,8 @@ describe("auth action creators", () => {
     let dispatch;
     let removeUserSong;
     let getUserSongs;
-    let removeUserSongParams;
+    let userId;
+    let songId;
     let userSongs;
 
     beforeEach(() => {
@@ -185,14 +183,12 @@ describe("auth action creators", () => {
       getUserSongs = jest
         .spyOn(MusicService, "getUserSongs")
         .mockImplementation(() => Promise.resolve(userSongs));
-      removeUserSongParams = {
-        userId: "user1",
-        songId: "song1"
-      };
+      userId = "user1";
+      songId = "song1";
     });
 
     it("should return correct start action", () => {
-      actionCreators.removeUserSong(removeUserSongParams)(dispatch);
+      actionCreators.removeUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.REMOVE_USER_SONG_START
@@ -200,13 +196,11 @@ describe("auth action creators", () => {
     });
 
     it("should return removeUserSong success action if removeUserSong completes successfully", async () => {
-      await actionCreators.removeUserSong(removeUserSongParams)(dispatch);
+      await actionCreators.removeUserSong(userId, songId)(dispatch);
 
-      expect(removeUserSong).toHaveBeenCalledWith(
-        { songId: "song1", userId: "user1" },
-        undefined
-      );
-      expect(getUserSongs).toHaveBeenCalledWith({ userId: "user1" });
+      expect(removeUserSong).toHaveBeenCalledWith(userId, songId);
+      expect(getUserSongs).toHaveBeenCalledWith(userId);
+
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.REMOVE_USER_SONG_SUCCESS,
         payload: userSongs
@@ -222,7 +216,7 @@ describe("auth action creators", () => {
         Promise.reject({ message: "remove user song error" })
       );
 
-      await actionCreators.removeUserSong(removeUserSongParams)(dispatch);
+      await actionCreators.removeUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.REMOVE_USER_SONG_FAIL
@@ -234,7 +228,7 @@ describe("auth action creators", () => {
         Promise.reject({ message: "get user songs error" })
       );
 
-      await actionCreators.removeUserSong(removeUserSongParams)(dispatch);
+      await actionCreators.removeUserSong(userId, songId)(dispatch);
 
       expect(dispatch).toHaveBeenCalledWith({
         type: actionTypes.REMOVE_USER_SONG_FAIL

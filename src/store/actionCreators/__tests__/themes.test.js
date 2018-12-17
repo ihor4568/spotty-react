@@ -1,7 +1,8 @@
 import * as actionTypes from "../../actionTypes";
 import { AuthService } from "../../../services/AuthService";
 import { ThemeService } from "../../../services/ThemeService";
-import { setUserTheme } from "../themes";
+import { setDefaultTheme, setUserTheme } from "../themes";
+import { SET_DEFAULT_THEME } from "../../actionTypes";
 
 jest.mock("../../../services/FirebaseService");
 
@@ -88,6 +89,12 @@ describe("themes action creators tests", () => {
       expect(dispatchMock).toHaveBeenCalledWith({
         type: actionTypes.SET_USER_THEME_FAIL
       });
+    });
+  });
+
+  describe("setDefaultTheme test", () => {
+    it("should return SET_DEFAULT_THEME action", () => {
+      expect(setDefaultTheme().type).toEqual(SET_DEFAULT_THEME);
     });
   });
 });

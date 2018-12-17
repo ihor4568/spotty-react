@@ -7,7 +7,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
-const styles = theme => ({
+const styles = {
   title: {
     textAlign: "center",
     padding: "1rem 0 1rem 0"
@@ -15,11 +15,18 @@ const styles = theme => ({
   link: {
     textDecoration: "none"
   },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
+  },
   media: {
-    minHeight: theme.props.cardMedia.aboutCardHeight,
-    objectFit: "cover"
+    position: "absolute",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "auto"
   }
-});
+};
 
 function AboutCard({ classes, person }) {
   return (
@@ -27,11 +34,13 @@ function AboutCard({ classes, person }) {
       <Card>
         <CardActionArea>
           <CardContent>
-            <CardMedia
-              className={classes.media}
-              component="img"
-              image={"https://github.com/" + person + ".png?size=400"}
-            />
+            <div className={classes.imageWrapper}>
+              <CardMedia
+                className={classes.media}
+                component="img"
+                image={"https://github.com/" + person + ".png?size=400"}
+              />
+            </div>
             <Typography className={classes.title} component="h2" variant="h6">
               {person}
             </Typography>
@@ -47,4 +56,4 @@ AboutCard.propTypes = {
   person: PropTypes.string.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(AboutCard);
+export default withStyles(styles)(AboutCard);

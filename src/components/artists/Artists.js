@@ -15,7 +15,7 @@ import Title from "../shared/Title";
 import { loadCachedArtists } from "../../store/actionCreators/artists";
 import Loader from "../shared/Loader";
 
-const styles = theme => ({
+const styles = {
   artistCard: {
     boxShadow: `none`,
     backgroundColor: `inherit`
@@ -25,12 +25,20 @@ const styles = theme => ({
     overflow: `hidden`,
     padding: `0.5rem`
   },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
+  },
   artistImage: {
     boxSizing: `border-box`,
     borderRadius: `50%`,
     boxShadow: `0 0 4.2rem -0.375rem rgba(0, 0, 0, 0.12)`,
-    minHeight: theme.props.cardMedia.artistCardHeight,
-    objectFit: "cover"
+    objectFit: "cover",
+    position: "absolute",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "100%"
   },
   artistName: {
     margin: `1rem 0 0 50%`,
@@ -50,8 +58,11 @@ const styles = theme => ({
       color: `inherit`,
       boxShadow: `none`
     }
+  },
+  container: {
+    margin: "-17px"
   }
-});
+};
 class Artists extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
@@ -80,12 +91,14 @@ class Artists extends Component {
               <Card className={classes.artistCard}>
                 <Link to={`${match.url}/${artist.id}`} className={classes.link}>
                   <CardActionArea className={classes.artistAction}>
-                    <CardMedia
-                      component="img"
-                      className={classes.artistImage}
-                      image={artist.artistPhotoURL}
-                      title={artist.artistName}
-                    />
+                    <div className={classes.imageWrapper}>
+                      <CardMedia
+                        component="img"
+                        className={classes.artistImage}
+                        image={artist.artistPhotoURL}
+                        title={artist.artistName}
+                      />
+                    </div>
                   </CardActionArea>
                   <Typography
                     variant="h6"
@@ -121,4 +134,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(styles, { withTheme: true })(Artists));
+)(withStyles(styles)(Artists));

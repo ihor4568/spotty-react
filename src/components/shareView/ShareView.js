@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { connect } from "react-redux";
 import { getSong } from "../../store/actionCreators/shareView";
+import Loader from "../shared/Loader";
 
 const styles = {
   container: {
@@ -25,6 +26,17 @@ const styles = {
     overflow: `hidden`,
     whiteSpace: `nowrap`,
     textOverflow: `ellipsis`
+  },
+  imageWrapper: {
+    position: "relative",
+    paddingTop: "100%"
+  },
+  media: {
+    position: "absolute",
+    left: "0",
+    top: "0",
+    width: "100%",
+    height: "auto"
   }
 };
 
@@ -33,7 +45,8 @@ class ShareView extends Component {
     classes: PropTypes.object.isRequired,
     info: PropTypes.object,
     match: PropTypes.object.isRequired,
-    onGetSong: PropTypes.func
+    onGetSong: PropTypes.func,
+    loader: PropTypes.bool.isRequired
   };
 
   componentDidMount() {
@@ -44,7 +57,11 @@ class ShareView extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, loader } = this.props;
+
+    if (loader) {
+      return <Loader />;
+    }
 
     if (!this.props.info) {
       return null;
@@ -54,11 +71,14 @@ class ShareView extends Component {
       <div className={classes.container}>
         <Card>
           <CardActionArea>
-            <CardMedia
-              component="img"
-              image={this.props.info.album.coverURL}
-              title={this.props.info.name}
-            />
+            <div className={classes.imageWrapper}>
+              <CardMedia
+                className={classes.media}
+                component="img"
+                image={this.props.info.album.coverURL}
+                title={this.props.info.name}
+              />
+            </div>
             <CardContent className={classes.songDescription}>
               <Typography
                 variant="h6"
@@ -80,7 +100,8 @@ class ShareView extends Component {
 
 const mapStateToProps = state => {
   return {
-    info: state.sharedSong
+    info: state.sharedSong,
+    loader: state.loader
   };
 };
 

@@ -2,7 +2,28 @@
 
 exports[`App component should render correctly 1`] = `
 <theme-provider>
-  <browser-router>
+  <router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
     <div
       className="App-root-1"
     >
@@ -54,6 +75,6 @@ exports[`App component should render correctly 1`] = `
         />
       </router-switch>
     </div>
-  </browser-router>
+  </router>
 </theme-provider>
 `;

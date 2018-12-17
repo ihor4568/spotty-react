@@ -34,4 +34,6 @@ const rootReducer = combineReducers({
   loader: loaderReducer
 });
 
-export default createStore(rootReducer, applyMiddleware(thunk, logger));
+export function configureStore() {
+  return createStore(rootReducer, applyMiddleware(thunk, logger));
+}

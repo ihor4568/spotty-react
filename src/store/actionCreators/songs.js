@@ -1,5 +1,6 @@
 import * as actionTypes from "../actionTypes";
 import { MusicService } from "../../services/MusicService";
+import history from "../../history";
 
 export function loadAlbumSongs(albumId) {
   return async dispatch => {
@@ -9,6 +10,7 @@ export function loadAlbumSongs(albumId) {
       dispatch(addAlbumSongs(Object.values(songs)));
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ALBUM_SONGS_FAIL });
+      history.push("/404");
     }
   };
 }
@@ -28,6 +30,7 @@ export function loadArtistsSongs(artist) {
       dispatch(getArtistSongs(Object.values(songs)));
     } catch (e) {
       dispatch({ type: actionTypes.FETCH_ARTISTS_SONGS_FAIL });
+      history.push("/404");
     }
   };
 }

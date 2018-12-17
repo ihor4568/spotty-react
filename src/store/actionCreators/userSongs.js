@@ -8,7 +8,7 @@ export function loadUserSongs(userId) {
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.FETCH_USER_SONGS_SUCCESS,
-        payload: Object.values(userSongs),
+        payload: userSongs,
         songs: userSongs
       });
     } catch (e) {
@@ -34,7 +34,7 @@ export function addUserSong(userId, songId) {
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.ADD_USER_SONG_SUCCESS,
-        payload: Object.values(userSongs)
+        payload: userSongs
       });
       dispatch({
         type: actionTypes.SAVE_SONGS,
@@ -54,7 +54,7 @@ export function removeUserSong(userId, songId) {
       const userSongs = await MusicService.getUserSongs(userId);
       dispatch({
         type: actionTypes.REMOVE_USER_SONG_SUCCESS,
-        payload: Object.values(userSongs)
+        payload: userSongs
       });
       dispatch({
         type: actionTypes.SAVE_SONGS,

@@ -3,8 +3,6 @@ import * as actionTypes from "../../actionTypes";
 
 import { MusicService } from "../../../services/MusicService";
 
-jest.mock("../../../services/FirebaseService");
-
 describe("songs action creators", () => {
   describe("getArtistSongs", () => {
     it("should return correct action", () => {

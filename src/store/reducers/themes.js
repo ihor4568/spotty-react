@@ -20,7 +20,6 @@ export default function themeReducer(state = initialState, action) {
     case actionTypes.FETCH_USER_AND_THEME_FAIL:
     case actionTypes.SET_DEFAULT_THEME:
       return {
-        ...state,
         themeType: initialState.themeType
       };
     default:

@@ -3,6 +3,8 @@ import { AuthService } from "../../../services/AuthService";
 import { ThemeService } from "../../../services/ThemeService";
 import { setUserTheme } from "../themes";
 
+jest.mock("../../../services/FirebaseService");
+
 describe("themes action creators tests", () => {
   let dispatchMock;
 

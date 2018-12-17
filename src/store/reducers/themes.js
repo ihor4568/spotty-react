@@ -8,13 +8,11 @@ export default function themeReducer(state = initialState, action) {
   switch (action.type) {
     case actionTypes.SET_USER_THEME_SUCCESS:
       return {
-        ...state,
         themeType: action.themeType
       };
     case actionTypes.FETCH_USER_AND_THEME_SUCCESS:
     case actionTypes.SIGN_IN_SUCCESS:
       return {
-        ...state,
         themeType: action.themeType
       };
     case actionTypes.FETCH_USER_AND_THEME_FAIL:

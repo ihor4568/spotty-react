@@ -8,7 +8,8 @@ import { withStyles } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 
 import { signOut } from "../../store/actionCreators/auth";
-import { setDefaultTheme } from "../../store/actionCreators/themes";
+
+import { hidePlayer } from "../../store/actionCreators/player";
 
 const styles = theme => ({
   exitToApp: {
@@ -21,8 +22,8 @@ class ProfileMenu extends Component {
     classes: PropTypes.object.isRequired,
     signOut: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
-    setDefaultTheme: PropTypes.func.isRequired,
-    avatar: PropTypes.string
+    avatar: PropTypes.string,
+    hidePlayer: PropTypes.func
   };
 
   state = {
@@ -38,9 +39,10 @@ class ProfileMenu extends Component {
   };
 
   handleLogOutClick = () => {
-    this.props.signOut();
+    const { signOut, hidePlayer } = this.props;
+    signOut();
     this.handleMenuClose();
-    this.props.setDefaultTheme();
+    hidePlayer();
   };
 
   render() {
@@ -96,5 +98,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { signOut, setDefaultTheme }
+  { signOut, hidePlayer }
 )(withStyles(styles, { withTheme: true })(ProfileMenu));

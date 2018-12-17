@@ -70,5 +70,6 @@ export const SET_RATING_SONG_FAIL = "SET_RATING_SONG_FAIL";
 
 export const PAUSE_SONG = "PAUSE_SONG";
 export const PLAY_SONG = "PLAY_SONG";
+export const HIDE_PLAYER = "HIDE_PLAYER";
 
 export const ADD_SEARCH_QUERY = "ADD_SEARCH_QUERY";

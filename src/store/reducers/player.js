@@ -27,6 +27,12 @@ export default function playerReducer(state = INITIAL_STATE, action) {
         ...state,
         savedSongs: action.savedSongs
       };
+    case actionTypes.HIDE_PLAYER:
+      return {
+        ...state,
+        song: {},
+        isPlaying: false
+      };
     default:
       return state;
   }

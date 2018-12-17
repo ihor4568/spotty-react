@@ -9,6 +9,7 @@ export default function loaderReducer(state = INITIAL_STATE, action) {
     case actionTypes.ADD_ARTISTS_START:
     case actionTypes.FETCH_ALBUM_SONGS_START:
     case actionTypes.FETCH_ARTISTS_SONGS_START:
+    case actionTypes.GET_SONG_START:
       return true;
     case actionTypes.FETCH_USER_SONGS_SUCCESS:
     case actionTypes.FETCH_USER_SONGS_FAIL:
@@ -21,6 +22,8 @@ export default function loaderReducer(state = INITIAL_STATE, action) {
     case actionTypes.FETCH_ARTISTS_SONGS_SUCCESS:
     case actionTypes.FETCH_ARTISTS_SONGS_FAIL:
     case actionTypes.SAVE_SONGS:
+    case actionTypes.GET_SONG_SUCCESS:
+    case actionTypes.GET_SONG_FAIL:
       return false;
     default:
       return state;

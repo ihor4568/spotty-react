@@ -38,7 +38,7 @@ const styles = {
     left: "0",
     top: "0",
     width: "100%",
-    height: "auto"
+    height: "100%"
   },
   artistName: {
     margin: `1rem 0 0 50%`,

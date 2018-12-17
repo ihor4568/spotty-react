@@ -25,7 +25,6 @@ describe("auth action creators", () => {
       loadUserSongsParam = {
         userId: "user1"
       };
-      // loadUserSongsParam = "user1";
     });
 
     it("should return correct start action", () => {
@@ -63,7 +62,6 @@ describe("auth action creators", () => {
   });
 
   describe("loadCachedUserSongs", () => {
-    // let userId = "user1"
     let userId = { userId: "user1" };
     it("should dispatch loadUserSongs", () => {
       const dispatchMock = jest.fn();
@@ -124,12 +122,7 @@ describe("auth action creators", () => {
     });
 
     it("should return addUserSong success action if addUserSong completes successfully", async () => {
-      // const { userId, songId } = addUserSongParams;
-
       await actionCreators.addUserSong(addUserSongParams)(dispatch);
-
-      // expect(setUserSong).toHaveBeenCalledWith(userId, songId);
-      // expect(getUserSongs).toHaveBeenCalledWith(userId);
 
       expect(setUserSong).toHaveBeenCalledWith(
         { songId: "song1", userId: "user1" },
@@ -207,12 +200,7 @@ describe("auth action creators", () => {
     });
 
     it("should return removeUserSong success action if removeUserSong completes successfully", async () => {
-      // const { userId, songId } = removeUserSongParams;
-
       await actionCreators.removeUserSong(removeUserSongParams)(dispatch);
-
-      // expect(setUserSong).toHaveBeenCalledWith(userId, songId);
-      // expect(getUserSongs).toHaveBeenCalledWith(userId);
 
       expect(removeUserSong).toHaveBeenCalledWith(
         { songId: "song1", userId: "user1" },

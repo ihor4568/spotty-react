@@ -1,10 +1,79 @@
 import * as actionCreators from "../auth";
 import * as actionTypes from "../../actionTypes";
 import { AuthService } from "../../../services/AuthService";
+import { ThemeService } from "../../../services/ThemeService";
 
 jest.mock("../../../services/FirebaseService");
 
 describe("auth action creators", () => {
+  describe("signIn action creator", () => {
+    let dispatch;
+    let signIn;
+    let getTheme;
+    let signInParams;
+
+    beforeEach(() => {
+      dispatch = jest.fn();
+      signIn = jest
+        .spyOn(AuthService, "signIn")
+        .mockImplementation(() => Promise.resolve({ user: { uid: 1 } }));
+      getTheme = jest
+        .spyOn(ThemeService, "getTheme")
+        .mockImplementation(() => Promise.resolve("light"));
+      signInParams = {
+        email: "example@mail.com",
+        password: "123456"
+      };
+    });
+
+    it("should return correct start action", () => {
+      actionCreators.signIn(signInParams)(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.SIGN_IN_START
+      });
+    });
+
+    it("should return signIn success action if signIn completes successfully", async () => {
+      const { email, password } = signInParams;
+
+      await actionCreators.signIn(signInParams)(dispatch);
+
+      expect(signIn).toHaveBeenCalledWith(email, password);
+      expect(getTheme).toHaveBeenCalledWith(1);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.SIGN_IN_SUCCESS,
+        user: { uid: 1 },
+        themeType: "light"
+      });
+    });
+
+    it("should return correct AUTH_ERROR action if signIn service fails", async () => {
+      signIn.mockImplementation(() =>
+        Promise.reject({ message: "Sign in error" })
+      );
+
+      await actionCreators.signIn(signInParams)(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.AUTH_ERROR,
+        error: "Sign in error"
+      });
+    });
+
+    it("should return correct AUTH_ERROR action if getTheme service fails", async () => {
+      getTheme.mockImplementation(() =>
+        Promise.reject({ message: "Get Theme error" })
+      );
+
+      await actionCreators.signIn(signInParams)(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.AUTH_ERROR,
+        error: "Get Theme error"
+      });
+    });
+  });
   describe("signOut action creator", () => {
     let dispatch;
     let signOut;
@@ -116,6 +185,82 @@ describe("auth action creators", () => {
         type: actionTypes.AUTH_ERROR,
         error: "Check user error"
       });
+    });
+  });
+
+  describe("fetchUserAndTheme action creator", () => {
+    let dispatch;
+    let check;
+    let getTheme;
+
+    beforeEach(() => {
+      dispatch = jest.fn();
+      check = jest
+        .spyOn(AuthService, "check")
+        .mockImplementation(() => Promise.resolve({ uid: 10 }));
+      getTheme = jest
+        .spyOn(ThemeService, "getTheme")
+        .mockImplementation(() => Promise.resolve("light"));
+    });
+
+    it("should return correct start action", () => {
+      actionCreators.fetchUserAndTheme()(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_USER_AND_THEME_START
+      });
+    });
+
+    it("should return FETCH_USER_AND_THEME_SUCCESS success", async () => {
+      await actionCreators.fetchUserAndTheme()(dispatch);
+
+      expect(check).toHaveBeenCalled();
+      expect(getTheme).toHaveBeenCalledWith(10);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_USER_AND_THEME_SUCCESS,
+        user: { uid: 10 },
+        themeType: "light"
+      });
+    });
+
+    it("should return correct FETCH_USER_AND_THEME_FAIL action if check service fails", async () => {
+      check.mockImplementation(() => Promise.reject());
+
+      await actionCreators.fetchUserAndTheme()(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_USER_AND_THEME_FAIL
+      });
+    });
+
+    it("should return correct FETCH_USER_AND_THEME_FAIL action if getTheme service fails", async () => {
+      getTheme.mockImplementation(() => Promise.reject());
+
+      await actionCreators.fetchUserAndTheme()(dispatch);
+
+      expect(dispatch).toHaveBeenCalledWith({
+        type: actionTypes.FETCH_USER_AND_THEME_FAIL
+      });
+    });
+  });
+
+  describe("authError action creator", () => {
+    it("should return correct authError action", () => {
+      const message = "Error message";
+      const expected = {
+        type: actionTypes.AUTH_ERROR,
+        error: message
+      };
+      expect(actionCreators.authError(message)).toEqual(expected);
+    });
+  });
+
+  describe("clearAuthError action creator", () => {
+    it("should return correct clearAuthError action", () => {
+      const expected = {
+        type: actionTypes.CLEAR_AUTH_ERROR
+      };
+      expect(actionCreators.clearAuthError()).toEqual(expected);
     });
   });
 });

@@ -8,7 +8,7 @@ describe("artists action creators", () => {
     describe("success", () => {
       let promise;
       const sampleArtists = {
-        artis1: {
+        artist1: {
           id: "sdfgsdfgs",
           name: "artist1"
         }

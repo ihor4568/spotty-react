@@ -9,8 +9,21 @@ export function loadAlbums() {
       const albums = await MusicService.getAllAlbums();
       dispatch(addAlbums(Object.values(albums)));
     } catch (e) {
-      dispatch({ type: actionTypes.ADD_ALBUMS_FAIL });
+      dispatch(addAlbumsFail());
     }
+  };
+}
+
+export function addAlbums(payload) {
+  return {
+    type: actionTypes.ADD_ALBUMS_SUCCESS,
+    payload
+  };
+}
+
+export function addAlbumsFail() {
+  return {
+    type: actionTypes.ADD_ALBUMS_FAIL
   };
 }
 
@@ -20,12 +33,5 @@ export function loadCachedAlbums() {
       return;
     }
     dispatch(loadAlbums());
-  };
-}
-
-export function addAlbums(payload) {
-  return {
-    type: actionTypes.ADD_ALBUMS_SUCCESS,
-    payload
   };
 }

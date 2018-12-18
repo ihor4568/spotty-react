@@ -41,9 +41,35 @@ describe("theme reducer", () => {
     });
   });
 
+  describe(`SIGN_IN_SUCCESS action`, () => {
+    it("should sign in", () => {
+      const payload = {
+        themeType: "test"
+      };
+
+      const { themeType } = payload;
+      const action = {
+        type: actionTypes.SIGN_IN_SUCCESS,
+        themeType
+      };
+      const result = themeReducer(initialState, action);
+
+      expect(result).toEqual(payload);
+    });
+  });
+
   describe(`SET_DEFAULT_THEME action`, () => {
     it("should set default theme type", () => {
       const action = { type: actionTypes.SET_DEFAULT_THEME };
+      const result = themeReducer(initialState, action);
+
+      expect(result).toEqual(initialState);
+    });
+  });
+
+  describe(`FETCH_USER_AND_THEME_FAIL action`, () => {
+    it("should fail theme type", () => {
+      const action = { type: actionTypes.FETCH_USER_AND_THEME_FAIL };
       const result = themeReducer(initialState, action);
 
       expect(result).toEqual(initialState);

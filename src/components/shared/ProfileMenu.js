@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import { signOut } from "../../store/actionCreators/auth";
 
 import { hidePlayer } from "../../store/actionCreators/player";
+import { setDefaultTheme } from "../../store/actionCreators/themes";
 
 const styles = theme => ({
   exitToApp: {
@@ -22,6 +23,7 @@ class ProfileMenu extends Component {
     classes: PropTypes.object.isRequired,
     signOut: PropTypes.func.isRequired,
     userName: PropTypes.string.isRequired,
+    setDefaultTheme: PropTypes.func.isRequired,
     avatar: PropTypes.string,
     hidePlayer: PropTypes.func
   };
@@ -39,9 +41,10 @@ class ProfileMenu extends Component {
   };
 
   handleLogOutClick = () => {
-    const { signOut, hidePlayer } = this.props;
+    const { signOut, hidePlayer, setDefaultTheme } = this.props;
     signOut();
     this.handleMenuClose();
+    setDefaultTheme();
     hidePlayer();
   };
 
@@ -98,5 +101,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { signOut, hidePlayer }
+  { signOut, hidePlayer, setDefaultTheme }
 )(withStyles(styles, { withTheme: true })(ProfileMenu));

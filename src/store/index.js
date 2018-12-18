@@ -15,11 +15,13 @@ import searchReducer from "./reducers/search";
 import ratingReducer from "./reducers/rating";
 import loaderReducer from "./reducers/loader";
 
+import { SIGN_OUT_SUCCESS } from "./actionTypes";
+
 const logger = createLogger({
   collapsed: true
 });
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   avatar: avatarReducer,
   albums: albumsReducer,
   artists: artistsReducer,
@@ -33,6 +35,14 @@ const rootReducer = combineReducers({
   rating: ratingReducer,
   loader: loaderReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === SIGN_OUT_SUCCESS) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 export function configureStore() {
   return createStore(rootReducer, applyMiddleware(thunk, logger));
